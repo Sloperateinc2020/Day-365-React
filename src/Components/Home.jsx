@@ -58,7 +58,7 @@ function Home() {
     let filteredServices = allServices;
 
     if (pincodeValue) {
-      filteredServices = allServices.filter(service => 
+      filteredServices = allServices.filter(service =>
         service.pincode.toString() === pincodeValue
       );
     } else if (stateValue || cityValue) {
@@ -127,12 +127,12 @@ function Home() {
 
   const handleStateChange = (e) => {
     setStateValue(e.target.value);
-    setPincodeValue('');  // Clear pincode if state is selected
+    setPincodeValue('');
   };
 
   const handleCityChange = (e) => {
     setCityValue(e.target.value);
-    setPincodeValue('');  // Clear pincode if city is selected
+    setPincodeValue('');
   };
 
   return (
@@ -145,14 +145,14 @@ function Home() {
         alignItems: 'center'
       }}>
         <div style={{ flex: 1, paddingRight: '40px', marginLeft: '50px' }}>
-          <h1 style={{ 
-            fontSize: '38px', 
+          <h1 style={{
+            fontSize: '38px',
             fontWeight: 'bold',
             marginBottom: '16px'
           }}>
             Welcome to <span style={{ color: '#4A90E2' }}>Day</span> 365
           </h1>
-          <p style={{ 
+          <p style={{
             fontSize: '13px',
             fontWeight: 'bold',
             marginBottom: '10px',
@@ -160,7 +160,7 @@ function Home() {
           }}>
             - Local Services at Your Fingertips!
           </p>
-          <p style={{ 
+          <p style={{
             fontSize: '12px',
             color: '#666',
             marginBottom: '24px',
@@ -186,7 +186,7 @@ function Home() {
         </div>
       </div>
 
-      {/* Search Section */}
+
       <div style={{ padding: '20px' }}>
         <h2 style={{
           fontSize: '24px',
@@ -402,122 +402,122 @@ function Home() {
         >
           See More
         </button>
-      {/* </div> */}
+        {/* </div> */}
         <div style={{ padding: '20px', textAlign: 'center' }}>
-      <h3 style={{
-        fontSize: '32px',
-        fontWeight: 'bold',
-        marginBottom: '20px',
-        color: '#6666ff'
-      }}>Latest Services</h3>
+          <h3 style={{
+            fontSize: '32px',
+            fontWeight: 'bold',
+            marginBottom: '20px',
+            color: '#6666ff'
+          }}>Latest Services</h3>
 
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
-        gap: '20px',
-        maxWidth: '1200px',
-        margin: '0 auto'
-      }}>
-        {latestServices.map((service, index) => (
-          <div key={index} style={{
-            borderRadius: '10px',
-            backgroundColor: '#f9f9f9',
-            padding: '20px',
-            boxShadow: '0px 4px 8px rgba(0,0,0,0.1)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-start',
-            textAlign: 'left',
-            position: 'relative'
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: '20px',
+            maxWidth: '1200px',
+            margin: '0 auto'
           }}>
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              marginBottom: '10px'
-            }}>
-              <img src={service.iconUrl} alt="Service Icon" style={{
-                width: '40px',
-                height: '40px',
-                borderRadius: '5px',
-                marginRight: '10px'
-              }} />
-              <div>
-                <h4 style={{
-                  fontSize: '18px',
-                  fontWeight: 'bold',
-                  margin: 0
-                }}>{service.title}</h4>
-                <p style={{
-                  fontSize: '14px',
-                  color: '#666',
-                  margin: 0
-                }}>{`₹${service.salaryRange.minimum} - ₹${service.salaryRange.maximum}`}</p>
+            {latestServices.map((service, index) => (
+              <div key={index} style={{
+                borderRadius: '10px',
+                backgroundColor: '#f9f9f9',
+                padding: '20px',
+                boxShadow: '0px 4px 8px rgba(0,0,0,0.1)',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                textAlign: 'left',
+                position: 'relative'
+              }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  marginBottom: '10px'
+                }}>
+                  <img src={service.iconUrl} alt="Service Icon" style={{
+                    width: '40px',
+                    height: '40px',
+                    borderRadius: '5px',
+                    marginRight: '10px'
+                  }} />
+                  <div>
+                    <h4 style={{
+                      fontSize: '18px',
+                      fontWeight: 'bold',
+                      margin: 0
+                    }}>{service.title}</h4>
+                    <p style={{
+                      fontSize: '14px',
+                      color: '#666',
+                      margin: 0
+                    }}>{`₹${service.salaryRange.minimum} - ₹${service.salaryRange.maximum}`}</p>
+                  </div>
+                  {service.isHot && (
+                    <span style={{
+                      backgroundColor: '#FDEDEC',
+                      color: '#FF6666',
+                      padding: '2px 6px',
+                      fontSize: '12px',
+                      fontWeight: 'bold',
+                      borderRadius: '5px',
+                      marginLeft: '10px'
+                    }}>Hot</span>
+                  )}
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+                  <img src={service.location.districtIconUrl} alt="District Icon" style={{
+                    width: '20px',
+                    height: '20px',
+                    marginRight: '8px'
+                  }} />
+                  <p style={{
+                    fontSize: '12px',
+                    color: '#666',
+                    margin: 0
+                  }}>{service.location.district}</p>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+                  <img src={service.location.cityIconUrl} alt="City Icon" style={{
+                    width: '16px',
+                    height: '16px',
+                    marginRight: '8px'
+                  }} />
+                  <p style={{
+                    fontSize: '12px',
+                    color: '#666',
+                    margin: 0
+                  }}>{service.location.city}, {service.location.pincode}</p>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <img src={service.workTypeIconUrl} alt="Work Type Icon" style={{
+                    width: '16px',
+                    height: '16px',
+                    marginRight: '8px'
+                  }} />
+                  <p style={{
+                    fontSize: '12px',
+                    color: '#666',
+                    margin: 0
+                  }}>{service.workType}</p>
+                </div>
               </div>
-              {service.isHot && (
-                <span style={{
-                  backgroundColor: '#FDEDEC',
-                  color: '#FF6666',
-                  padding: '2px 6px',
-                  fontSize: '12px',
-                  fontWeight: 'bold',
-                  borderRadius: '5px',
-                  marginLeft: '10px'
-                }}>Hot</span>
-              )}
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
-              <img src={service.location.districtIconUrl} alt="District Icon" style={{
-                width: '20px',
-                height: '20px',
-                marginRight: '8px'
-              }} />
-              <p style={{
-                fontSize: '12px',
-                color: '#666',
-                margin: 0
-              }}>{service.location.district}</p>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
-              <img src={service.location.cityIconUrl} alt="City Icon" style={{
-                width: '16px',
-                height: '16px',
-                marginRight: '8px'
-              }} />
-              <p style={{
-                fontSize: '12px',
-                color: '#666',
-                margin: 0
-              }}>{service.location.city}, {service.location.pincode}</p>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <img src={service.workTypeIconUrl} alt="Work Type Icon" style={{
-                width: '16px',
-                height: '16px',
-                marginRight: '8px'
-              }} />
-              <p style={{
-                fontSize: '12px',
-                color: '#666',
-                margin: 0
-              }}>{service.workType}</p>
-            </div>
+            ))}
           </div>
-        ))}
-      </div>
 
-      {/* See More Button */}
-      <button style={{
-        backgroundColor: '#6666ff',
-        color: 'white',
-        padding: '10px 20px',
-        border: 'none',
-        borderRadius: '5px',
-        marginTop: '20px',
-        cursor: 'pointer'
-      }}>
-        See More
-      </button>
-    </div>
+
+          <button style={{
+            backgroundColor: '#6666ff',
+            color: 'white',
+            padding: '10px 20px',
+            border: 'none',
+            borderRadius: '5px',
+            marginTop: '20px',
+            cursor: 'pointer'
+          }}>
+            See More
+          </button>
+        </div>
       </div>
     </div>
   );

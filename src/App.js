@@ -1,6 +1,6 @@
 import React from 'react';
+import AboutPage from './About/AboutPage';
 import './App.css';
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Components/Home';
 import Header from './Components/Header';
@@ -16,10 +16,11 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/signin" element={<SignIn />} /> 
           <Route path="/signup" element={<SignupPage/>} />
+          <Route path='/about' element={<AboutPage />} />
         </Routes>
       </div>
     </Router>
   )
-}
 
+}
 export default App;

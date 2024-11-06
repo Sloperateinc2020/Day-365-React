@@ -1,0 +1,166 @@
+/* Container for the entire sign-up page */
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  gap: 50px; /* Equal gap between left and right sections */
+}
+
+/* Left Section */
+.signup-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 50px;
+  gap: 20px; /* Equal gap between content items in the left section */
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* Rectangular shape for main user image */
+.main-user-image {
+  width: 500px;
+  height: 300px;
+  border-radius: 10px; /* Small rounded corners, change or remove if you want sharp corners */
+  margin-bottom: 20px;
+  background-color: #e0e0e0;
+}
+
+.user-icons {
+  display: flex;
+  justify-content: space-between; /* Equal spacing between icons */
+  gap: 20px; /* Space between each icon */
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.user-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #d9d9d9;
+}
+
+/* Right Section */
+.signup-right {
+  width: 350px;
+  height: 400px; /* Increased height to accommodate new layout */
+  padding: 30px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Heading and paragraph spacing adjustment */
+.signup-right h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 0; /* Remove gap */
+  text-align: left;
+}
+
+.signup-right p {
+  font-size: 16px;
+  color: #666;
+  margin-top: 5px; /* Remove extra spacing */
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+/* Button Styles */
+.signup-btn {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd; /* Default light gray border */
+  border-radius: 10px; /* Rounded corners */
+  font-size: 14px;
+  cursor: pointer;
+  color: #ffffff; /* White text for all buttons */
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+/* Specific button colors with borders */
+.email-btn {
+  background-color: #6c63ff;
+  border-color: #6c63ff; /* Matching border color */
+}
+
+.google-btn {
+  color: #db4437;
+  background-color: transparent;
+  border: 1px solid #db4437; /* Red border for Google button */
+}
+
+.facebook-btn {
+  color: #3b5998;
+  background-color: transparent;
+  border: 1px solid #3b5998; /* Blue border for Facebook button */
+}
+
+.apple-btn {
+  color: #000000;
+  background-color: transparent;
+  border: 1px solid #000000; /* Black border for Apple button */
+  margin-bottom: 20px;
+}
+
+/* Centered Terms & Conditions content */
+.centered-terms {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.centered-terms p:first-child {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+/* Bold styling for Terms & Conditions and Privacy Policy text */
+.bold-text {
+  font-weight: bold;
+  color: #333;
+  font-size: 14px;
+
+}
+
+/* Centered Login link styling with blue color */
+.login-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px; /* Increased font size for login link */
+  margin-top: 30px; /* Move it slightly down */
+  color: #666;
+}
+
+.login-button {
+  background: none;
+  border: none;
+  color: #0066cc; /* Set color to blue for Log in */
+  cursor: pointer;
+  padding: 0;
+  font-size: 16px;
+  text-decoration: underline;
+}
+
+.login-button:hover {
+  text-decoration: none;
+}

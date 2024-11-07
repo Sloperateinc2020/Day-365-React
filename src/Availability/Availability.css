@@ -1,0 +1,227 @@
+* {
+    box-sizing: border-box;
+}
+
+.availability-container {
+    display: flex;
+    gap: 20px;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+.availability-calendar {
+    flex: 1;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 100%;
+}
+
+.availability-calendar h2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.availability-calendar p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+/* Calendar Styles */
+.calendar {
+    margin-top: 20px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between; /* Space between items */
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.month-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.month-year {
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center; /* Center the month and year text */
+    flex-grow: 1; /* Allow the text to take up available space */
+}
+
+.calendar-day-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar-day {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2px; /* Space between days */
+    margin-left: 30px;
+}
+
+/* Time Slot Styles */
+.time-slots,
+.location-section {
+    margin-top: 30px;
+}
+
+.time-slots h3,
+.location-section h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.time-slot {
+    background-color: #e0ebff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px; /* Increase padding for more width */
+    margin: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #007bff;
+    transition: background-color 0.2s;
+    width: 230px; /* Increased width */
+}
+
+.location {
+    background-color: #e0ebff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px; /* Increase padding for more width */
+    margin: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #007bff;
+    transition: background-color 0.2s;
+}
+
+.time-slot.selected,
+.location.selected {
+    background-color: #b3d4ff;
+}
+
+.location-input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.save-button {
+    background-color: #007bff;
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    margin-top: 30px;
+    cursor: pointer;
+    font-size: 18px;
+    height: 40px;
+}
+
+.availability-summary-container {
+    margin-top: 20px; /* Space between form and summary */
+    height:600px;
+    width:300px;
+}
+
+.availability-summary {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    width: 280px; /* Decreased width */
+}
+
+.availability-item {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: flex-start; /* Align items to the left */
+}
+
+.availability-info {
+    display: flex;
+    flex-direction: column; /* Keep info in column layout */
+    width: 100%; /* Ensure it takes full width */
+}
+
+.availability-date-time {
+    display: flex;
+    align-items: center; /* Center align date and icon */
+    justify-content: flex-start; /* Align to the start */
+    margin-bottom: 5px; /* Space below date */
+}
+
+.calendar-icon {
+    margin-right: 5px; /* Space between icon and date */
+}
+
+.availability-location {
+    display: flex;
+    align-items: center; /* Align icon and location */
+    margin-left: 10px; /* Move the location slightly to the right */
+    margin-bottom: 5px; /* Space below location */
+}
+
+.availability-time {
+    font-size: 12px; /* Smaller font size for the time */
+    color: #555;
+}
+
+.availability-actions {
+    display: flex;
+    justify-content: center; /* Center the buttons */
+    gap: 5px; /* Space between buttons */
+    margin-top: 5px; /* Space above buttons */
+}
+
+.edit-button,
+.delete-button {
+    background-color: #007bff;
+    color: white;
+    padding: 4px 8px; /* Decreased padding for smaller buttons */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 12px; /* Smaller font size for buttons */
+}
+
+.edit-button:hover,
+.delete-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.delete-button {
+    background-color: #dc3545; /* Red for delete */
+}
+
+.delete-button:hover {
+    background-color: #c82333; /* Darker red on hover */
+}

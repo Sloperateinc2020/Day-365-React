@@ -1,0 +1,146 @@
+
+.header {
+    text-align: left;
+    font-size: 15px; /* Adjust size as necessary */
+    margin-bottom: 20px; /* Add some space below the heading */
+  }
+  .bookings-container {
+    padding: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  
+  .filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    margin-top: 50px;
+  }
+  
+  .date-filter,
+  .search-input {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 270px;
+    height: 11px;
+  }
+  
+  .search-button {
+    padding: 8px 16px;
+    background-color: #6366f1;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .search-button:hover {
+    background-color: #4f46e5;
+  }
+  
+  h2 {
+    margin: 20px 0;
+    font-size: 1.5rem;
+    color: #333;
+    margin-top: 40px;
+  }
+  
+  .bookings-table {
+    overflow-x: auto;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+  
+  th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  tr:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .status {
+    display: inline-flex; /* Use inline-flex for flexibility */
+    justify-content: center; /* Center text horizontally */
+    align-items: center; /* Center text vertically */
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    text-transform: capitalize;
+    min-width: 100px; /* Set a consistent width */
+  }
+  
+  .status.completed {
+    background-color: #0cdb54;
+    color: white;
+  }
+  
+  .status.pending {
+    background-color: #e79b0e;
+    color: white;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding: 10px 0;
+  }
+  
+  .prev-btn,
+  .next-btn {
+    padding: 8px 16px;
+    background-color: #6366f1;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .prev-btn:hover,
+  .next-btn:hover {
+    background-color: #4f46e5;
+  }
+  
+  .prev-btn:disabled,
+  .next-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  @media (max-width: 768px) {
+    .filters {
+      flex-direction: column;
+    }
+    
+    .bookings-table {
+      overflow-x: auto;
+    }
+    
+    table {
+      font-size: 14px;
+    }
+    
+    th, td {
+      padding: 8px 10px;
+    }
+  }

@@ -1,0 +1,191 @@
+/* Register Container */
+.register-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  /* Header Styles */
+  .register-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .register-title {
+    font-size: 1.0rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  
+  .register-subtitle {
+    color: #666;
+    font-size: 9px;
+    line-height: 1.5;
+    max-width: 450px;
+    margin: 0 auto;
+  }
+  
+  /* Form Styles */
+  .register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 0.5rem;
+    align-items: start;
+    width: 100%;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    width: 100%;
+    align-items: center;
+  }
+  
+  .form-label {
+    font-size: 0.875rem;
+    color: #333;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 0.25rem;
+    width: 100%;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 0.5rem;
+    height: 33px;
+    background-color: #f9f9f9;
+    border: 1px solid #eaeaea;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    color: #333;
+    transition: all 0.2s ease;
+    text-align: center;
+    min-width: 300px;
+    box-sizing: border-box;
+  }
+  
+  .form-input::placeholder {
+    color: #999;
+    text-align: center;
+  }
+  
+  .form-input:focus {
+    outline: none;
+    border-color: #6366f1;
+    background-color: #fff;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
+  }
+  .upload-label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 6px;
+    margin-right: 450px;
+  }
+  /* File Upload Styles */
+  .file-upload-container {
+    display: flex;
+    /* align-items: center; */
+    gap: 0.5rem;
+    width: auto;
+    margin-right: 400px;
+  }
+  
+  .file-upload-button {
+    padding: 0.2rem 1rem;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 4px;
+    color:black;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 33px;
+    margin: 0;
+    width: 140px;
+  }
+  
+  .file-upload-button:hover {
+    background-color: #e5e5e5;
+  }
+  
+  .share-icon {
+    color: #666;
+    display: flex;
+    align-items: center;
+  }
+  
+  .hidden-input {
+    display: none;
+  }
+  
+  /* Registration Fee Styles */
+  .registration-fee {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 1rem 0;
+    justify-content: left;
+  }
+  
+  .fee-label {
+    font-size: 0.875rem;
+    color: #666;
+  }
+  
+  /* Submit Button */
+  .submit-button {
+    width: 100%;
+    max-width: 250px;
+    margin: 1rem auto;
+    padding: 1rem;
+    background-color: #6366f1;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .submit-button:hover {
+    background-color: #4f46e5;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .register-container {
+      padding: 1rem;
+    }
+    
+    .register-title {
+      font-size: 1.25rem;
+    }
+    
+    .form-row {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    
+    .form-group {
+      gap: 0.25rem;
+    }
+    .form-input {
+      min-width: 100%;
+    }
+  }

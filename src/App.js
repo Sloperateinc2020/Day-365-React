@@ -6,6 +6,8 @@ import Home from './Components/Home';
 import Header from './Components/Header';
 import SignIn from './Components/SignIn';
 import SignupPage from './SignUp/SignupPage';
+import Register from './Components/Register';
+
 
 function App() {
   return (
@@ -16,6 +18,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/signin" element={<SignIn />} /> 
           <Route path="/signup" element={<SignupPage/>} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </div>
     </Router>

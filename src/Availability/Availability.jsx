@@ -7,17 +7,21 @@ const Availability = () => {
     const [startDate, setStartDate] = useState(new Date());
     const [selectedTime, setSelectedTime] = useState('10:00 AM - 11:00 AM');
     const [location, setLocation] = useState('Chilakaluripet');
-    const [locations, setLocations] = useState([]);
+    const [locations, setLocations] = useState([]); // Will be populated from the API
     const [availabilityEntries, setAvailabilityEntries] = useState([]); // Store multiple availability entries
     const [isEditing, setIsEditing] = useState(false); // Track editing mode
     const [editIndex, setEditIndex] = useState(null); // Track the index of the entry being edited
 
-    // Fetch locations from the API
+    // Fetch locations from the Mock API
     useEffect(() => {
-        fetch('https://mocki.io/v1/81ca3350-d9ca-4b46-bcc7-09b18ac59f84')
+        fetch('https://mocki.io/v1/5fbe5a6d-8103-4ad7-9668-633e1960405d') // Mock API URL
             .then((response) => response.json())
             .then((data) => {
-                setLocations(data.locations || []); // Default to an empty array if no locations found
+                // Extract locations from the services array
+                const serviceLocations = data.topServices.map(service => service.location);
+                // Remove duplicates
+                const uniqueLocations = [...new Set(serviceLocations)];
+                setLocations(uniqueLocations); // Set unique locations from the services
             })
             .catch((error) => console.error('Error fetching locations:', error));
     }, []);
@@ -177,7 +181,7 @@ const Availability = () => {
                         placeholder="Add location preference"
                         className="location-input"
                         onChange={handleLocationChange}
-                        value={location} // Use location state
+                        value={location}
                     />
                 </div>
 
@@ -186,14 +190,14 @@ const Availability = () => {
 
             {/* Availability Summary Box */}
             <div className="availability-summary-container">
-                <h3>Availability Entries</h3>
                 <div className="availability-summary">
+                    <h3>Availability Entries</h3>
                     {availabilityEntries.map((entry, index) => (
                         <div key={index} className="availability-item">
                             <div className="availability-info">
                                 <div className="availability-date-time">
                                     <FaCalendarAlt className="calendar-icon" />
-                                    <span style={{ fontWeight: 'bold' }}>
+                                    <span style={{ fontWeight: 'bold', fontSize: '14px' }}>
                                         {entry.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
                                     </span>
                                     <span className="availability-location">

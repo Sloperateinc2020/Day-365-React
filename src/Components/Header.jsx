@@ -1,9 +1,18 @@
-// Header.js
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Header({ selectedMenu, setSelectedMenu }) {
+  const navigate = useNavigate();
+
   const handleMenuClick = (menu) => {
-    setSelectedMenu(menu);
+    setSelectedMenu(menu); // Update selected menu to trigger color change
+    if (menu === 'Contact') {
+      navigate('/booking');
+    } else if (menu === 'Home') {
+      navigate('/home');
+    } else if (menu === 'All Services') {
+      navigate('/all-services');
+    }
   };
 
   return (
@@ -11,7 +20,6 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
       <div style={styles.container}>
         <h1 style={styles.logoText}>LOGO</h1>
         
-        {/* Menu Items */}
         <div style={styles.menuContainer}>
           <button
             onClick={() => handleMenuClick('Home')}
@@ -31,13 +39,31 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
           >
             All Services
           </button>
-          <button onClick={() => handleMenuClick('About')} style={styles.textWithGap}>
+          <button
+            onClick={() => handleMenuClick('About')}
+            style={{
+              ...styles.textWithGap,
+              ...(selectedMenu === 'About' ? styles.selectedText : {}),
+            }}
+          >
             About
           </button>
-          <button onClick={() => handleMenuClick('Contact')} style={styles.textWithGap}>
+          <button
+            onClick={() => handleMenuClick('Contact')}
+            style={{
+              ...styles.textWithGap,
+              ...(selectedMenu === 'Contact' ? styles.selectedText : {}),
+            }}
+          >
             Contact
           </button>
-          <button onClick={() => handleMenuClick('Login/Register')} style={styles.textWithGap}>
+          <button
+            onClick={() => handleMenuClick('Login/Register')}
+            style={{
+              ...styles.textWithGap,
+              ...(selectedMenu === 'Login/Register' ? styles.selectedText : {}),
+            }}
+          >
             Login/Register
           </button>
           <button style={styles.vendorButton}>
@@ -63,10 +89,9 @@ const styles = {
     backgroundColor: 'white',
     padding: 10,
     width: '120%',
-    maxWidth: 1300,
+    maxWidth: 1500,
     height: 40,
     borderRadius: 8,
-    // boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)',
   },
   logoText: {
     fontWeight: 'bold',
@@ -88,7 +113,7 @@ const styles = {
     color: 'black',
   },
   selectedText: {
-    color: 'blue',
+    color: 'blue', // Corrected style name for selected text color
   },
   vendorButton: {
     backgroundColor: '#8a6ded',
@@ -100,6 +125,6 @@ const styles = {
     fontWeight: 'bold',
     fontSize: 12,
     boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.3)',
-    marginLeft:"450px"
+    marginLeft: '450px',
   },
 };

@@ -8,6 +8,8 @@ import SignIn from './Components/SignIn';
 import SignupPage from './SignUp/SignupPage';
 import Booking from './Components/Booking/Booking';
 import Register from './Components/Register';
+import Listings from './Components/Listings';
+
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/booking" element={<Booking />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/listings" element={<Listings/>} />
+
         </Routes>
       </div>
     </Router>

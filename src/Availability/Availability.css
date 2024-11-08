@@ -1,0 +1,355 @@
+/* Global styles */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Availability container */
+.availability-container {
+    display: flex;
+    gap: 20px;
+    font-family: Arial, sans-serif;
+    color: #333;
+    margin-top: 30px; /* Add margin to pull the entire container down */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+/* The calendar container */
+.availability-calendar {
+    flex: 1;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 100%;
+}
+
+/* Calendar header */
+.availability-calendar h2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.availability-calendar p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+/* Calendar Styles */
+.calendar {
+    margin-top: 20px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between; /* Space between items */
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.month-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.month-year {
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center; /* Center the month and year text */
+    flex-grow: 1; /* Allow the text to take up available space */
+}
+
+.calendar-day-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar-day {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2px;
+    margin-left: 30px;
+}
+
+/* Time Slot Styles */
+.time-slots,
+.location-section {
+    margin-top: 30px;
+}
+
+.time-slots h3,
+.location-section h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.time-slot {
+    background-color: #e0ebff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px; /* Increase padding for more width */
+    margin: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #007bff;
+    transition: background-color 0.2s;
+    width: 230px; /* Increased width */
+}
+
+.location {
+    background-color: #e0ebff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px; /* Increase padding for more width */
+    margin: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #007bff;
+    transition: background-color 0.2s;
+}
+
+.time-slot.selected,
+.location.selected {
+    background-color: #b3d4ff;
+}
+
+.location-input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.save-button {
+    background-color: #007bff;
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    margin-top: 30px;
+    cursor: pointer;
+    font-size: 18px;
+    height: 40px;
+}
+
+/* Availability Summary Styles */
+.availability-summary {
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 380px;
+    height: 900px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.availability-summary h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* Availability Item Styles */
+.availability-item {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: flex-start; /* Align items to the left */
+    border: 1px solid #d3d3d3; /* Border for each entry */
+    border-radius: 8px; /* Rounded corners for entries */
+    padding: 4px; /* Padding inside each entry */
+    margin-bottom: 10px; /* Space between entries */
+    width: 100%; /* Ensure it takes full width of the summary */
+}
+
+/* Info Section (Date, Time, Location) */
+.availability-info {
+    display: flex;
+    flex-direction: column; /* Keep info in column layout */
+    width: 100%; /* Ensure it takes full width */
+}
+
+.availability-date-time {
+    display: flex;
+    align-items: center; /* Center align date and icon */
+    justify-content: flex-start; /* Align to the start */
+    margin-bottom: 5px; /* Space below date */
+    margin-top: -5px; /* Move the date slightly up */
+    flex: 0 0 auto; /* Prevent this section from growing or shrinking */
+}
+
+.calendar-icon {
+    display: inline-flex; /* Use inline-flex to maintain its inline nature */
+    justify-content: center; /* Center the icon horizontally */
+    align-items: center; /* Center the icon vertically */
+    width: 20px; /* Define width of the circle */
+    height: 20px; /* Define height of the circle */
+    border-radius: 50%; /* Make the icon's container a circle */
+    background-color: lightblue; /* Background color of the circle */
+    color: blue; /* Set the icon's color */
+    margin-right: 5px; /* Space between icon and date */
+    font-size: 16px; /* Adjust icon size (you can change this as per your needs) */
+}
+
+.availability-time {
+    font-size: 12px; /* Smaller font size for the time */
+    color: #555;
+    margin-top: 0; /* Ensure it stays close to the date */
+    margin-bottom: 20px; /* Add space below the time */
+    margin-right: 200px;
+    flex: 0 0 auto; /* Prevent this section from growing or shrinking */
+}
+
+.availability-location {
+    display: flex;
+    align-items: center; /* Align icon and location */
+    margin-left: 60px; /* Move the location slightly to the right */
+    margin-top: 40px; /* Space above the location to pull it down */
+    margin-bottom: 5px; /* Space below location */
+    flex: 1; /* Allow location section to grow and take available space */
+    overflow: hidden; /* Prevent overflow issues */
+}
+
+.availability-actions {
+    display: flex;
+    justify-content: center; /* Center the buttons */
+    gap: 5px; /* Space between buttons */
+    margin-top: 5px; /* Space above buttons */
+}
+
+/* Edit & Delete Buttons */
+.edit-button,
+.delete-button {
+    background-color: #007bff;
+    color: white;
+    padding: 4px 8px; /* Decreased padding for smaller buttons */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 12px; /* Smaller font size for buttons */
+}
+
+.edit-button:hover,
+.delete-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.delete-button {
+    background-color: #dc3545; /* Red for delete */
+}
+
+.delete-button:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+/* Media Queries for Responsiveness */
+@media screen and (max-width: 1200px) {
+    .availability-container {
+        flex-direction: column; /* Stack items vertically on larger screens */
+    }
+
+    .availability-summary {
+        width: 90%; /* Allow the summary to take up more space */
+    }
+
+    .availability-calendar {
+        max-width: 100%; /* Allow the calendar container to be full-width */
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .availability-container {
+        gap: 10px; /* Reduce space between elements */
+    }
+
+    .availability-summary {
+        width: 100%; /* Take full width */
+        height: auto; /* Let height adjust to content */
+    }
+
+    .availability-calendar {
+        padding: 15px; /* Reduce padding */
+    }
+
+    .time-slot,
+    .location {
+        width: 100%; /* Full width on smaller screens */
+        padding: 10px; /* Reduce padding */
+    }
+
+    .save-button {
+        font-size: 16px; /* Adjust button font size */
+    }
+
+    .calendar-header {
+        flex-direction: column; /* Stack header items vertically */
+    }
+
+    .calendar-day {
+        width: 35px; /* Smaller calendar day size */
+        height: 35px;
+    }
+
+    .availability-time,
+    .availability-location {
+        margin-right: 0; /* Remove margin for better fitting */
+        margin-left: 0; /* Remove margin for better fitting */
+    }
+
+    .availability-actions {
+        flex-direction: column; /* Stack action buttons vertically */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .availability-summary {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .save-button {
+        padding: 12px;
+    }
+
+    .availability-calendar {
+        padding: 10px;
+    }
+
+    .time-slot,
+    .location {
+        width: 100%; /* Full width for all items */
+    }
+
+    .availability-item {
+        padding: 10px; /* Increase padding */
+    }
+
+    .calendar-header {
+        font-size: 16px; /* Smaller text for calendar */
+    }
+}

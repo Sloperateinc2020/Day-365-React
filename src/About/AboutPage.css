@@ -1,0 +1,280 @@
+/* Main container setup */
+.container {
+    font-family: Arial, sans-serif;
+    color: #333;
+    max-width: 100%; /* Ensures container doesn’t cause overflow */
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+    overscroll-behavior: contain; /* Prevents unintended scrolling */
+    overflow-x: hidden; /* Hides any horizontal scrollbar in main container */
+}
+
+.header {
+    position: relative;
+    text-align: center;
+}
+
+.header-image {
+    width: 98%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.header-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-45%, -50%);
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.header-text h1 {
+    font-size: 36px;
+    margin: 0;
+    font-weight: bold;
+}
+
+.header-text p {
+    font-size: 18px;
+    margin-top: 10px;
+    color: #dcdcdc;
+}
+
+.why-choose {
+    text-align: left;
+    margin: 50px 0;
+}
+
+.why-choose h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    margin-left: 40px;
+}
+
+.features {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.feature {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    width: 200px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.feature h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.feature p {
+    font-size: 14px;
+    color: #666;
+}
+
+.popular-services {
+    text-align: left;
+    margin: 50px 0;
+}
+
+.popular-services h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    margin-left: 40px;
+}
+
+/* Wrapper to hide scrollbar */
+.service-list-container {
+    overflow: hidden; /* Hides scrollbar on this wrapper */
+    margin-left: 40px;
+}
+
+/* Service list styles */
+.service-list {
+    display: flex;
+    justify-content: flex-start;
+    gap: 98px; /* Increased gap between images */
+    flex-wrap: nowrap;
+    overflow-x: auto; /* Enables horizontal scrolling */
+    overflow-y: hidden; /* Prevents vertical scrollbar */
+    overscroll-behavior: contain; /* Contains scroll within the element */
+    scrollbar-width: none; /* Hides scrollbar in Firefox */
+    -ms-overflow-style: none; /* Hides scrollbar in IE and Edge */
+}
+
+.service-list::-webkit-scrollbar {
+    display: none; /* Hides scrollbar in Chrome, Safari, and other WebKit-based browsers */
+}
+
+.service-list img {
+    width: 150px;
+    height: 150px;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+
+.booking {
+    text-align: center;
+    margin: 50px 0;
+}
+
+.booking p {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.booking button {
+    padding: 10px 30px;
+    font-size: 18px;
+    background-color: black;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Tablet and Mobile Responsive Adjustments */
+@media (max-width: 1024px) {
+    .header-image {
+        width: 100%;
+        height: 250px;
+    }
+
+    .header-text h1 {
+        font-size: 30px;
+    }
+
+    .header-text p {
+        font-size: 16px;
+    }
+
+    .why-choose h2, .popular-services h2 {
+        font-size: 22px;
+        margin-left: 20px;
+    }
+
+    .features {
+        gap: 15px;
+    }
+
+    .feature {
+        width: 180px;
+    }
+
+    .service-list {
+        gap: 50px;
+        margin-left: 20px;
+    }
+
+    .service-list img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .booking p {
+        font-size: 18px;
+    }
+
+    .booking button {
+        font-size: 16px;
+        padding: 8px 20px;
+    }
+}
+
+/* Mobile (768px and below) */
+@media (max-width: 768px) {
+    .header-image {
+        width: 100%;
+        height: 200px;
+    }
+
+    .header-text h1 {
+        font-size: 26px;
+    }
+
+    .header-text p {
+        font-size: 14px;
+    }
+
+    .why-choose h2, .popular-services h2 {
+        font-size: 20px;
+        margin-left: 15px;
+    }
+
+    .features {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .feature {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .service-list {
+        gap: 20px;
+        margin-left: 10px;
+    }
+
+    .service-list img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .booking p {
+        font-size: 16px;
+    }
+
+    .booking button {
+        font-size: 14px;
+        padding: 8px 20px;
+    }
+}
+
+/* Small Mobile (480px and below) */
+@media (max-width: 480px) {
+    .header-text h1 {
+        font-size: 22px;
+    }
+
+    .header-text p {
+        font-size: 12px;
+    }
+
+    .why-choose h2, .popular-services h2 {
+        font-size: 18px;
+        margin-left: 10px;
+    }
+
+    .feature {
+        width: 100%;
+    }
+
+    .service-list img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .booking p {
+        font-size: 14px;
+    }
+
+    .booking button {
+        font-size: 12px;
+        padding: 6px 16px;
+    }
+}

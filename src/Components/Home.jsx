@@ -63,13 +63,29 @@ function Home() {
   const handleServiceSearch = (e) => {
     const searchValue = e.target.value;
     setServiceSearchValue(searchValue);
-
+  
     if (!searchValue) {
+      // Reset state, city, and pincode when search value is cleared
+      setStateValue('');
+      setCityValue('');
+      setPincodeValue('');
       setDisplayedServices(allServices.slice(0, 4));
       setFilteredServices(allServices);
       setIsSearchActive(false);
+    } else {
+      // Filter services based on the search value
+      const filteredResults = allServices.filter(service =>
+        typeof service.service === 'string' &&
+        service.service.toLowerCase().includes(searchValue.toLowerCase())
+      );
+      
+      setFilteredServices(filteredResults);
+      setDisplayedServices(filteredResults.slice(0, 4));
+      setIsSearchActive(true);
     }
   };
+  
+  
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -203,6 +219,8 @@ function Home() {
   };
 
   return (
+    <div style={{ overflowX: 'hidden', position: 'fixed', width: '100%', height: '90%' }}>
+
     <div style={{ overflowX: 'hidden' }}>
       <div style={{
         background: '#D6E4FF',
@@ -211,6 +229,7 @@ function Home() {
         justifyContent: 'space-between',
         alignItems: 'center'
       }}>
+        {/* Left Section */}
         <div style={{ flex: 1, paddingRight: '40px', marginLeft: '50px' }}>
           <h1 style={{
             fontSize: '38px',
@@ -233,13 +252,13 @@ function Home() {
             marginBottom: '24px',
             lineHeight: '22px'
           }}>
-            At <span style={{ fontWeight: 'bold' }}>Day 365</span>, we make it easier than ever to book trusted local services,<br></br>
-            online. Whether you need a plumber, electrician, driver, or any other<br></br>
-            professional, we've got you covered with a network of experts ready to<br></br>
+            At <span style={{ fontWeight: 'bold' }}>Day 365</span>, we make it easier than ever to book trusted local services,<br />
+            online. Whether you need a plumber, electrician, driver, or any other<br />
+            professional, we've got you covered with a network of experts ready to<br />
             serve you.
           </p>
           <button style={{
-            backgroundColor: '#4A90E2',
+            backgroundColor: 'blue',
             color: 'white',
             padding: '10px',
             border: 'none',
@@ -251,7 +270,132 @@ function Home() {
             Explore now
           </button>
         </div>
-      </div>
+
+        {/* Right Section */}
+        <div style={{
+          position: 'relative',
+          flex: 1,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+          {/* Background Shape */}
+          <div style={{
+            position: 'relative',
+            width: '400px',
+            height: '160px',
+            backgroundColor: '#6666ff',
+            borderRadius: '100px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            overflow: 'hidden',
+            padding: '20px',
+          }}>
+            {/* Left Floating Image */}
+            <img src="https://www.shutterstock.com/image-photo/happy-young-guy-flag-us-260nw-2000077403.jpg" alt="Person 1" style={{
+              position: 'absolute',
+              top: '-0px',
+              left: '-0px',
+              width: '70px',
+              height: '60px',
+              borderRadius: '50%',
+              border: '4px solid white',
+            }} />
+
+            {/* Plumber Service Card */}
+            <div style={{
+              backgroundColor: 'white',
+              borderRadius: '15px',
+              padding: '15px',
+              textAlign: 'center',
+              boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+              marginRight: '40px',
+              zIndex: 1,
+              width:"200px",
+              marginTop:'70px'
+            }}>
+              <img src="https://www.shutterstock.com/image-vector/user-circle-isolated-icon-round-260nw-2459622791.jpg" alt="Plumber Icon" style={{
+                width: '30px',
+                height: '30px',
+                marginBottom: '8px',
+              }} />
+              <h3 style={{
+                fontSize: '16px',
+                fontWeight: 'bold',
+                margin: '0',
+              }}>Plumber</h3>
+              <p style={{
+                fontSize: '12px',
+                color: '#6666ff',
+                margin: '0',
+              }}>Book with Ease</p>
+            </div>
+
+            {/* Driver Service Card */}
+            <div style={{
+              position: 'absolute',
+              top: '30%',
+              right: '20px',
+              transform: 'translateY(-50%)',
+              backgroundColor: 'white',
+              borderRadius: '15px',
+              padding: '15px',
+              textAlign: 'center',
+              boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+              zIndex: 1,
+              width:"150px"
+            }}>
+              <img src="https://img.freepik.com/premium-vector/businessman-driver-icon-flat-character-with-steering-wheel_176411-4417.jpg" alt="Driver Icon" style={{
+                width: '30px',
+                height: '30px',
+                marginBottom: '8px',
+              }} />
+              <h3 style={{
+                fontSize: '16px',
+                fontWeight: 'bold',
+                margin: '0',
+              }}>Driver</h3>
+              <p style={{
+                fontSize: '12px',
+                color: 'blue',
+                margin: '0',
+              }}>Book at Cheep COST</p>
+            </div>
+
+            {/* Right Floating Image */}
+            <img src="https://via.placeholder.com/50" alt="Person 2" style={{
+              position: 'absolute',
+              bottom: '-20px',
+              right: '-20px',
+              width: '60px',
+              height: '60px',
+              borderRadius: '50%',
+              border: '4px solid white',
+            }} />
+
+            {/* Location Icon */}
+            <div style={{
+              position: 'absolute',
+              top: '20px',
+              right: '-10px',
+              backgroundColor: 'white',
+              borderRadius: '50%',
+              width: '30px',
+              height: '30px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#ff4081',
+              fontSize: '16px',
+              fontWeight: 'bold',
+              zIndex: 2,
+            }}>
+              📍
+            </div>
+          </div>
+          </div>
+          </div>
 
       <div style={{ padding: '20px' }}>
         <h2 style={{
@@ -275,125 +419,127 @@ function Home() {
           margin: '0 auto',
           height: '50px'
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
-            <Search size={20} style={{ marginRight: '10px' }} />
-            <input
-              type="text"
-              value={serviceSearchValue}
-              onChange={handleServiceSearch}
-              placeholder="Search for Services"
-              style={{
-                border: '1px solid #ccc',
-                padding: '10px',
-                borderRadius: '5px',
-                flex: 1,
-                marginRight: '10px'
-              }}
-            />
-          </div>
+<div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
+  <Search size={20} style={{ marginRight: '10px' }} />
+  <input
+    type="text"
+    value={serviceSearchValue}
+    onChange={handleServiceSearch}
+    placeholder="Search for Services"
+    style={{
+      border: 'none', // Removed border
+      padding: '10px',
+      borderRadius: '5px',
+      flex: 1,
+      marginRight: '10px',
+      backgroundColor: '#f0f0f0' // Optional light background to show input area
+    }}
+  />
+</div>
 
-          <select
-            value={stateValue}
-            onChange={handleStateChange}
-            disabled={!!pincodeValue}
-            style={{
-              padding: '10px',
-              border: '1px solid #ccc',
-              borderRadius: '5px',
-              width: '150px',
-              marginRight: '10px',
-              backgroundColor: pincodeValue ? '#f0f0f0' : 'white'
-            }}
-          >
-            <option value="">Select State</option>
-            {Array.from(new Set(allServices.map(service => service.state))).map((state, index) => (
-              <option key={index} value={state}>{state}</option>
-            ))}
-          </select>
+<select
+  value={stateValue}
+  onChange={handleStateChange}
+  disabled={!!pincodeValue}
+  style={{
+    padding: '10px',
+    border: 'none', // Removed border
+    borderRadius: '5px',
+    width: '150px',
+    marginRight: '10px',
+    backgroundColor: pincodeValue ? '#f0f0f0' : 'white'
+  }}
+>
+  <option value="">Select State</option>
+  {Array.from(new Set(allServices.map(service => service.state))).map((state, index) => (
+    <option key={index} value={state}>{state}</option>
+  ))}
+</select>
 
-          <div style={{ position: 'relative' }}>
-            <input
-              type="text"
-              value={cityValue}
-              onChange={handleCityChange}
-              placeholder="Enter City"
-              disabled={!!pincodeValue}
-              style={{
-                padding: '10px',
-                border: '1px solid #ccc',
-                borderRadius: '5px',
-                width: '150px',
-                marginRight: '10px',
-                backgroundColor: pincodeValue ? '#f0f0f0' : 'white'
-              }}
-            />
-            {showCitySuggestions && (
-              <div style={{
-                position: 'absolute',
-                top: '100%',
-                left: 0,
-                width: '150px',
-                maxHeight: '150px',
-                overflowY: 'auto',
-                backgroundColor: 'white',
-                border: '1px solid #ccc',
-                borderRadius: '5px',
-                zIndex: 1000
-              }}>
-                {citySuggestions.map((city, index) => (
-                  <div
-                    key={index}
-                    onClick={() => handleCitySelect(city)}
-                    style={{ padding: '10px', cursor: 'pointer' }}
-                  >
-                    {city}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+<div style={{ position: 'relative' }}>
+  <input
+    type="text"
+    value={cityValue}
+    onChange={handleCityChange}
+    placeholder="Enter City"
+    disabled={!!pincodeValue}
+    style={{
+      padding: '10px',
+      border: 'none', // Removed border
+      borderRadius: '5px',
+      width: '150px',
+      marginRight: '10px',
+      backgroundColor: pincodeValue ? '#f0f0f0' : 'white'
+    }}
+  />
+  {showCitySuggestions && (
+    <div style={{
+      position: 'absolute',
+      top: '100%',
+      left: 0,
+      width: '150px',
+      maxHeight: '150px',
+      overflowY: 'auto',
+      backgroundColor: 'white',
+      border: '1px solid #ccc',
+      borderRadius: '5px',
+      zIndex: 1000
+    }}>
+      {citySuggestions.map((city, index) => (
+        <div
+          key={index}
+          onClick={() => handleCitySelect(city)}
+          style={{ padding: '10px', cursor: 'pointer' }}
+        >
+          {city}
+        </div>
+      ))}
+    </div>
+  )}
+</div>
 
-          <div style={{ position: 'relative' }}>
-            <input
-              type="text"
-              value={pincodeValue}
-              onChange={(e) => filterPincodes(e.target.value)}
-              placeholder="Pincode"
-              disabled={!!stateValue || !!cityValue}
-              style={{
-                padding: '10px',
-                border: '1px solid #ccc',
-                borderRadius: '5px',
-                width: '100px',
-                marginRight: '10px',
-                backgroundColor: (stateValue || cityValue) ? '#f0f0f0' : 'white'
-              }}
-            />
-            {showPincodeSuggestions && (
-              <div style={{
-                position: 'absolute',
-                top: '100%',
-                left: 0,
-                width: '100%',
-                maxHeight: '150px',
-                overflowY: 'auto',
-                backgroundColor: 'white',
-                border: '1px solid #ccc',
-                borderRadius: '5px',
-                zIndex: 1000
-              }}>
-                {pincodeSuggestions.map((pincode, index) => (
-                  <div
-                    key={index}
-                    onClick={() => handlePincodeSelect(pincode)}
-                    style={{ padding: '10px', cursor: 'pointer' }}
-                  >
-                    {pincode}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+<div style={{ position: 'relative' }}>
+  <input
+    type="text"
+    value={pincodeValue}
+    onChange={(e) => filterPincodes(e.target.value)}
+    placeholder="Pincode"
+    disabled={!!stateValue || !!cityValue}
+    style={{
+      padding: '10px',
+      border: 'none', // Removed border
+      borderRadius: '5px',
+      width: '100px',
+      marginRight: '10px',
+      backgroundColor: (stateValue || cityValue) ? '#f0f0f0' : 'white'
+    }}
+  />
+  {showPincodeSuggestions && (
+    <div style={{
+      position: 'absolute',
+      top: '100%',
+      left: 0,
+      width: '100%',
+      maxHeight: '150px',
+      overflowY: 'auto',
+      backgroundColor: 'white',
+      border: '1px solid #ccc',
+      borderRadius: '5px',
+      zIndex: 1000
+    }}>
+      {pincodeSuggestions.map((pincode, index) => (
+        <div
+          key={index}
+          onClick={() => handlePincodeSelect(pincode)}
+          style={{ padding: '10px', cursor: 'pointer' }}
+        >
+          {pincode}
+        </div>
+      ))}
+    </div>
+  )}
+</div>
+
 
           <button
             onClick={handleSearch}
@@ -427,61 +573,84 @@ function Home() {
           alignItems: 'center',
           gap: '20px',
         }}>
-          <button
-            onClick={handlePrevService}
-            style={{
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              opacity: isSearchActive ? 0.5 : 1
-            }}
-            disabled={isSearchActive}
-          >
-            ←
-          </button>
+         <div style={{ display: 'flex', alignItems: 'center' }}>
+  <button
+    onClick={handlePrevService}
+    style={{
+      background: 'none',
+      border: 'none',
+      cursor: 'pointer',
+      opacity: isSearchActive ? 0.5 : 1,
+      fontSize: '24px',
+      color: '#bbb',
+      padding: '10px'
+    }}
+    disabled={isSearchActive}
+  >
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M15 19L8 12L15 5" stroke="#bbb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  </button>
 
-          {displayedServices.map((service, index) => (
-            <div key={index} style={{
-              padding: '15px',
-              borderRadius: '10px',
-              textAlign: 'center',
-              width: '160px',
-              margin: '8px',
-              backgroundColor: service.color || '#f9f9f9',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-            }}>
-              <img src={service.imageUrl} alt={service.service} style={{
-                width: '60px',
-                height: '60px',
-                borderRadius: '30px',
-                marginBottom: '10px'
-              }} />
-              <p style={{
-                fontSize: '16px',
-                fontWeight: 'bold',
-                color: '#333'
-              }}>{service.service}</p>
-              <p style={{
-                fontSize: '12px',
-                color: '#666'
-              }}>{service.availableServices}</p>
-            </div>
-          ))}
+  {displayedServices.map((service, index) => (
+    <div key={index} style={{
+      padding: '15px',
+      borderRadius: '10px',
+      textAlign: 'center',
+      width: '160px',
+      margin: '8px',
+      backgroundColor: service.color || '#f9f9f9',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+    }}>
+      <img src={service.imageUrl} alt={service.service} style={{
+        width: '60px',
+        height: '60px',
+        borderRadius: '30px',
+        marginBottom: '10px'
+      }} />
+      <p style={{
+        fontSize: '16px',
+        fontWeight: 'bold',
+        color: '#333'
+      }}>{service.service}</p>
+      <p style={{
+        fontSize: '12px',
+        color: '#666'
+      }}>{service.availableServices}</p>
+    </div>
+  ))}
 
-          <button
-            onClick={handleNextService}
-            style={{
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              opacity: isSearchActive ? 0.5 : 1
-            }}
-            disabled={isSearchActive}
-          >
-            →
-          </button>
-        </div>
-
+  <button
+    onClick={handleNextService}
+    style={{
+      background: 'none',
+      border: 'none',
+      cursor: 'pointer',
+      opacity: isSearchActive ? 0.5 : 1,
+      fontSize: '24px',
+      color: '#bbb',
+      padding: '10px'
+    }}
+    disabled={isSearchActive}
+  >
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M9 5L16 12L9 19" stroke="#bbb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  </button>
+</div>
+</div>
         <button
           onClick={handleSeeMore}
           style={{
@@ -548,17 +717,18 @@ function Home() {
                       margin: 0
                     }}>{`₹${service.salaryRange.minimum} - ₹${service.salaryRange.maximum}`}</p>
                   </div>
-                  {service.isHot && (
-                    <span style={{
-                      backgroundColor: '#FDEDEC',
-                      color: '#FF6666',
-                      padding: '2px 6px',
-                      fontSize: '12px',
-                      fontWeight: 'bold',
-                      borderRadius: '5px',
-                      marginLeft: '10px'
-                    }}>Hot</span>
-                  )}
+                  <span style={{
+            position: 'absolute',  // To place it relative to the card
+            top: '10px',
+            right: '10px',
+            backgroundColor: '#FDEDEC',
+            color: '#FF6666',
+            padding: '2px 6px',
+            fontSize: '12px',
+            borderRadius: '5px',
+          }}>
+            {service.badge}
+          </span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
                   <img src={service.location.districtIconUrl} alt="District Icon" style={{
@@ -968,6 +1138,7 @@ function Home() {
     </div>
     <Footer />
 
+    </div>
     </div>
 
   );

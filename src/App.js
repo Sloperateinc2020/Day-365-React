@@ -1,4 +1,5 @@
 import React from 'react';
+import AboutPage from './About/AboutPage';
 import './App.css';
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
@@ -6,6 +7,7 @@ import Home from './Components/Home';
 import Header from './Components/Header';
 import SignIn from './Components/SignIn';
 import SignupPage from './SignUp/SignupPage';
+import Availability from './Availability/Availability'; 
 import Booking from './Components/Booking/Booking';
 import Register from './Components/Register';
 import Listings from './Components/Listings';
@@ -17,15 +19,20 @@ function App() {
       <div className="min-h-screen bg-gray-50">
         <Header />
         <Routes>
+
+          {/* Default Route - to handle undefined paths */}
+          <Route path="*" element={<h1>404 - Page Not Found</h1>} />
+
           {/* Redirect the root path to /home */}
           <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={<Home />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignupPage />} />
+           <Route path="/about" element={<AboutPage />} />
           <Route path="/booking" element={<Booking />} />
           <Route path="/register" element={<Register />} />
           <Route path="/listings" element={<Listings/>} />
-
+           <Route path="/availability" element={<Availability />} />
         </Routes>
       </div>
     </Router>

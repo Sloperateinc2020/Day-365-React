@@ -16,6 +16,7 @@ function App() {
     <Router>
       <div className="min-h-screen bg-gray-50">
         <Header />
+        
         <Routes>
 
           {/* Default Route - to handle undefined paths */}

@@ -11,7 +11,8 @@ import Availability from './Availability/Availability';
 import Booking from './Components/Booking/Booking';
 import Register from './Components/Register';
 import Listings from './Components/Listings';
-
+import Profile from './Components/Profile/Profile'; // Import Profile component
+import AccountSettings from './Components/AccountSettings/AccountSettings'; // Import AccountSetting component
 
 function App() {
   return (
@@ -28,11 +29,13 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignupPage />} />
-           <Route path="/about" element={<AboutPage />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/booking" element={<Booking />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/listings" element={<Listings/>} />
-           <Route path="/availability" element={<Availability />} />
+          <Route path="/listings" element={<Listings />} />
+          <Route path="/availability" element={<Availability />} />
+          <Route path="/profile" element={<Profile />} /> {/* Add Profile route */}
+          <Route path="/accountsetting" element={<AccountSettings />} /> {/* Add AccountSetting route */}
         </Routes>
       </div>
     </Router>

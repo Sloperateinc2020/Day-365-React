@@ -797,13 +797,13 @@ function Home() {
       }}>
         {topServices.slice(0, 4).map((service, index) => (
           <div key={index} style={{
-            flex: '0 0 13%', 
+            flex: '0 0 14%', 
             borderRadius: '8px',
             padding: '20px',
             alignItems: 'center',
             border: '1px solid #f5f5f5',
             backgroundColor: '#f1f1f1',
-            textAlign: 'center'
+            textAlign: 'center',
           }}>
             <img
               src={service.iconUrl}
@@ -871,12 +871,12 @@ function Home() {
       margin: '0 10px',
       justifyContent: 'space-between',
       width: '900px', // Increased width
-      marginLeft: '190px',
+      marginLeft: '220px',
     }}>
       {/* Banner Content */}
       <div style={{
         flex: 1,
-        backgroundColor: '#6666ff'
+        backgroundColor: '#6666ff',
       }}>
         <h2 style={{
           color: '#FFFFFF',

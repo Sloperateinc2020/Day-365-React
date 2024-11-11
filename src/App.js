@@ -11,6 +11,8 @@ import Availability from './Availability/Availability';
 import Booking from './Components/Booking/Booking';
 import Register from './Components/Register';
 import Listings from './Components/Listings';
+import Payments from './Components/Payments';
+
 
 
 function App() {
@@ -33,6 +35,8 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/listings" element={<Listings/>} />
            <Route path="/availability" element={<Availability />} />
+           <Route path="/payments" element={<Payments/>} />
+
         </Routes>
       </div>
     </Router>

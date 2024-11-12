@@ -1,26 +1,24 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './AccountSettings.css';
+import './BankDetails.css';
 
-const AccountSettings = () => {
-  const [activeTab, setActiveTab] = useState('Account Settings');
-  const [linkText, setLinkText] = useState('https://app.ahiregro...'); // State for the link text
+const BankDetails = () => {
+  const [activeTab, setActiveTab] = useState('Bank Details');
+  const [linkText, setLinkText] = useState('https://app.ahiregro...'); // Link text state
   const navigate = useNavigate();
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
     if (tab === 'Documents') {
-      // Navigate to Profile's Documents section when clicking on "Documents"
-      navigate('/profile');
-    } else if (tab === 'Bank Details') {
-      // Navigate to BankDetails page when clicking on "Bank Details"
-      navigate('/bankdetails');
+      navigate('/profile'); // Navigate to Profile page when Documents is clicked
+    } else if (tab === 'Account Settings') {
+      navigate('/accountsettings'); // Navigate to AccountSettings page when Account Settings is clicked
     }
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText('https://app.ahiregro...');
-    setLinkText('Copied'); // Set text to "Copied"
+    navigator.clipboard.writeText(linkText); // Copy the link text to clipboard
+    setLinkText('Copied'); // Temporarily change link text to "Copied"
     
     // Revert back to the original link text after a delay
     setTimeout(() => {
@@ -77,54 +75,46 @@ const AccountSettings = () => {
           </button>
           <button 
             className={activeTab === 'Bank Details' ? 'active' : ''}
-            onClick={() => handleTabClick('Bank Details')}
+            onClick={() => setActiveTab('Bank Details')}
           >
             Bank Details
           </button>
         </div>
 
-        {activeTab === 'Account Settings' && (
-          <div className="account-settings-wrapper">
-            <form className="account-form">
+        {activeTab === 'Bank Details' && (
+          <div className="bank-details-wrapper">
+            <form className="bank-form">
               <div className="form-data left-column">
                 <label>First Name</label>
-                <input type="text" placeholder="Enter first name" />
+                <input type="text" placeholder="" />
               </div>
               <div className="form-data right-column">
                 <label>Last Name</label>
-                <input type="text" placeholder="Enter last name" />
+                <input type="text" placeholder="" />
               </div>
               <div className="form-data left-column">
-                <label>Phone Number</label>
-                <input type="text" placeholder="Enter phone number" />
+                <label>Account Number</label>
+                <input type="text" placeholder="+91 " />
               </div>
               <div className="form-data right-column">
-                <label>Email address</label>
-                <input type="email" placeholder="Enter email address" />
+                <label>Confirm Account Number</label>
+                <input type="text" placeholder="nathaniel.poole@microsoft.com" />
               </div>
               <div className="form-data left-column">
-                <label>City</label>
-                <input type="text" placeholder="Enter city" />
+                <label>IFSC</label>
+                <input type="text" placeholder="" />
               </div>
               <div className="form-data right-column">
-                <label>State</label>
-                <input type="text" placeholder="Enter state" />
+                <label>Branch</label>
+                <input type="text" placeholder="Hyderabad" />
               </div>
               <div className="form-data left-column">
-                <label>Postcode</label>
-                <input type="text" placeholder="Enter postcode" />
+                <label>Mobile</label>
+                <input type="text" placeholder="" />
               </div>
               <div className="form-data right-column">
-                <label>Country</label>
-                <input type="text" placeholder="Enter country" />
-              </div>
-              <div className="form-data full-width">
-                <label>Available Locations</label>
-                <select>
-                  <option>Select location</option>
-                  <option>Guntur, Chilakaluripet</option>
-                  <option>Guntur, Patnam</option>
-                </select>
+                <label>Email</label>
+                <input type="email" placeholder="" />
               </div>
             </form>
 
@@ -138,4 +128,4 @@ const AccountSettings = () => {
   );
 };
 
-export default AccountSettings;
+export default BankDetails;

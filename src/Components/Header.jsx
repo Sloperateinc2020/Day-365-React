@@ -81,17 +81,21 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#f5f5f5',
-    width: '100%',
+    position: 'fixed', // Make the header fixed
+    top: 0, // Position it at the top of the screen
+    width: '100%', // Ensure it spans the full width of the viewport
+    zIndex: 1000, // Ensures the header appears above other content
   },
   container: {
     display: 'flex',
     alignItems: 'center',
     backgroundColor: 'white',
     padding: 10,
-    width: '120%',
+    width: '100%', // Adjust width to fit within outer container
     maxWidth: 1500,
-    height: 40,
+    height: 50,
     borderRadius: 8,
+    boxSizing: 'border-box', // Include padding in height/width
   },
   logoText: {
     fontWeight: 'bold',
@@ -113,7 +117,7 @@ const styles = {
     color: 'black',
   },
   selectedText: {
-    color: 'blue', // Corrected style name for selected text color
+    color: 'blue', // Style for selected text color
   },
   vendorButton: {
     backgroundColor: '#8a6ded',
@@ -125,6 +129,6 @@ const styles = {
     fontWeight: 'bold',
     fontSize: 12,
     boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.3)',
-    marginLeft: '450px',
+    marginLeft: 'auto', // Ensure the vendor button stays to the right
   },
 };

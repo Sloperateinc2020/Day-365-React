@@ -34,7 +34,6 @@ const Booking = () => {
     <>
 
       <div className="bookings-container">
-        <h1 className="header">Booking Management</h1>
         <div className="filters">
           <input
             type="date"
@@ -74,7 +73,7 @@ const Booking = () => {
                   <td>{booking.mobile}</td>
                   <td>{booking.amountPaid}</td>
                   <td>
-                    <span className={`status ${booking.status}`}>
+                    <span className={`state ${booking.status}`}>
                       {booking.status}
                     </span>
                   </td>

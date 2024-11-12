@@ -11,10 +11,11 @@ import Availability from './Availability/Availability';
 import Booking from './Components/Booking/Booking';
 import Register from './Components/Register';
 import Listings from './Components/Listings';
-
 import Profile from './Components/Profile/Profile'; // Import Profile component
 import AccountSettings from './Components/AccountSettings/AccountSettings'; // Import AccountSetting component
 import Payments from './Components/Payments';
+import BankDetails from './Components/BankDetails/BankDetails'; // Import BankDetails component
+
 
 
 
@@ -40,10 +41,12 @@ function App() {
           <Route path="/listings" element={<Listings />} />
           <Route path="/availability" element={<Availability />} />
           <Route path="/profile" element={<Profile />} /> {/* Add Profile route */}
-          <Route path="/accountsetting" element={<AccountSettings />} /> {/* Add AccountSetting route */}
+          <Route path="/accountsettings" element={<AccountSettings />} /> {/* Add AccountSetting route */}
           <Route path="/listings" element={<Listings/>} />
            <Route path="/availability" element={<Availability />} />
            <Route path="/payments" element={<Payments/>} />
+           <Route path="/bankdetails" element={<BankDetails />} /> {/* Add BankDetails route */}
+
 
         </Routes>
       </div>

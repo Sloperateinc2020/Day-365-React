@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Register.css';
 import Footer from './Footer';
-import { BsDownload } from 'react-icons/bs';
+import { BsDownload, BsChevronDown } from 'react-icons/bs';
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -20,11 +20,12 @@ function Register() {
     newSkill: '',
     idProof: null
   });
-  
-  const [fileName, setFileName] = useState(''); 
-  const [skillsList, setSkillsList] = useState([ 
+
+  const [fileName, setFileName] = useState('');  // State to track the file name
+  const [skillsList, setSkillsList] = useState([
     'Plumbing', 'Electrical', 'Carpentry'
   ]);
+  const [isAddingNewSkill, setIsAddingNewSkill] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -40,34 +41,42 @@ function Register() {
       ...prev,
       idProof: file
     }));
-    setFileName(file ? file.name : ''); 
+    setFileName(file ? file.name : '');  // Set the file name when a file is selected
   };
 
   const handleSkillsChange = (e) => {
     const value = e.target.value;
-    setFormData(prev => ({
-      ...prev,
-      skills: value,
-      newSkill: '', 
-    }));
+    if (value === 'addSkills') {
+      setIsAddingNewSkill(true);
+      setFormData(prev => ({
+        ...prev,
+        skills: ''
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        skills: value
+      }));
+      setIsAddingNewSkill(false);
+    }
   };
 
   const handleNewSkillChange = (e) => {
-    const newSkill = e.target.value;
     setFormData(prev => ({
       ...prev,
-      newSkill
+      newSkill: e.target.value
     }));
   };
 
   const handleAddNewSkill = () => {
     if (formData.newSkill && !skillsList.includes(formData.newSkill)) {
-      setSkillsList(prevSkills => [...prevSkills, formData.newSkill]); 
+      setSkillsList(prevSkills => [...prevSkills, formData.newSkill]);
       setFormData(prev => ({
         ...prev,
-        skills: formData.newSkill, 
-        newSkill: '' 
+        skills: formData.newSkill,
+        newSkill: ''
       }));
+      setIsAddingNewSkill(false);
     }
   };
 
@@ -147,18 +156,15 @@ function Register() {
           <div className="form-row">
             <div className="form-group">
               <label className="form-label">Gender*</label>
-              <select
+              <input
+                type="text"
                 name="gender"
+                placeholder="Enter your Gender"
                 className="form-input"
                 value={formData.gender}
                 onChange={handleInputChange}
                 required
-              >
-                <option value="">Select Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-              </select>
+              />
             </div>
 
             <div className="form-group">
@@ -218,17 +224,15 @@ function Register() {
 
             <div className="form-group">
               <label className="form-label">State*</label>
-              <select
+              <input
+                type="text"
                 name="state"
+                placeholder="Select State"
                 className="form-input"
                 value={formData.state}
                 onChange={handleInputChange}
                 required
-              >
-                <option value="">Select State</option>
-                <option value="CA">California</option>
-                <option value="NY">New York</option>
-              </select>
+              />
             </div>
           </div>
 
@@ -248,63 +252,65 @@ function Register() {
 
             <div className="form-group">
               <label className="form-label">Skills*</label>
-              <select
-                name="skills"
-                className="form-input"
-                value={formData.skills}
-                onChange={handleSkillsChange}
-                required
-              >
-                <option value="">Select your Skills</option>
-                {skillsList.map((skill, index) => (
-                  <option key={index} value={skill}>{skill}</option>
-                ))}
-                <option value="addSkills">Add New Skill</option> 
-              </select>
-
-              {formData.skills === 'addSkills' && (
-                <div className="form-group">
-                  <input
-                    type="text"
-                    name="newSkill"
-                    placeholder="Enter a new skill"
-                    className="form-input"
-                    value={formData.newSkill}
-                    onChange={handleNewSkillChange}
-                  />
-                  <button
-                    type="button"
-                    onClick={handleAddNewSkill}
-                    className="add-skill-button"
-                  >
-                    Add Skill
-                  </button>
-                </div>
-              )}
+              <div className="select-wrapper">
+                <select
+                  name="skills"
+                  className="form-input select-input"
+                  value={formData.skills}
+                  onChange={handleSkillsChange}
+                  required
+                >
+                  <option value="">Select your Skills</option>
+                  {skillsList.map((skill, index) => (
+                    <option key={index} value={skill}>{skill}</option>
+                  ))}
+                  <option value="addSkills">+ Add New Skill</option>
+                </select>
+                <BsChevronDown className="select-arrow" />
+              </div>
             </div>
           </div>
 
-          <div className="form-group">
-            <label className="upload-label">Upload ID Proof*</label>
-            <div className="file-upload-container">
-              <div className="file-upload-wrapper">
+          {isAddingNewSkill && (
+            <div className="form-group">
+              <label className="form-label">Enter New Skill</label>
+              <div className="add-skill-container">
+                <input
+                  type="text"
+                  name="newSkill"
+                  placeholder="Enter new skill"
+                  className="form-input"
+                  value={formData.newSkill}
+                  onChange={handleNewSkillChange}
+                />
                 <button
                   type="button"
-                  onClick={() => document.getElementById('file-upload').click()}
-                  className="file-upload-button"
+                  className="add-skill-button"
+                  onClick={handleAddNewSkill}
                 >
-                  Choose Files
-                  <BsDownload className="download-icon" size={18} />
+                  Add Skill
                 </button>
-                <span className="file-name">{fileName}</span>
               </div>
-              <input
-                id="file-upload"
-                type="file"
-                className="hidden-input"
-                onChange={handleFileChange}
-                required
-              />
+            </div>
+          )}
+
+          <div className="form-group">
+            <label className="form-label">Upload ID Proof*</label>
+            <div className="file-upload-container">
+              <div className="file-upload-wrapper">
+                <div className="choose-files-btn">
+                  Choose Files
+                  <input
+                    id="file-upload"
+                    type="file"
+                    className="file-input"
+                    onChange={handleFileChange}
+                    required
+                  />
+                </div>
+                {fileName && <span className="file-name-display">{fileName}</span>} {/* Display file name here */}
+                <BsDownload className="download-icon" size={18} />
+              </div>
             </div>
           </div>
 
@@ -321,7 +327,7 @@ function Register() {
         </form>
       </div>
 
-      <Footer /> 
+      <Footer />
     </>
   );
 }

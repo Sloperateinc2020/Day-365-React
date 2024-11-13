@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import './Profile.css';
 
 const Profile = () => {
@@ -10,11 +11,32 @@ const Profile = () => {
   ]);
 
   const [activeTab, setActiveTab] = useState('Documents');
+  const [linkText, setLinkText] = useState('https://app.ahiregro...'); // State for the link text
+  const navigate = useNavigate(); 
 
   const handleCheckbox = (id) => {
     setDocuments(documents.map(doc => 
       doc.id === id ? { ...doc, checked: !doc.checked } : doc
     ));
+  };
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+    if (tab === 'Account Settings') {
+      navigate('/accountsettings'); // Navigate to AccountSettings page
+    } else if (tab === 'Bank Details') {
+      navigate('/bankdetails'); // Navigate to BankDetails page
+    }
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText('https://app.ahiregro...');
+    setLinkText('Copied'); // Set text to "Copied"
+    
+    // Revert back to the original link text after a delay
+    setTimeout(() => {
+      setLinkText('https://app.ahiregro...');
+    }, 2000); // 2-second delay
   };
 
   return (
@@ -44,8 +66,8 @@ const Profile = () => {
         <div className="profile-actions">
           <button className="view-profile-btn">View Public Profile</button>
           <div className="profile-link">
-            <span>https://app.ahiregro...</span>
-            <button className="copy-btn">📋</button>
+            <span>{linkText}</span>
+            <button className="copy-btn" onClick={handleCopy}>📋</button>
           </div>
         </div>
       </div>
@@ -54,7 +76,7 @@ const Profile = () => {
         <div className="tabs">
           <button 
             className={activeTab === 'Account Settings' ? 'active' : ''}
-            onClick={() => setActiveTab('Account Settings')}
+            onClick={() => handleTabClick('Account Settings')}
           >
             Account Settings
           </button>
@@ -66,49 +88,51 @@ const Profile = () => {
           </button>
           <button 
             className={activeTab === 'Bank Details' ? 'active' : ''}
-            onClick={() => setActiveTab('Bank Details')}
+            onClick={() => handleTabClick('Bank Details')}
           >
             Bank Details
           </button>
         </div>
 
-        <div className="documents-section">
-          <h2>Uploaded Documents</h2>
-          <table className="documents-table">
-            <thead>
-              <tr>
-                <th>Check</th>
-                <th>Document Name</th>
-                <th>Comment</th>
-                <th>Size</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {documents.map(doc => (
-                <tr key={doc.id}>
-                  <td>
-                    <input
-                      type="checkbox"
-                      checked={doc.checked}
-                      onChange={() => handleCheckbox(doc.id)}
-                    />
-                  </td>
-                  <td>{doc.name}</td>
-                  <td>{doc.content}</td>
-                  <td>{doc.size}</td>
-                  <td>
-                    <button className="edit-btn">✏️</button>
-                  </td>
+        {activeTab === 'Documents' && (
+          <div className="documents-section">
+            <h2>Uploaded Documents</h2>
+            <table className="documents-table">
+              <thead>
+                <tr>
+                  <th>Check</th>
+                  <th>Document Name</th>
+                  <th>Comment</th>
+                  <th>Size</th>
+                  <th>Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-          <div className="document-actions">
-            <button className="upload-btn">Upload</button>
-            <button className="delete-btn">Delete</button>
+              </thead>
+              <tbody>
+                {documents.map(doc => (
+                  <tr key={doc.id}>
+                    <td>
+                      <input
+                        type="checkbox"
+                        checked={doc.checked}
+                        onChange={() => handleCheckbox(doc.id)}
+                      />
+                    </td>
+                    <td>{doc.name}</td>
+                    <td>{doc.content}</td>
+                    <td>{doc.size}</td>
+                    <td>
+                      <button className="edit-btn">✏️</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div className="document-actions">
+              <button className="upload-btn">Upload</button>
+              <button className="delete-btn">Delete</button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

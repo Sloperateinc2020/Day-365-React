@@ -23,20 +23,19 @@ const Profile = () => {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
     if (tab === 'Account Settings') {
-      navigate('/accountsettings'); // Navigate to AccountSettings page
+      navigate('/accountsettings'); 
     } else if (tab === 'Bank Details') {
-      navigate('/bankdetails'); // Navigate to BankDetails page
+      navigate('/bankdetails'); 
     }
   };
 
   const handleCopy = () => {
     navigator.clipboard.writeText('https://app.ahiregro...');
-    setLinkText('Copied'); // Set text to "Copied"
+    setLinkText('Copied'); 
     
-    // Revert back to the original link text after a delay
     setTimeout(() => {
       setLinkText('https://app.ahiregro...');
-    }, 2000); // 2-second delay
+    }, 2000);
   };
 
   return (
@@ -113,7 +112,7 @@ const Profile = () => {
                     <td>
                       <input
                         type="checkbox"
-                        checked={doc.checked}
+                        // checked={doc.checked}
                         onChange={() => handleCheckbox(doc.id)}
                       />
                     </td>

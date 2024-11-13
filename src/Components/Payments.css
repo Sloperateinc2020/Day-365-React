@@ -23,8 +23,9 @@
 
 .card {
   padding: 24px;
-  border-radius: 9px;
-  width: 280px;
+  border-radius: 8px; /* Rounded corners, can be 0 for sharp corners */
+  width: 100%;
+  max-width: 280px;
 }
 
 .card.mint {

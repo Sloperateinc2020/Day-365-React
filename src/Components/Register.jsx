@@ -21,11 +21,16 @@ function Register() {
     idProof: null
   });
 
-  const [fileName, setFileName] = useState('');  // State to track the file name
+  const [fileName, setFileName] = useState('');
   const [skillsList, setSkillsList] = useState([
     'Plumbing', 'Electrical', 'Carpentry'
   ]);
   const [isAddingNewSkill, setIsAddingNewSkill] = useState(false);
+
+  // List of states (for dropdown)
+  const statesList = [
+    'California', 'New York', 'Texas', 'Florida', 'Illinois', 'Ohio', 'Georgia', 'North Carolina'
+  ];
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -41,7 +46,7 @@ function Register() {
       ...prev,
       idProof: file
     }));
-    setFileName(file ? file.name : '');  // Set the file name when a file is selected
+    setFileName(file ? file.name : '');
   };
 
   const handleSkillsChange = (e) => {
@@ -156,15 +161,21 @@ function Register() {
           <div className="form-row">
             <div className="form-group">
               <label className="form-label">Gender*</label>
-              <input
-                type="text"
-                name="gender"
-                placeholder="Enter your Gender"
-                className="form-input"
-                value={formData.gender}
-                onChange={handleInputChange}
-                required
-              />
+              <div className="select-wrapper">
+                <select
+                  name="gender"
+                  className="form-input select-input"
+                  value={formData.gender}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select your Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+                <BsChevronDown className="select-arrow" />
+              </div>
             </div>
 
             <div className="form-group">
@@ -224,15 +235,21 @@ function Register() {
 
             <div className="form-group">
               <label className="form-label">State*</label>
-              <input
-                type="text"
-                name="state"
-                placeholder="Select State"
-                className="form-input"
-                value={formData.state}
-                onChange={handleInputChange}
-                required
-              />
+              <div className="select-wrapper">
+                <select
+                  name="state"
+                  className="form-input select-input"
+                  value={formData.state}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select your State</option>
+                  {statesList.map((state, index) => (
+                    <option key={index} value={state}>{state}</option>
+                  ))}
+                </select>
+                <BsChevronDown className="select-arrow" />
+              </div>
             </div>
           </div>
 
@@ -308,7 +325,7 @@ function Register() {
                     required
                   />
                 </div>
-                {fileName && <span className="file-name-display">{fileName}</span>} {/* Display file name here */}
+                {fileName && <span className="file-name-display">{fileName}</span>}
                 <BsDownload className="download-icon" size={18} />
               </div>
             </div>

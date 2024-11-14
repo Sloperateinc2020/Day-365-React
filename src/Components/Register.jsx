@@ -332,11 +332,13 @@ function Register() {
           </div>
 
           <div className="registration-fee">
-            <input type="checkbox" id="registration-fee" required />
-            <label htmlFor="registration-fee" className="fee-label">
-              <strong>Registration fee</strong><br /> will be charged in the registration fee of 99 INR
-            </label>
-          </div>
+  <input type="checkbox" id="registration-fee" required />
+  <label htmlFor="registration-fee" className="fee-label">
+    <strong>Registration fee</strong><br />
+    will be charged in the registration fee of <span className="orange-text">99</span> INR
+  </label>
+</div>
+
 
           <button type="submit" className="submit-button">
             Proceed to Payment

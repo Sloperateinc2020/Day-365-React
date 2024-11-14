@@ -1,38 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import './Payments.css';
-import Footer from './Footer';  // Ensure the correct path for the Footer component
+import Footer from './Footer';  
 
-import config from '../config';  // Import the configuration file
+import config from '../config';  
 
 const Payments = () => {
-  const [transactions, setTransactions] = useState([]); // Initialize state for transactions
-  const [loading, setLoading] = useState(true); // State to manage loading
+  const [transactions, setTransactions] = useState([]); 
+  const [loading, setLoading] = useState(true); 
 
-  // Fetch the payments data from the API
   useEffect(() => {
     const fetchPayments = async () => {
       try {
-        const response = await fetch(config.PAYMENTS_API_URL);  // Fetch data from the API
+        const response = await fetch(config.PAYMENTS_API_URL);  
         const data = await response.json();
         
-        // Check if 'data.payments' exists and is an array
         if (Array.isArray(data.payments)) {
-          setTransactions(data.payments);  // Set the fetched data to state
+          setTransactions(data.payments);  
         } else {
           console.error('Payments data is not an array:', data.payments);
         }
       } catch (error) {
-        console.error('Error fetching payments:', error); // Handle errors
+        console.error('Error fetching payments:', error); 
       } finally {
-        setLoading(false); // Stop loading after fetching
+        setLoading(false); 
       }
     };
 
-    fetchPayments(); // Call the fetch function on component mount
+    fetchPayments();
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>; // Display loading message
+    return <div>Loading...</div>; 
   }
 
   return (
@@ -43,7 +41,7 @@ const Payments = () => {
         <div className="cards">
           <div className="card mint">
             <div className="card-text">Total Transaction Amount</div>
-            <div className="amount">$3,000</div> {/* Replace with dynamic data if needed */}
+            <div className="amount">$3,000</div> 
           </div>
           
           <div className="card orange">
@@ -51,12 +49,12 @@ const Payments = () => {
               Remaining Balance Amount to<br></br>
               <span className="get-tag">Get</span>
             </div>
-            <div className="amount">$1,200</div> {/* Replace with dynamic data if needed */}
+            <div className="amount">$1,200</div> 
           </div>
           
           <div className="card green">
             <div className="card-text">Total Paid Amount</div>
-            <div className="amount">$1,800</div> {/* Replace with dynamic data if needed */}
+            <div className="amount">$1,800</div> 
           </div>
         </div>
 
@@ -107,7 +105,6 @@ const Payments = () => {
         </div>
       </div>
 
-      {/* Footer outside of the main container */}
       <Footer />
     </>
   );

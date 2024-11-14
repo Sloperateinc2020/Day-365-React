@@ -18,17 +18,17 @@ function SignIn() {
 
       <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px', position: 'relative' }}>
 
-        <div style={{ position: 'absolute', top: '20px', left: '10px', display: 'flex', alignItems: 'center' }}>
+        <div style={{ position: 'absolute', top: '50px', left: '10px', display: 'flex', alignItems: 'center' }}>
           <IoLogoOctocat size={30} style={{ color: '#6A5ACD', marginRight: '8px' }} />
           <span style={{ fontSize: '20px', fontWeight: 'bold', color: '#333' }}>Day 365</span>
         </div>
 
-        <a href="#" style={{ position: 'absolute', top: '20px', right: '10px', color: 'black', fontSize: '14px', textDecoration: 'none' }}>
+        <a href="#" style={{ position: 'absolute', top: '50px', right: '10px', color: 'black', fontSize: '14px', textDecoration: 'none' }}>
           Don’t have an account? <span style={{ color: '#6A5ACD' }}>Register Now</span>
         </a>
 
 
-        <div style={{ maxWidth: '400px', width: '100%', backgroundColor: '#fff', padding: '40px', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)', margin: '20px 0', position: 'relative' }}>
+        <div style={{marginTop:'140px', maxWidth: '500px', width: '100%', backgroundColor: '#fff', padding: '40px', borderRadius: '8px', margin: '20px 0', position: 'relative' }}>
           <h1 style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center', color: '#333', marginBottom: '5px' }}>Welcome back</h1>
           <p style={{ textAlign: 'center', color: '#666', marginBottom: '5px', fontSize: '8px' }}>Enter your details to get sign in to your account.</p>
 

@@ -40,7 +40,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/listings" element={<Listings />} />
           <Route path="/availability" element={<Availability />} />
-          <Route path="/profile" element={<Profile />} /> {/* Add Profile route */}
+          <Route path="/documents" element={<Profile />} /> {/* Add Profile route */}
           <Route path="/accountsettings" element={<AccountSettings />} /> {/* Add AccountSetting route */}
           <Route path="/listings" element={<Listings/>} />
            <Route path="/availability" element={<Availability />} />

@@ -5,7 +5,7 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
   const navigate = useNavigate();
 
   const handleMenuClick = (menu) => {
-    setSelectedMenu(menu); // Update selected menu to trigger color change
+    setSelectedMenu(menu); 
     if (menu === 'Contact') {
       navigate('/booking');
     } else if (menu === 'Home') {
@@ -93,7 +93,7 @@ const styles = {
     padding: 10,
     width: '100%', // Adjust width to fit within outer container
     maxWidth: 1500,
-    height: 50,
+    height: 60,
     borderRadius: 8,
     boxSizing: 'border-box', // Include padding in height/width
   },

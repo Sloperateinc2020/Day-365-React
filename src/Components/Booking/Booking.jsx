@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Booking.css';
-import config from '../../config'; // Adjust the import path as necessary
+import config from '../../config'; 
 import Footer from '../Footer';
 
 const Booking = () => {
@@ -16,7 +16,7 @@ const Booking = () => {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        setBookings(data); // Set the bookings data from the API
+        setBookings(data); 
       } catch (error) {
         console.error('Error fetching bookings:', error);
       }
@@ -29,7 +29,13 @@ const Booking = () => {
     booking.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     booking.mobile.includes(searchTerm)
   );
+  useEffect(() => {
+    document.body.classList.add('scroll-locked');
 
+    return () => {
+      document.body.classList.remove('scroll-locked');
+    };
+  }, []);
   return (
     <>
 
@@ -93,7 +99,7 @@ const Booking = () => {
         </div>
       </div>
 
-      <Footer /> {/* Footer also outside the main container */}
+      <Footer /> 
     </>
   );
 };

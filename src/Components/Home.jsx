@@ -219,7 +219,7 @@ function Home() {
   };
 
   return (
-    <div style={{ overflowX: 'hidden', position: 'fixed', width: '100%', height: '90%' }}>
+    <div style={{ overflowX: 'hidden', position: 'fixed', width: '100%', height: '90%',marginTop:"40px" }}>
 
     <div style={{ overflowX: 'hidden' }}>
       <div style={{
@@ -227,7 +227,7 @@ function Home() {
         padding: '60px 20px',
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
       }}>
         {/* Left Section */}
         <div style={{ flex: 1, paddingRight: '40px', marginLeft: '50px' }}>

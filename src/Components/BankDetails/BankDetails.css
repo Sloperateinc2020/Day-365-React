@@ -5,7 +5,15 @@
     background: #F5F5F5;
     min-height: 100vh;
     position: relative;
-    margin-top: 10px;
+    margin-top: 70px;
+    overflow-y: auto; 
+    overflow-x: hidden; 
+    overscroll-behavior: contain; 
+}
+
+/* Scroll Lock for Container */
+.bank-details-container.scroll-locked {
+    overflow: hidden; 
 }
   
 .bank-details-container::before {

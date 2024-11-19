@@ -15,6 +15,7 @@ import Profile from './Components/Profile/Profile'; // Import Profile component
 import AccountSettings from './Components/AccountSettings/AccountSettings'; // Import AccountSetting component
 import Payments from './Components/Payments';
 import BankDetails from './Components/BankDetails/BankDetails'; // Import BankDetails component
+import EditVendorProfile from './Components/EditVendorProfile/EditVendorProfile';
 
 
 
@@ -46,6 +47,7 @@ function App() {
            <Route path="/availability" element={<Availability />} />
            <Route path="/payments" element={<Payments/>} />
            <Route path="/bankdetails" element={<BankDetails />} /> {/* Add BankDetails route */}
+           <Route path="/editvendorprofile" element={<EditVendorProfile />} /> {/* Add BankDetails route */}
 
 
         </Routes>

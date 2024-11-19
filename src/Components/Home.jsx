@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
 import config from '../config';
 import Footer from './Footer';
+import { useNavigate } from 'react-router-dom';
+
 
 
 function Home() {
@@ -20,6 +22,7 @@ function Home() {
   const [showPincodeSuggestions, setShowPincodeSuggestions] = useState(false);
   const [citySuggestions, setCitySuggestions] = useState([]);
   const [showCitySuggestions, setShowCitySuggestions] = useState(false);
+  
 
   useEffect(() => {
     fetchServices();
@@ -32,7 +35,7 @@ function Home() {
       const response = await fetch(config.SERVICE_API_URL);
       const data = await response.json();
       setAllServices(data.services);
-      setFilteredServices(data.services); // Set initial filtered services
+      setFilteredServices(data.services); 
       setDisplayedServices(data.services.slice(0, 4));
       setIsSearchActive(false);
     } catch (error) {
@@ -65,7 +68,6 @@ function Home() {
     setServiceSearchValue(searchValue);
   
     if (!searchValue) {
-      // Reset state, city, and pincode when search value is cleared
       setStateValue('');
       setCityValue('');
       setPincodeValue('');
@@ -73,7 +75,6 @@ function Home() {
       setFilteredServices(allServices);
       setIsSearchActive(false);
     } else {
-      // Filter services based on the search value
       const filteredResults = allServices.filter(service =>
         typeof service.service === 'string' &&
         service.service.toLowerCase().includes(searchValue.toLowerCase())
@@ -217,6 +218,11 @@ function Home() {
     const service = allServices.find(service => service.city === city);
     setStateValue(service ? service.state : '');
   };
+  const navigate = useNavigate();
+
+  const handleSeeMoreTopServices = () => {
+    navigate('/top-services');
+  };
 
   return (
     <div style={{ overflowX: 'hidden', position: 'fixed', width: '100%', height: '90%',marginTop:"40px" }}>
@@ -229,7 +235,6 @@ function Home() {
         justifyContent: 'space-between',
         alignItems: 'center',
       }}>
-        {/* Left Section */}
         <div style={{ flex: 1, paddingRight: '40px', marginLeft: '50px' }}>
           <h1 style={{
             fontSize: '38px',
@@ -271,7 +276,6 @@ function Home() {
           </button>
         </div>
 
-        {/* Right Section */}
         <div style={{
           position: 'relative',
           flex: 1,
@@ -279,7 +283,6 @@ function Home() {
           justifyContent: 'center',
           alignItems: 'center'
         }}>
-          {/* Background Shape */}
           <div style={{
             position: 'relative',
             width: '400px',
@@ -292,7 +295,6 @@ function Home() {
             overflow: 'hidden',
             padding: '20px',
           }}>
-            {/* Left Floating Image */}
             <img src="https://www.shutterstock.com/image-photo/happy-young-guy-flag-us-260nw-2000077403.jpg" alt="Person 1" style={{
               position: 'absolute',
               top: '-0px',
@@ -303,7 +305,6 @@ function Home() {
               border: '4px solid white',
             }} />
 
-            {/* Plumber Service Card */}
             <div style={{
               backgroundColor: 'white',
               borderRadius: '15px',
@@ -332,7 +333,6 @@ function Home() {
               }}>Book with Ease</p>
             </div>
 
-            {/* Driver Service Card */}
             <div style={{
               position: 'absolute',
               top: '30%',
@@ -363,7 +363,6 @@ function Home() {
               }}>Book at Cheep COST</p>
             </div>
 
-            {/* Right Floating Image */}
             <img src="https://via.placeholder.com/50" alt="Person 2" style={{
               position: 'absolute',
               bottom: '-20px',
@@ -427,12 +426,12 @@ function Home() {
     onChange={handleServiceSearch}
     placeholder="Search for Services"
     style={{
-      border: 'none', // Removed border
+      border: 'none', 
       padding: '10px',
       borderRadius: '5px',
       flex: 1,
       marginRight: '10px',
-      backgroundColor: '#f0f0f0' // Optional light background to show input area
+      backgroundColor: '#f0f0f0' 
     }}
   />
 </div>
@@ -443,7 +442,7 @@ function Home() {
   disabled={!!pincodeValue}
   style={{
     padding: '10px',
-    border: 'none', // Removed border
+    border: 'none', 
     borderRadius: '5px',
     width: '150px',
     marginRight: '10px',
@@ -465,7 +464,7 @@ function Home() {
     disabled={!!pincodeValue}
     style={{
       padding: '10px',
-      border: 'none', // Removed border
+      border: 'none', 
       borderRadius: '5px',
       width: '150px',
       marginRight: '10px',
@@ -848,7 +847,9 @@ function Home() {
         ))}
       </div>
 
-      <button style={{
+      <button
+          onClick={handleSeeMoreTopServices}
+          style={{
             backgroundColor: '#6666ff',
             color: 'white',
             padding: '10px 20px',
@@ -856,9 +857,11 @@ function Home() {
             borderRadius: '5px',
             marginTop: '20px',
             cursor: 'pointer'
-          }}>
-            See More
-          </button>
+          }}
+        >
+          See More
+        </button>
+
     </div>
     <div style={{
       display: 'flex',

@@ -4,14 +4,17 @@ import { useNavigate } from 'react-router-dom';
 export default function Header({ selectedMenu, setSelectedMenu }) {
   const navigate = useNavigate();
 
+  // Function to handle navigation and update selected menu
   const handleMenuClick = (menu) => {
-    setSelectedMenu(menu); 
+    setSelectedMenu(menu);  // Set the selected menu in the parent component
     if (menu === 'Contact') {
-      navigate('/booking');
+      navigate('/booking');  // Navigate to the Booking page
     } else if (menu === 'Home') {
-      navigate('/home');
+      navigate('/home');  // Navigate to Home page
     } else if (menu === 'All Services') {
-      navigate('/all-services');
+      navigate('/allservices');  // Navigate to All Services page
+    } else if (menu === 'About') {
+      navigate('/about');  // Navigate to About page
     }
   };
 
@@ -19,7 +22,7 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
     <div style={styles.outerContainer}>
       <div style={styles.container}>
         <h1 style={styles.logoText}>LOGO</h1>
-        
+
         <div style={styles.menuContainer}>
           <button
             onClick={() => handleMenuClick('Home')}
@@ -81,21 +84,21 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#f5f5f5',
-    position: 'fixed', // Make the header fixed
-    top: 0, // Position it at the top of the screen
-    width: '100%', // Ensure it spans the full width of the viewport
-    zIndex: 1000, // Ensures the header appears above other content
+    position: 'fixed',
+    top: 0,
+    width: '100%',
+    zIndex: 1000,
   },
   container: {
     display: 'flex',
     alignItems: 'center',
     backgroundColor: 'white',
     padding: 10,
-    width: '100%', // Adjust width to fit within outer container
+    width: '100%',
     maxWidth: 1500,
     height: 60,
     borderRadius: 8,
-    boxSizing: 'border-box', // Include padding in height/width
+    boxSizing: 'border-box',
   },
   logoText: {
     fontWeight: 'bold',
@@ -117,7 +120,7 @@ const styles = {
     color: 'black',
   },
   selectedText: {
-    color: 'blue', // Style for selected text color
+    color: 'blue', // Highlight selected menu with blue
   },
   vendorButton: {
     backgroundColor: '#8a6ded',
@@ -129,6 +132,6 @@ const styles = {
     fontWeight: 'bold',
     fontSize: 12,
     boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.3)',
-    marginLeft: 'auto', // Ensure the vendor button stays to the right
+    marginLeft: 'auto',
   },
 };

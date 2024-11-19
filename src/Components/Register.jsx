@@ -27,7 +27,6 @@ function Register() {
   ]);
   const [isAddingNewSkill, setIsAddingNewSkill] = useState(false);
 
-  // List of states (for dropdown)
   const statesList = [
     'California', 'New York', 'Texas', 'Florida', 'Illinois', 'Ohio', 'Georgia', 'North Carolina'
   ];

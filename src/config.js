@@ -1,6 +1,10 @@
 import AllServices from "./Components/AllServices";
 
 const config = {
+    SERVICE_API_URL: 'https://run.mocky.io/v3/410caeb3-1905-445e-a82e-3d10ece1da1e',
+    LATESTSERVICE_API_URL: 'https://run.mocky.io/v3/8d88062e-45c5-4df3-97bc-3ece2305bffc',
+    TOPSERVICE_API_URL:'https://run.mocky.io/v3/a560955a-c4bb-4f79-8a4f-c9ee5020b1aa',
+
     SERVICE_API_URL: 'https://run.mocky.io/v3/fd38b35d-b642-4b9d-aa83-40586216b668',
     LATESTSERVICE_API_URL: 'https://run.mocky.io/v3/b443cb64-d965-4b88-b998-ad0990866d7b',
     TOPSERVICE_API_URL:'https://run.mocky.io/v3/84e71828-4740-4c2e-a983-345d647dab5b',

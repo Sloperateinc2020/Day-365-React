@@ -8,6 +8,8 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
   const handleMenuClick = (menu) => {
     setSelectedMenu(menu);  // Set the selected menu in the parent component
     if (menu === 'Contact') {
+      navigate('/contact');
+
       navigate('/booking');  // Navigate to the Booking page
     } else if (menu === 'Home') {
       navigate('/home');  // Navigate to Home page
@@ -16,6 +18,10 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
     } else if (menu === 'About') {
       navigate('/about');  // Navigate to About page
     }
+  };
+
+  const handleVendorClick = () => {
+    navigate('/join-as-vendor'); 
   };
 
   return (
@@ -69,7 +75,8 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
           >
             Login/Register
           </button>
-          <button style={styles.vendorButton}>
+          {/* Add onClick for vendor button */}
+          <button style={styles.vendorButton} onClick={handleVendorClick}>
             Join As Vendor
           </button>
         </div>
@@ -84,6 +91,11 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#f5f5f5',
+    position: 'fixed', 
+    top: 0, 
+    width: '100%', 
+    zIndex: 1000, 
+
     position: 'fixed',
     top: 0,
     width: '100%',
@@ -94,6 +106,11 @@ const styles = {
     alignItems: 'center',
     backgroundColor: 'white',
     padding: 10,
+    width: '100%', 
+    maxWidth: 1500,
+    height: 60,
+    borderRadius: 8,
+    boxSizing: 'border-box', 
     width: '100%',
     maxWidth: 1500,
     height: 60,
@@ -120,6 +137,7 @@ const styles = {
     color: 'black',
   },
   selectedText: {
+    color: 'blue', 
     color: 'blue', // Highlight selected menu with blue
   },
   vendorButton: {
@@ -132,6 +150,8 @@ const styles = {
     fontWeight: 'bold',
     fontSize: 12,
     boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.3)',
+    marginLeft: 'auto', 
+
     marginLeft: 'auto',
   },
 };

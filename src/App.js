@@ -13,6 +13,11 @@ import Listings from './Components/Listings';
 import Profile from './Components/Profile/Profile';
 import AccountSettings from './Components/AccountSettings/AccountSettings';
 import Payments from './Components/Payments';
+import BankDetails from './Components/BankDetails/BankDetails'; // Import BankDetails component
+import EditVendorProfile from './Components/EditVendorProfile/EditVendorProfile';
+
+
+
 import BankDetails from './Components/BankDetails/BankDetails';
 import AllServices from './Components/AllServices';
 
@@ -36,6 +41,15 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/listings" element={<Listings />} />
           <Route path="/availability" element={<Availability />} />
+          <Route path="/documents" element={<Profile />} /> {/* Add Profile route */}
+          <Route path="/accountsettings" element={<AccountSettings />} /> {/* Add AccountSetting route */}
+          <Route path="/listings" element={<Listings/>} />
+           <Route path="/availability" element={<Availability />} />
+           <Route path="/payments" element={<Payments/>} />
+           <Route path="/bankdetails" element={<BankDetails />} /> {/* Add BankDetails route */}
+           <Route path="/editvendorprofile" element={<EditVendorProfile />} /> {/* Add BankDetails route */}
+
+
           <Route path="/documents" element={<Profile />} />
           <Route path="/accountsettings" element={<AccountSettings />} />
           <Route path="/payments" element={<Payments />} />

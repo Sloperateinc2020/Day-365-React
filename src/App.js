@@ -16,6 +16,8 @@ import AccountSettings from './Components/AccountSettings/AccountSettings'; // I
 import Payments from './Components/Payments';
 import BankDetails from './Components/BankDetails/BankDetails'; // Import BankDetails component
 import EditVendorProfile from './Components/EditVendorProfile/EditVendorProfile';
+import UserProfileandSearchPage from './Components/UserProfileandSearchPage/UserProfileandSearchpage';
+
 
 
 
@@ -48,7 +50,8 @@ function App() {
            <Route path="/payments" element={<Payments/>} />
            <Route path="/bankdetails" element={<BankDetails />} /> {/* Add BankDetails route */}
            <Route path="/editvendorprofile" element={<EditVendorProfile />} /> {/* Add BankDetails route */}
-
+           <Route path="/userprofileandsearchpage" element={<UserProfileandSearchPage />} /> {/* Add BankDetails route */}
+           
 
         </Routes>
       </div>

@@ -13,7 +13,9 @@ const EditVendorProfile = () => {
 
   const [serviceData, setServiceData] = useState({
     hourlyRate: '',
-    serviceArea: '',
+    serviceArea: '15 miles',
+    pricePerService: '', // Correct field name
+    paymentMethods: [],
     availability: true,
     services: {
       residential: false,
@@ -32,6 +34,15 @@ const EditVendorProfile = () => {
     setServiceData({ ...serviceData, [name]: value });
   };
 
+  const handlePaymentChange = (method) => {
+    setServiceData((prev) => ({
+      ...prev,
+      paymentMethods: prev.paymentMethods.includes(method)
+        ? prev.paymentMethods.filter((item) => item !== method)
+        : [...prev.paymentMethods, method],
+    }));
+  };
+
   const handleToggleAvailability = () => {
     setServiceData({ ...serviceData, availability: !serviceData.availability });
   };
@@ -47,14 +58,15 @@ const EditVendorProfile = () => {
   const validateForm = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!profileData.fullName) return "Full Name is required.";
-    if (!emailRegex.test(profileData.email)) return "A valid Email is required.";
-    if (!profileData.phoneNumber) return "Phone Number is required.";
-    if (!profileData.yearsOfExperience) return "Years of Experience is required.";
-    if (!profileData.licenseNumber) return "License Number is required.";
-    if (!profileData.servicesOffered) return "Services Offered are required.";
-    if (!serviceData.hourlyRate) return "Hourly Rate is required.";
-    if (!serviceData.serviceArea) return "Service Area is required.";
+    if (!profileData.fullName) return 'Full Name is required.';
+    if (!emailRegex.test(profileData.email)) return 'A valid Email is required.';
+    if (!profileData.phoneNumber) return 'Phone Number is required.';
+    if (!profileData.yearsOfExperience) return 'Years of Experience is required.';
+    if (!profileData.licenseNumber) return 'License Number is required.';
+    if (!profileData.servicesOffered) return 'Services Offered are required.';
+    if (!serviceData.hourlyRate) return 'Hourly Rate is required.';
+    if (!serviceData.serviceArea) return 'Service Area is required.';
+    if (!serviceData.pricePerService) return 'Price per Service is required.';
 
     return null; // Form is valid
   };
@@ -71,7 +83,7 @@ const EditVendorProfile = () => {
     const requestData = { ...profileData, ...serviceData };
 
     try {
-      console.log("Sending request data:", requestData);
+      console.log('Sending request data:', requestData);
 
       const response = await fetch('http://localhost:8080/api/vendor-profile', {
         method: 'POST',
@@ -81,24 +93,14 @@ const EditVendorProfile = () => {
         body: JSON.stringify(requestData),
       });
 
-      const contentType = response.headers.get('Content-Type');
-      const responseText = await response.text();
+      const result = await response.text();
 
-      if (contentType && contentType.includes('application/json')) {
-        try {
-          const result = JSON.parse(responseText);
-          console.log('Profile saved successfully:', result);
-          alert('Profile saved successfully!');
-        } catch (error) {
-          console.error('Error parsing JSON response:', error);
-          alert('Failed to parse the JSON response.');
-        }
-      } else if (contentType && contentType.includes('text/plain')) {
-        console.log('Response (plain text):', responseText);
-        alert(responseText);
+      if (response.ok) {
+        console.log('Profile saved successfully:', result);
+        alert('Profile saved successfully!');
       } else {
-        console.error('Unexpected content type. Response:', responseText);
-        alert('Unexpected response from server.');
+        console.error('Error:', result);
+        alert('Failed to save the profile: ' + result);
       }
     } catch (error) {
       console.error('Error:', error);
@@ -108,14 +110,14 @@ const EditVendorProfile = () => {
 
   return (
     <>
-      <div style={{ maxWidth: '500px', margin: '100px auto', fontFamily: 'Arial, sans-serif' }}>
-      <h2 style={{ textAlign: 'left', marginTop: '30px' }}>Edit Plumber Profile</h2>
-
-        <p style={{ textAlign: 'left', color: 'gray' }}>Update your profile and service information</p>
+      <div style={{ maxWidth: '600px', margin: '100px auto', fontFamily: 'Arial, sans-serif' }}>
+        <h2>Edit Vendor Profile</h2>
+        <p style={{ color: 'gray' }}>Update your profile and service information</p>
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          {/* Profile Fields */}
           <div>
-            <label htmlFor="fullName" style={{ display: 'block', marginBottom: '5px' }}>Full Name</label>
+            <label htmlFor="fullName" style={{ fontWeight: 'bold' }}>Full Name</label>
             <input
               type="text"
               id="fullName"
@@ -126,7 +128,7 @@ const EditVendorProfile = () => {
             />
           </div>
           <div>
-            <label htmlFor="email" style={{ display: 'block', marginBottom: '5px' }}>Email</label>
+            <label htmlFor="email" style={{ fontWeight: 'bold' }}>Email</label>
             <input
               type="email"
               id="email"
@@ -137,7 +139,7 @@ const EditVendorProfile = () => {
             />
           </div>
           <div>
-            <label htmlFor="phoneNumber" style={{ display: 'block', marginBottom: '5px' }}>Phone Number</label>
+            <label htmlFor="phoneNumber" style={{ fontWeight: 'bold' }}>Phone Number</label>
             <input
               type="tel"
               id="phoneNumber"
@@ -148,7 +150,7 @@ const EditVendorProfile = () => {
             />
           </div>
           <div>
-            <label htmlFor="yearsOfExperience" style={{ display: 'block', marginBottom: '5px' }}>Years of Experience</label>
+            <label htmlFor="yearsOfExperience" style={{ fontWeight: 'bold' }}>Years of Experience</label>
             <input
               type="number"
               id="yearsOfExperience"
@@ -159,7 +161,7 @@ const EditVendorProfile = () => {
             />
           </div>
           <div>
-            <label htmlFor="licenseNumber" style={{ display: 'block', marginBottom: '5px' }}>License Number</label>
+            <label htmlFor="licenseNumber" style={{ fontWeight: 'bold' }}>License Number</label>
             <input
               type="text"
               id="licenseNumber"
@@ -170,7 +172,7 @@ const EditVendorProfile = () => {
             />
           </div>
           <div>
-            <label htmlFor="servicesOffered" style={{ display: 'block', marginBottom: '5px' }}>Services Offered</label>
+            <label htmlFor="servicesOffered" style={{ fontWeight: 'bold' }}>Services Offered</label>
             <textarea
               id="servicesOffered"
               name="servicesOffered"
@@ -180,8 +182,9 @@ const EditVendorProfile = () => {
             />
           </div>
 
+          {/* Service Settings Fields */}
           <div>
-            <label htmlFor="hourlyRate" style={{ display: 'block', marginBottom: '5px' }}>Hourly Rate ($)</label>
+            <label htmlFor="hourlyRate" style={{ fontWeight: 'bold' }}>Hourly Rate ($)</label>
             <input
               type="number"
               id="hourlyRate"
@@ -192,7 +195,7 @@ const EditVendorProfile = () => {
             />
           </div>
           <div>
-            <label htmlFor="serviceArea" style={{ display: 'block', marginBottom: '5px' }}>Service Area</label>
+            <label htmlFor="serviceArea" style={{ fontWeight: 'bold' }}>Service Area</label>
             <select
               id="serviceArea"
               name="serviceArea"
@@ -207,102 +210,109 @@ const EditVendorProfile = () => {
             </select>
           </div>
           <div>
-            <label htmlFor="availability" style={{ display: 'block', marginBottom: '5px' }}>Availability</label>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <div
-                onClick={handleToggleAvailability}
-                style={{
-                  display: 'inline-block',
-                  width: '50px',
-                  height: '24px',
-                  backgroundColor: serviceData.availability ? '#4caf50' : '#ccc',
-                  borderRadius: '24px',
-                  position: 'relative',
-                  cursor: 'pointer',
-                }}
-              >
-                <div
-                  style={{
-                    width: '20px',
-                    height: '20px',
-                    backgroundColor: '#fff',
-                    borderRadius: '50%',
-                    position: 'absolute',
-                    top: '2px',
-                    left: serviceData.availability ? '28px' : '2px',
-                    transition: 'left 0.2s',
-                  }}
-                ></div>
-              </div>
-              <span>{serviceData.availability ? 'Currently Available for Work' : 'Not Available'}</span>
+            <label htmlFor="pricePerService" style={{ fontWeight: 'bold' }}>Price per Service ($)</label>
+            <input
+              type="number"
+              id="pricePerService"
+              name="pricePerService"
+              value={serviceData.pricePerService}
+              onChange={handleServiceChange}
+              style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+            />
+          </div>
+
+          <div>
+            <label style={{ fontWeight: 'bold' }}>Payment Methods Accepted</label>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+              {['Cash', 'Credit Card', 'Online', 'Bank Account'].map((method) => (
+                <label key={method}>
+                  <input
+                    type="checkbox"
+                    checked={serviceData.paymentMethods.includes(method)}
+                    onChange={() => handlePaymentChange(method)}
+                  />
+                  {method}
+                </label>
+              ))}
             </div>
           </div>
           <div>
-            <label style={{ display: 'block', marginBottom: '5px' }}>Services</label>
+  <label style={{ fontWeight: 'bold' }}>Availability</label>
+  <div
+    onClick={handleToggleAvailability}
+    style={{
+      cursor: 'pointer',
+      marginTop: '5px',
+      display: 'flex',
+      alignItems: 'center',
+    }}
+  >
+    {/* Toggle Button */}
+    <div
+      style={{
+        width: '50px',
+        height: '24px',
+        backgroundColor: serviceData.availability ? 'black' : '#ccc',
+        borderRadius: '12px',
+        position: 'relative',
+      }}
+    >
+      <div
+        style={{
+          width: '20px',
+          height: '20px',
+          backgroundColor: '#fff',
+          borderRadius: '50%',
+          position: 'absolute',
+          top: '2px',
+          left: serviceData.availability ? '28px' : '2px',
+          transition: 'left 0.2s',
+        }}
+      />
+    </div>
+
+    {/* Availability Status Text */}
+    <span style={{ marginLeft: '10px', color: 'black' }}>
+      {serviceData.availability ? 'Currently Available for Work' : 'Not Available'}
+    </span>
+  </div>
+</div>
+
+          <div>
+            <label style={{ fontWeight: 'bold', marginBottom: '10px', display: 'block' }}>Types of Services</label>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-              <label>
-                <input
-                  type="checkbox"
-                  name="residential"
-                  checked={serviceData.services.residential}
-                  onChange={handleServiceCheckboxChange}
-                  style={{ marginRight: '5px' }}
-                />
-                Residential
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  name="commercial"
-                  checked={serviceData.services.commercial}
-                  onChange={handleServiceCheckboxChange}
-                  style={{ marginRight: '5px' }}
-                />
-                Commercial
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  name="emergency"
-                  checked={serviceData.services.emergency}
-                  onChange={handleServiceCheckboxChange}
-                  style={{ marginRight: '5px' }}
-                />
-                Emergency
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  name="maintenance"
-                  checked={serviceData.services.maintenance}
-                  onChange={handleServiceCheckboxChange}
-                  style={{ marginRight: '5px' }}
-                />
-                Maintenance
-              </label>
+              {['residential', 'commercial', 'emergency', 'maintenance'].map((serviceType) => (
+                <label key={serviceType} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <input
+                    type="checkbox"
+                    name={serviceType}
+                    checked={serviceData.services[serviceType]}
+                    onChange={handleServiceCheckboxChange}
+                  />
+                  {serviceType.charAt(0).toUpperCase() + serviceType.slice(1)}
+                </label>
+              ))}
             </div>
           </div>
 
           <button
             type="submit"
             style={{
-              backgroundColor: '#000',
-              color: '#fff',
-              padding: '10px',
-              borderRadius: '4px',
+              backgroundColor: '#007bff',
+              color: 'white',
               border: 'none',
+              borderRadius: '4px',
+              padding: '10px 20px',
               cursor: 'pointer',
-              textAlign: 'center',
             }}
           >
             Save Changes
           </button>
         </form>
       </div>
-
       <Footer />
     </>
   );
 };
 
-export default  EditVendorProfile;
+export default EditVendorProfile;

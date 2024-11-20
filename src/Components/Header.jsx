@@ -4,14 +4,19 @@ import { useNavigate } from 'react-router-dom';
 export default function Header({ selectedMenu, setSelectedMenu }) {
   const navigate = useNavigate();
 
+  // Function to handle navigation and update selected menu
   const handleMenuClick = (menu) => {
-    setSelectedMenu(menu); 
+    setSelectedMenu(menu);  // Set the selected menu in the parent component
     if (menu === 'Contact') {
       navigate('/contact');
+
+      navigate('/booking');  // Navigate to the Booking page
     } else if (menu === 'Home') {
-      navigate('/home');
+      navigate('/home');  // Navigate to Home page
     } else if (menu === 'All Services') {
-      navigate('/all-services');
+      navigate('/allservices');  // Navigate to All Services page
+    } else if (menu === 'About') {
+      navigate('/about');  // Navigate to About page
     }
   };
 
@@ -23,7 +28,7 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
     <div style={styles.outerContainer}>
       <div style={styles.container}>
         <h1 style={styles.logoText}>LOGO</h1>
-        
+
         <div style={styles.menuContainer}>
           <button
             onClick={() => handleMenuClick('Home')}
@@ -90,6 +95,11 @@ const styles = {
     top: 0, 
     width: '100%', 
     zIndex: 1000, 
+
+    position: 'fixed',
+    top: 0,
+    width: '100%',
+    zIndex: 1000,
   },
   container: {
     display: 'flex',
@@ -101,6 +111,11 @@ const styles = {
     height: 60,
     borderRadius: 8,
     boxSizing: 'border-box', 
+    width: '100%',
+    maxWidth: 1500,
+    height: 60,
+    borderRadius: 8,
+    boxSizing: 'border-box',
   },
   logoText: {
     fontWeight: 'bold',
@@ -123,6 +138,7 @@ const styles = {
   },
   selectedText: {
     color: 'blue', 
+    color: 'blue', // Highlight selected menu with blue
   },
   vendorButton: {
     backgroundColor: '#8a6ded',
@@ -135,5 +151,7 @@ const styles = {
     fontSize: 12,
     boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.3)',
     marginLeft: 'auto', 
+
+    marginLeft: 'auto',
   },
 };

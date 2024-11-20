@@ -1,36 +1,32 @@
-import React from 'react';
-import AboutPage from './About/AboutPage';
-import './App.css';
-
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import './App.css';
+import AboutPage from './About/AboutPage';
 import Home from './Components/Home';
 import Header from './Components/Header';
 import SignIn from './Components/SignIn';
 import SignupPage from './SignUp/SignupPage';
-import Availability from './Availability/Availability'; 
+import Availability from './Availability/Availability';
 import Booking from './Components/Booking/Booking';
 import Register from './Components/Register';
 import Listings from './Components/Listings';
-import Profile from './Components/Profile/Profile'; // Import Profile component
-import AccountSettings from './Components/AccountSettings/AccountSettings'; // Import AccountSetting component
+import Profile from './Components/Profile/Profile';
+import AccountSettings from './Components/AccountSettings/AccountSettings';
 import Payments from './Components/Payments';
-import BankDetails from './Components/BankDetails/BankDetails'; // Import BankDetails component
-
-
-
+import BankDetails from './Components/BankDetails/BankDetails';
+import AllServices from './Components/AllServices';
 
 function App() {
+  const [selectedMenu, setSelectedMenu] = useState('Home'); // Initial selected menu
+
   return (
     <Router>
       <div className="min-h-screen bg-gray-50">
-        <Header />
+        {/* Pass selectedMenu and setSelectedMenu as props to Header */}
+        <Header selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
         
         <Routes>
-
-          {/* Default Route - to handle undefined paths */}
           <Route path="*" element={<h1>404 - Page Not Found</h1>} />
-
-          {/* Redirect the root path to /home */}
           <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={<Home />} />
           <Route path="/signin" element={<SignIn />} />
@@ -40,14 +36,11 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/listings" element={<Listings />} />
           <Route path="/availability" element={<Availability />} />
-          <Route path="/documents" element={<Profile />} /> {/* Add Profile route */}
-          <Route path="/accountsettings" element={<AccountSettings />} /> {/* Add AccountSetting route */}
-          <Route path="/listings" element={<Listings/>} />
-           <Route path="/availability" element={<Availability />} />
-           <Route path="/payments" element={<Payments/>} />
-           <Route path="/bankdetails" element={<BankDetails />} /> {/* Add BankDetails route */}
-
-
+          <Route path="/documents" element={<Profile />} />
+          <Route path="/accountsettings" element={<AccountSettings />} />
+          <Route path="/payments" element={<Payments />} />
+          <Route path="/bankdetails" element={<BankDetails />} />
+          <Route path="/allservices" element={<AllServices />} />
         </Routes>
       </div>
     </Router>

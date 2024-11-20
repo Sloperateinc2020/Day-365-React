@@ -92,13 +92,15 @@ function Home() {
     e.preventDefault();
     let results = allServices;
 
+    const hasLocationFilter = stateValue || cityValue || pincodeValue;
+
     if (serviceSearchValue) {
       results = results.filter(service =>
         typeof service.service === 'string' &&
         service.service.toLowerCase().includes(serviceSearchValue.toLowerCase())
       );
     }
-
+  
     if (pincodeValue) {
       results = results.filter(service =>
         service.pincode.toString() === pincodeValue
@@ -110,12 +112,17 @@ function Home() {
         return matchesState && matchesCity;
       });
     }
-
-    setFilteredServices(results); 
-    setDisplayedServices(results.slice(0, 4));
-    setIsSearchActive(true);
+  
+    if (!hasLocationFilter) {
+      // No filters selected, so redirect to the services page
+      navigate('/services');
+    } else {
+      // Filters are applied, update the displayed services
+      setFilteredServices(results);
+      setDisplayedServices(results.slice(0, 4));
+      setIsSearchActive(true);
+    }
   };
-
   const handleSeeMore = () => {
     const currentLength = displayedServices.length;
     const nextItems = filteredServices.slice(currentLength, currentLength + 4); 

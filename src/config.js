@@ -11,7 +11,9 @@ const config = {
     BOOKING_API_URL:'https://run.mocky.io/v3/d8942cdd-72ec-422e-acfb-714c75054bf6',
     VENDORLISTINGS_API_URL:'https://run.mocky.io/v3/35927549-0903-4303-a6b9-494429ca33eb',
     PAYMENTS_API_URL:'https://run.mocky.io/v3/96f0dd31-9880-41e4-b388-38c350512b20',
-    // ALLSERVICES_API_URL:'https://run.mocky.io/v3/3511fe49-1ff0-46e3-aa6c-7edbec578015'
+    POPULARSERVICESNEARYOU_API_URL:'https://run.mocky.io/v3/74568ebb-9a32-49c1-b84e-26c21eeb1fa4',
+    SPECIALOFFERS_API_URL:'https://run.mocky.io/v3/ff4adade-b9ff-484e-97e3-cd5e6e1f83b5',
+    TOPRATEDPROVIDERS_API_URL:'https://run.mocky.io/v3/b6bd6747-0ee1-43f7-b70b-e38392c5c5c5',
 };
 
 export default config;

@@ -21,6 +21,7 @@ import VendorRegistration from './Components/VendorRegistration/VendorRegistrati
 import EditVendorProfile from './Components/EditVendorProfile/EditVendorProfile';
 import AllServices from './Components/AllServices';
 import Services from './Components/Services/Services'; // Import the Services component
+import SearchResult from './Components/SearchResult/SearchResult'; // Import SearchResult component
 
 function App() {
   const [selectedMenu, setSelectedMenu] = useState('Home'); // Initial selected menu
@@ -49,6 +50,7 @@ function App() {
           <Route path="/top-services" element={<TopServices />} />
           <Route path="/allservices" element={<AllServices />} />
           <Route path="/services" element={<Services />} /> {/* Add this route for Services */}
+          <Route path="/search-result" element={<SearchResult />} /> {/* Add this route for SearchResult */}
           <Route path="*" element={<h1>404 - Page Not Found</h1>} />
         </Routes>
       </div>

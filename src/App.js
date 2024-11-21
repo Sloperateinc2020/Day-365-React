@@ -20,6 +20,7 @@ import TopServices from './Components/TopServices/TopServices';
 import VendorRegistration from './Components/VendorRegistration/VendorRegistration';
 import EditVendorProfile from './Components/EditVendorProfile/EditVendorProfile';
 import AllServices from './Components/AllServices';
+import Services from './Components/Services/Services'; // Import the Services component
 
 function App() {
   const [selectedMenu, setSelectedMenu] = useState('Home'); // Initial selected menu
@@ -39,14 +40,15 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/listings" element={<Listings />} />
           <Route path="/availability" element={<Availability />} />
-          <Route path="/documents" element={<Profile />} /> {/* Add Profile route */}
-          <Route path="/accountsettings" element={<AccountSettings />} /> {/* Add AccountSetting route */}
+          <Route path="/documents" element={<Profile />} />
+          <Route path="/accountsettings" element={<AccountSettings />} />
           <Route path="/payments" element={<Payments />} />
           <Route path="/bankdetails" element={<BankDetails />} />
           <Route path="/editvendorprofile" element={<EditVendorProfile />} />
           <Route path="/join-as-vendor" element={<VendorRegistration />} />
           <Route path="/top-services" element={<TopServices />} />
           <Route path="/allservices" element={<AllServices />} />
+          <Route path="/services" element={<Services />} /> {/* Add this route for Services */}
           <Route path="*" element={<h1>404 - Page Not Found</h1>} />
         </Routes>
       </div>

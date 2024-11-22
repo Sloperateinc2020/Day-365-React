@@ -21,14 +21,17 @@ import VendorRegistration from './Components/VendorRegistration/VendorRegistrati
 import EditVendorProfile from './Components/EditVendorProfile/EditVendorProfile';
 import AllServices from './Components/AllServices';
 import Services from './Components/Services/Services'; 
-import VendorDashboard from './Components/VendorDashboard/VendorDashboard'; // Adjust the path if needed
+import VendorDashboard from './Components/VendorDashboard/VendorDashboard'; 
+import SearchResult from './Components/SearchResult/SearchResult'; 
 
 function App() {
   const [selectedMenu, setSelectedMenu] = useState('Home'); // Initial selected menu
 
   return (
     <Router>
-      <AppWrapper selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
+      <div className="min-h-screen bg-gray-50">
+        <AppWrapper selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
+      </div>
     </Router>
   );
 }
@@ -37,7 +40,7 @@ const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
   const location = useLocation(); // Get current route
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
       {/* Conditionally render Header: don't display on /vendordashboard route */}
       {location.pathname !== '/vendordashboard' && (
         <Header selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
@@ -62,10 +65,11 @@ const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
         <Route path="/top-services" element={<TopServices />} />
         <Route path="/allservices" element={<AllServices />} />
         <Route path="/services" element={<Services />} />
+        <Route path="/search-result" element={<SearchResult />} />
         <Route path="/vendordashboard" element={<VendorDashboard />} />
         <Route path="*" element={<h1>404 - Page Not Found</h1>} />
       </Routes>
-    </div>
+    </>
   );
 }
 

@@ -18,6 +18,9 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
     } else if (menu === 'About') {
       navigate('/about');  // Navigate to About page
     }
+    else if (menu === 'Login/Register') {
+      navigate('/register');  // Navigate to About page
+    }
   };
 
   const handleVendorClick = () => {

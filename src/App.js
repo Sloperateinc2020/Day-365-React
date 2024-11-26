@@ -42,8 +42,9 @@ const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
 
   return (
     <>
-      {/* Conditionally render Header: don't display on /vendordashboard route */}
-      {location.pathname !== '/vendordashboard' && (
+      {/* Conditionally render Header: don't display on /listings or /vendordashboard routes */}
+      {location.pathname !== '/listings' && location.pathname !== '/vendordashboard' && 
+      location.pathname !== '/booking' && (
         <Header selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
       )}
 
@@ -55,7 +56,7 @@ const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/booking" element={<Booking />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/listings" element={<Listings />} />
+        <Route path="/listings" element={<Listings />} /> {/* Listings page */}
         <Route path="/availability" element={<Availability />} />
         <Route path="/documents" element={<Profile />} />
         <Route path="/accountsettings" element={<AccountSettings />} />

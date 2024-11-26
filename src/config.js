@@ -8,12 +8,13 @@ const config = {
     SERVICE_API_URL: 'https://run.mocky.io/v3/9c3b644e-8da4-4a9e-91ef-847ee02e961f',
     LATESTSERVICE_API_URL: 'https://run.mocky.io/v3/b443cb64-d965-4b88-b998-ad0990866d7b',
     TOPSERVICE_API_URL:'https://run.mocky.io/v3/84e71828-4740-4c2e-a983-345d647dab5b',
-    BOOKING_API_URL:'https://run.mocky.io/v3/d8942cdd-72ec-422e-acfb-714c75054bf6',
+    BOOKING_API_URL:'https://run.mocky.io/v3/42109b5a-0cee-4a43-bcf1-115321580021',
     VENDORLISTINGS_API_URL:'https://run.mocky.io/v3/35927549-0903-4303-a6b9-494429ca33eb',
     PAYMENTS_API_URL:'https://run.mocky.io/v3/96f0dd31-9880-41e4-b388-38c350512b20',
     POPULARSERVICESNEARYOU_API_URL:'https://run.mocky.io/v3/74568ebb-9a32-49c1-b84e-26c21eeb1fa4',
     SPECIALOFFERS_API_URL:'https://run.mocky.io/v3/ff4adade-b9ff-484e-97e3-cd5e6e1f83b5',
     TOPRATEDPROVIDERS_API_URL:'https://run.mocky.io/v3/b6bd6747-0ee1-43f7-b70b-e38392c5c5c5',
+    UPCOMINGBOOKING_API_URL:'https://run.mocky.io/v3/8463a47b-e7a3-496f-94f5-cde19360cf95',
 };
 
 export default config;

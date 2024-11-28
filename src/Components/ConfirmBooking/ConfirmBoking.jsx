@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Footer from "../Footer"; // Import the Footer component
+
 
 const ConfirmBooking = () => {
   const [serviceType, setServiceType] = useState('normal');
@@ -26,8 +28,9 @@ const ConfirmBooking = () => {
       hour12: true
     });
   };
-
+  
   return (
+  
     <div style={{
       width: '100%',
       maxWidth: '1200px',
@@ -59,7 +62,7 @@ const ConfirmBooking = () => {
               style={{ width: '45px', height: '45px', borderRadius: '50%', objectFit: 'cover' }}
             />
             <div>
-              <p style={{ fontSize: '14px', fontWeight: 'bold', marginBottom: '2px' }}>Suresh Babu</p>
+              <p style={{ fontSize: '14px', fontWeight: 'bold', marginBottom: '-5px' }}>Suresh Babu</p>
               <p style={{ fontSize: '12px', color: 'blue' }}>Plumber</p>
               <div style={{ display: 'flex', gap: '4px', fontSize: '12px', color: '#666' }}>
                 <span>4.7</span>
@@ -74,7 +77,7 @@ const ConfirmBooking = () => {
 
       {/* Service Type */}
       <div>
-        <h2 style={{ fontSize: '14px', fontWeight: 'bold' }}>Service Type</h2>
+        <h2 style={{ fontSize: '14px', fontWeight: 'bold',marginBottom:'10px',marginTop:'-10px' }}>Service Type</h2>
         <div style={{ display: 'flex', gap: '20px' }}>
           <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
             <input
@@ -107,7 +110,7 @@ const ConfirmBooking = () => {
       {/* Customer Details */}
       <div>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '5px' }}>
-          <h2 style={{ fontSize: '14px', fontWeight: 'bold' }}>Customer Details</h2>
+          <h2 style={{ fontSize: '14px', fontWeight: 'bold',marginTop:'-15px' }}>Customer Details</h2>
           <button style={{ color: '#4F46E5', fontSize: '15px', border: 'none', background: 'none', cursor: 'pointer', fontWeight: 'bold' }}>
             EDIT
           </button>
@@ -159,7 +162,7 @@ const ConfirmBooking = () => {
       {/* Booking Date & Time */}
       <div>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
-          <h2 style={{ fontSize: '14px', fontWeight: 'bold' }}>Booking Date & Time</h2>
+          <h2 style={{ fontSize: '14px', fontWeight: 'bold',marginTop:'-15px' }}>Booking Date & Time</h2>
           <button 
             onClick={handleDateTimeEdit}
             style={{ color: '#4F46E5', fontSize: '14px', border: 'none', background: 'none', cursor: 'pointer', fontWeight: 'bold' }}
@@ -217,7 +220,7 @@ const ConfirmBooking = () => {
 
       {/* Payment Method */}
       <div>
-        <h2 style={{ fontSize: '14px', fontWeight: 'bold' }}>Payment Method</h2>
+        <h2 style={{ fontSize: '14px', fontWeight: 'bold',marginTop:'-10px' }}>Payment Method</h2>
         <div style={{ display: 'flex', gap: '20px' }}>
           <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
             <input
@@ -257,20 +260,20 @@ const ConfirmBooking = () => {
 
       {/* Total */}
       <div>
-        <h2 style={{ fontSize: '14px', fontWeight: 'bold' }}>Total
-          <p style={{ fontWeight: 'normal' }}>
+        <h2 style={{ fontSize: '14px', fontWeight: 'bold',marginTop:'-10px' }}>Total 
+          <p style={{ fontWeight: 'normal',color:'#666' }}>
             Note: Platform fee of $20 has to be paid to Confirm Booking.
           </p>
         </h2>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-          <span style={{ fontSize: '13px', color: '#666' }}>Platform Fee (has to pay Now to confirm)</span>
+          <span style={{ fontSize: '13px', color: 'black' }}>Platform Fee (has to pay Now to confirm)</span>
           <span style={{ fontSize: '13px' }}>$20</span>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '15px' }}>
-          <span style={{ fontSize: '13px', color: '#666' }}>Service Fee</span>
+          <span style={{ fontSize: '13px', color: 'black' }}>Service Fee</span>
           <span style={{ fontSize: '13px' }}>$160</span>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid #eee', paddingTop: '15px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between',  paddingTop: '15px' }}>
           <span style={{ fontSize: '14px', fontWeight: '200' }}>Total</span>
           <span style={{ fontSize: '14px', fontWeight: 'bold' }}>$180</span>
         </div>
@@ -278,7 +281,7 @@ const ConfirmBooking = () => {
 
       {/* Confirm Button */}
       <button style={{
-        width: '100%',
+        width: '20%',
         padding: '12px',
         backgroundColor: '#4F46E5',
         color: 'white',
@@ -286,10 +289,13 @@ const ConfirmBooking = () => {
         borderRadius: '4px',
         fontSize: '14px',
         cursor: 'pointer',
-        marginTop: '20px'
+        marginTop: '20px',
+        marginLeft:'400px'
       }}>
         ₹99 Confirm Booking
       </button>
+      <Footer />
+      <></>
     </div>
   );
 };

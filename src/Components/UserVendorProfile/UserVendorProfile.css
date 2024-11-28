@@ -1,0 +1,128 @@
+/* Add some global padding and font adjustments to make things more visually appealing */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Profile container styles */
+  .profile-container {
+    display: flex;
+    padding: 20px;
+  }
+  
+  /* Sidebar styling */
+  .profile-sidebar {
+    width: 250px;
+    padding-right: 20px;
+  }
+  
+  /* Profile image and info section */
+  .profile-image {
+    height: 100px;
+    width: 100px;
+    background-color: lightgrey;
+    margin-bottom: 20px;
+  }
+  .profile-info h3 {
+    font-size: 18px;
+    margin: 0;
+  }
+  .profile-info p {
+    color: grey;
+    margin: 5px 0;
+  }
+  
+  /* Stats styling */
+  .profile-stats {
+    margin-top: 20px;
+  }
+  .stat-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+  }
+  .stat-item .stat-number {
+    color: green;
+  }
+  
+  .profile-content {
+    flex-grow: 1;
+  }
+  
+  /* Tabs styling */
+  .tabs button {
+    padding: 10px 20px;
+    margin: 10px 0;
+    background-color: #f4f4f4;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .tabs .active {
+    background-color: #d1d1d1;
+  }
+  
+  /* Form styling */
+  .account-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Adds space between all form fields */
+  }
+  
+  .form-data {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Adds space between label and input */
+  }
+  
+  .form-data label {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .form-data input,
+  .form-data select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .form-data.left-column,
+  .form-data.right-column {
+    width: 48%; /* Adjusts the width of the form columns */
+  }
+  
+  .form-data.full-width {
+    width: 100%;
+  }
+  
+  /* Button container */
+  .update-button-container {
+    margin-top: 20px;
+  }
+  
+  .update-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .update-button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Add space between fields and the footer */
+  .profile-content {
+    padding-bottom: 50px; /* Adjust as needed */
+  }
+  
+  /* Prevent page scrolling */
+  body.scroll-locked {
+    overflow: hidden;
+  }
+  

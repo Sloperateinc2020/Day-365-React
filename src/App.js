@@ -24,6 +24,9 @@ import Services from './Components/Services/Services';
 import VendorDashboard from './Components/VendorDashboard/VendorDashboard'; 
 import SearchResult from './Components/SearchResult/SearchResult';
 import ConfirmBooking from './Components/ConfirmBooking/ConfirmBoking';
+import PreviousBooking from './Components/PreviousBooking/PreviousBooking';
+import UserVendorProfile from './Components/UserVendorProfile/UserVendorProfile'; 
+
 
 function App() {
   const [selectedMenu, setSelectedMenu] = useState('Home'); // Initial selected menu
@@ -70,6 +73,9 @@ const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
         <Route path="/search-result" element={<SearchResult />} />
         <Route path="/vendordashboard" element={<VendorDashboard />} />
         <Route path="/confirmbooking" element={<ConfirmBooking />} />
+        <Route path="/previousbooking" element={<PreviousBooking />} />
+        <Route path="/uservendorprofile" element={<UserVendorProfile />} />
+
 
         <Route path="*" element={<h1>404 - Page Not Found</h1>} />
       </Routes>

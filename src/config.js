@@ -15,6 +15,7 @@ const config = {
     SPECIALOFFERS_API_URL:'https://run.mocky.io/v3/ff4adade-b9ff-484e-97e3-cd5e6e1f83b5',
     TOPRATEDPROVIDERS_API_URL:'https://run.mocky.io/v3/b6bd6747-0ee1-43f7-b70b-e38392c5c5c5',
     UPCOMINGBOOKING_API_URL:'https://run.mocky.io/v3/8463a47b-e7a3-496f-94f5-cde19360cf95',
+    PREVIOUSBOOKING_API_URL:'https://run.mocky.io/v3/a24335a5-9994-41f1-88a9-af6601feac6d'
 };
 
 export default config;

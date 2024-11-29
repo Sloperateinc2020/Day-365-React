@@ -1,3 +1,4 @@
+// Header.js
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,24 +8,22 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
   // Function to handle navigation and update selected menu
   const handleMenuClick = (menu) => {
     setSelectedMenu(menu);  // Set the selected menu in the parent component
+
     if (menu === 'Contact') {
       navigate('/contact');
-
-      navigate('/booking');  // Navigate to the Booking page
     } else if (menu === 'Home') {
-      navigate('/home');  // Navigate to Home page
+      navigate('/home');
     } else if (menu === 'All Services') {
-      navigate('/allservices');  // Navigate to All Services page
+      navigate('/allservices');
     } else if (menu === 'About') {
-      navigate('/about');  // Navigate to About page
-    }
-    else if (menu === 'Login/Register') {
-      navigate('/register');  // Navigate to About page
+      navigate('/about');
+    } else if (menu === 'Login/Register') {
+      navigate('/signup');  // Navigate to the SignUp page
     }
   };
 
   const handleVendorClick = () => {
-    navigate('/join-as-vendor'); 
+    navigate('/join-as-vendor');
   };
 
   return (
@@ -97,11 +96,6 @@ const styles = {
     position: 'fixed', 
     top: 0, 
     width: '100%', 
-    zIndex: 1000, 
-
-    position: 'fixed',
-    top: 0,
-    width: '100%',
     zIndex: 1000,
   },
   container: {
@@ -114,11 +108,6 @@ const styles = {
     height: 60,
     borderRadius: 8,
     boxSizing: 'border-box', 
-    width: '100%',
-    maxWidth: 1500,
-    height: 60,
-    borderRadius: 8,
-    boxSizing: 'border-box',
   },
   logoText: {
     fontWeight: 'bold',
@@ -140,7 +129,6 @@ const styles = {
     color: 'black',
   },
   selectedText: {
-    color: 'blue', 
     color: 'blue', // Highlight selected menu with blue
   },
   vendorButton: {
@@ -153,8 +141,6 @@ const styles = {
     fontWeight: 'bold',
     fontSize: 12,
     boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.3)',
-    marginLeft: 'auto', 
-
     marginLeft: 'auto',
   },
 };

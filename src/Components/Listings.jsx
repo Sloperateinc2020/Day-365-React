@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Plus } from 'lucide-react';
 import './Listings.css';
-import Footer from './Footer';  
-import { Link } from 'react-router-dom'; // Import Link for navigation
+import Footer from './Footer';
+import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import { Bell, Home, ListOrdered, MessageSquare, Wallet, User, CalendarDays } from 'lucide-react';
-
 
 // Sidebar Component
 const Sidebar = () => {
@@ -100,6 +99,7 @@ const Sidebar = () => {
 
 function Listings() {
   const [listings, setListings] = useState([]);
+  const navigate = useNavigate(); // Initialize useNavigate hook for routing
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -116,18 +116,28 @@ function Listings() {
     fetchListings();
   }, []);
 
+  const handleRegisterNewJobClick = () => {
+    // Navigate to the job registration page
+    navigate('/jobregistration');
+  };
+
+  const handleEditClick = (listingId) => {
+    // Navigate to the EditVendorProfile page with the listingId
+    navigate(`/edit-vendor-profile/${listingId}`);
+  };
+
   return (
     <>
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex', minHeight: '100vh', flexDirection: 'column' }}>
         {/* Sidebar */}
         <Sidebar />
 
         {/* Main Content */}
-        <div style={{ marginLeft: '80px', width: '100%' }}>
+        <div style={{ marginLeft: '80px', width: '100%', paddingBottom: '80px' }}>
           <div className="listings-container">
             <div className="listings-header">
               <h1 className="listings-title">Vendor Listings</h1>
-              <button className="register-button">
+              <button className="register-button" onClick={handleRegisterNewJobClick}>
                 <Plus size={16} />
                 Register New Job
               </button>
@@ -144,7 +154,12 @@ function Listings() {
                           <h3 className="listing-name">{listing.name}</h3> {/* Display name */}
                           <p className="listing-detail">Category: {listing.category}</p>
                           <p className="listing-detail">Location: {listing.location}</p>
-                          <button className="edit-button">Edit List</button>
+                          <button
+                            className="edit-button"
+                            onClick={() => handleEditClick(listing.id)} // Pass listing.id to handleEditClick
+                          >
+                            Edit List
+                          </button>
                         </div>
                         <div className="listing-image">
                           <img src={listing.imageUrl} alt={listing.title} /> {/* Display image */}
@@ -158,8 +173,10 @@ function Listings() {
               </div>
             </div>
           </div>
-          <Footer />
         </div>
+
+        {/* Footer (Moved outside the main container) */}
+        <Footer />
       </div>
     </>
   );

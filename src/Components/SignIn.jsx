@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+ import React, { useState } from 'react';
 import { FaGoogle, FaApple, FaFacebook } from 'react-icons/fa';
 import { IoLogoOctocat } from 'react-icons/io';
 import Footer from './Footer';
@@ -18,12 +18,12 @@ function SignIn() {
 
       <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px', position: 'relative' }}>
 
-        <div style={{ position: 'absolute', top: '50px', left: '10px', display: 'flex', alignItems: 'center' }}>
+        <div style={{ position: 'absolute', top: '70px', left: '10px', display: 'flex', alignItems: 'center' }}>
           <IoLogoOctocat size={30} style={{ color: '#6A5ACD', marginRight: '8px' }} />
           <span style={{ fontSize: '20px', fontWeight: 'bold', color: '#333' }}>Day 365</span>
         </div>
 
-        <a href="#" style={{ position: 'absolute', top: '50px', right: '10px', color: 'black', fontSize: '14px', textDecoration: 'none' }}>
+        <a href="#" style={{ position: 'absolute', top: '80px', right: '10px', color: 'black', fontSize: '14px', textDecoration: 'none' }}>
           Don’t have an account? <span style={{ color: '#6A5ACD' }}>Register Now</span>
         </a>
 

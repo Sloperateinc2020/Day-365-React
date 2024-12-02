@@ -6,7 +6,7 @@ import Footer from '../Footer';
 const AccountSettings = () => {
   const [activeTab, setActiveTab] = useState('Account Settings');
   const [linkText, setLinkText] = useState('https://app.ahiregro...');
-  const navigate = useNavigate();
+  const navigate = useNavigate();  // Use navigate hook
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -24,6 +24,11 @@ const AccountSettings = () => {
       setLinkText('https://app.ahiregro...');
     }, 2000);
   };
+
+  const handlePreviousBookingsClick = () => {
+    navigate('/previousbooking');  // Navigate to the Previous Booking page
+  };
+
   useEffect(() => {
     document.body.classList.add('scroll-locked');
     
@@ -31,6 +36,7 @@ const AccountSettings = () => {
       document.body.classList.remove('scroll-locked');
     };
   }, []);
+
   return (
     <>
       <div className="profile-container">
@@ -53,8 +59,10 @@ const AccountSettings = () => {
             </div>
           </div>
           <div className="profile-actions">
-            <div className="profile-link">
-            </div>
+            {/* Add a button to trigger navigation to Previous Booking */}
+            <button onClick={handlePreviousBookingsClick} className="previous-booking-button">
+              Previous Bookings
+            </button>
           </div>
         </div>
 
@@ -66,8 +74,6 @@ const AccountSettings = () => {
             >
               Account Settings
             </button>
- 
-
           </div>
 
           {activeTab === 'Account Settings' && (

@@ -9,8 +9,7 @@ import Header from './Components/Header';
 import SignIn from './Components/SignIn';
 import SignupPage from './SignUp/SignupPage';
 import Booking from './Components/Booking/Booking';
-import Register from './Components/Register';
-import Listings from './Components/Listings';
+import Listings from './Components/Listings'; // Make sure this is your Listings component
 import Availability from './Availability/Availability';
 import Profile from './Components/Profile/Profile';
 import AccountSettings from './Components/AccountSettings/AccountSettings';
@@ -18,15 +17,17 @@ import Payments from './Components/Payments';
 import BankDetails from './Components/BankDetails/BankDetails';
 import TopServices from './Components/TopServices/TopServices';
 import VendorRegistration from './Components/VendorRegistration/VendorRegistration';
-import EditVendorProfile from './Components/EditVendorProfile/EditVendorProfile';
+import EditVendorProfile from './Components/EditVendorProfile/EditVendorProfile'; // Make sure this is the correct path
 import AllServices from './Components/AllServices';
-import Services from './Components/Services/Services'; 
-import VendorDashboard from './Components/VendorDashboard/VendorDashboard'; 
+import Services from './Components/Services/Services';
+import VendorDashboard from './Components/VendorDashboard/VendorDashboard';
 import SearchResult from './Components/SearchResult/SearchResult';
 import ConfirmBooking from './Components/ConfirmBooking/ConfirmBoking';
 import PreviousBooking from './Components/PreviousBooking/PreviousBooking';
-import UserVendorProfile from './Components/UserVendorProfile/UserVendorProfile'; 
-
+import UserVendorProfile from './Components/UserVendorProfile/UserVendorProfile';
+import JobRegistration from './Components/JobRegistration/JobRegistration';
+import Contact from './Components/Contact/Contact';
+import SignUpDetails from './Components/SignUpDetails/SignUpDetails';
 
 function App() {
   const [selectedMenu, setSelectedMenu] = useState('Home'); // Initial selected menu
@@ -58,14 +59,13 @@ const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/booking" element={<Booking />} />
-        <Route path="/register" element={<Register />} />
         <Route path="/listings" element={<Listings />} /> {/* Listings page */}
         <Route path="/availability" element={<Availability />} />
         <Route path="/documents" element={<Profile />} />
         <Route path="/accountsettings" element={<AccountSettings />} />
         <Route path="/payments" element={<Payments />} />
         <Route path="/bankdetails" element={<BankDetails />} />
-        <Route path="/editvendorprofile" element={<EditVendorProfile />} />
+        <Route path="/edit-vendor-profile/:listingId" element={<EditVendorProfile />} /> {/* Edit Vendor Profile Page */}
         <Route path="/join-as-vendor" element={<VendorRegistration />} />
         <Route path="/top-services" element={<TopServices />} />
         <Route path="/allservices" element={<AllServices />} />
@@ -75,7 +75,9 @@ const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
         <Route path="/confirmbooking" element={<ConfirmBooking />} />
         <Route path="/previousbooking" element={<PreviousBooking />} />
         <Route path="/uservendorprofile" element={<UserVendorProfile />} />
-
+        <Route path="/jobregistration" element={<JobRegistration />} /> 
+        <Route path="/contact" element={<Contact />} /> 
+        <Route path="/signupdetails" element={<SignUpDetails />} /> 
 
         <Route path="*" element={<h1>404 - Page Not Found</h1>} />
       </Routes>

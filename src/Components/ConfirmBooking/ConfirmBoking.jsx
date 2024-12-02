@@ -30,6 +30,7 @@ const ConfirmBooking = () => {
   };
   
   return (
+     
   
     <div style={{
       width: '100%',
@@ -260,7 +261,7 @@ const ConfirmBooking = () => {
 
       {/* Total */}
       <div>
-        <h2 style={{ fontSize: '14px', fontWeight: 'bold',marginTop:'-10px' }}>Total 
+        <h2 style={{ fontSize: '14px', fontWeight: 'bold',marginTop:'-10px' }}>Total
           <p style={{ fontWeight: 'normal',color:'#666' }}>
             Note: Platform fee of $20 has to be paid to Confirm Booking.
           </p>
@@ -297,6 +298,7 @@ const ConfirmBooking = () => {
       <Footer />
       <></>
     </div>
+    
   );
 };
 

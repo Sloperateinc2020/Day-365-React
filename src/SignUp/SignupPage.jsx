@@ -2,8 +2,21 @@ import React from 'react';
 import './SignupPage.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Footer from '../Components/Footer';
+import { useNavigate } from 'react-router-dom';  // Import useNavigate
 
 function SignupPage() {
+  const navigate = useNavigate();  // Initialize useNavigate hook
+
+  // Handle navigation to SignUpDetails page
+  const handleEmailMobileSignup = () => {
+    navigate('/signupdetails');  // Redirect to the SignUpDetails page
+  };
+
+  // Handle navigation to SignIn page
+  const handleLoginRedirect = () => {
+    navigate('/signin');  // Redirect to SignIn page
+  };
+
   return (
     <>
       {/* Main container for the signup content */}
@@ -26,7 +39,8 @@ function SignupPage() {
             <h2>Let's Get Started 🚀</h2>
             <p>Sign up your account</p>
             
-            <button className="signup-btn1 email-btn1">
+            {/* Button to navigate to SignUpDetails */}
+            <button className="signup-btn1 email-btn1" onClick={handleEmailMobileSignup}>
               <i className="fas fa-envelope"></i> Sign Up with Email or Mobile
             </button>
             <button className="signup-btn1 google-btn1">
@@ -50,7 +64,7 @@ function SignupPage() {
             {/* Centered Login link */}
             <p className="login-link1">
               Already have an account? 
-              <button className="login-button1" onClick={() => alert('Redirecting to Login...')}>
+              <button className="login-button1" onClick={handleLoginRedirect}>  {/* Use handleLoginRedirect function */}
                 <strong>Log in</strong>
               </button>
             </p>

@@ -23,6 +23,7 @@ body {
     width: 100px;
     background-color: lightgrey;
     margin-bottom: 20px;
+    margin-left: 45px;
   }
   .profile-info h3 {
     font-size: 18px;
@@ -70,24 +71,24 @@ body {
     gap: 20px; /* Adds space between all form fields */
   }
   
-  .form-data {
-    display: flex;
-    flex-direction: column;
-    gap: 10px; /* Adds space between label and input */
+  .account-form .form-data.full-width {
+    margin-top: -15px; 
   }
   
-  .form-data label {
-    font-size: 14px;
-    font-weight: bold;
-  }
-  
-  .form-data input,
-  .form-data select {
-    padding: 8px;
+  .account-form .form-data input {
+    width: 100%; /* Make the input fields take up the full width */
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 14px;
+    box-sizing: border-box;
   }
+  
+  .account-form .form-data label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
   
   .form-data.left-column,
   .form-data.right-column {
@@ -111,6 +112,11 @@ body {
     border-radius: 4px;
     cursor: pointer;
   }
+  .stat-item {
+    cursor: pointer; /* Change the cursor to a hand (pointer) when hovering */
+    
+  }
+  
   
   .update-button:hover {
     background-color: #45a049;

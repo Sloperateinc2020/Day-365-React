@@ -6,7 +6,33 @@ import Footer from '../Footer';
 const AccountSettings = () => {
   const [activeTab, setActiveTab] = useState('Account Settings');
   const [linkText, setLinkText] = useState('https://app.ahiregro...');
-  const navigate = useNavigate();  // Use navigate hook
+  const navigate = useNavigate();
+
+  const cities = [
+    "Chiakaluripet",
+    "Hyderabad",
+    "Mumbai",
+    "Delhi",
+    "Bangalore",
+    "Chennai",
+    "Kolkata",
+    "Pune",
+    "Ahmedabad",
+    "Jaipur"
+  ];
+
+  const countries = [
+    "India",
+    "United States",
+    "United Kingdom",
+    "Canada",
+    "Australia",
+    "Germany",
+    "France",
+    "Japan",
+    "Singapore",
+    "UAE"
+  ];
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -26,7 +52,7 @@ const AccountSettings = () => {
   };
 
   const handlePreviousBookingsClick = () => {
-    navigate('/previousbooking');  // Navigate to the Previous Booking page
+    navigate('/previousbooking');
   };
 
   useEffect(() => {
@@ -53,16 +79,10 @@ const AccountSettings = () => {
               <span>Explore Services</span>
               <span className="stat-number green"></span>
             </div>
-            <div className="stat-item">
+            <div className="stat-item" onClick={handlePreviousBookingsClick}>
               <span>Previous Bookings</span>
               <span className="stat-number">2</span>
             </div>
-          </div>
-          <div className="profile-actions">
-            {/* Add a button to trigger navigation to Previous Booking */}
-            <button onClick={handlePreviousBookingsClick} className="previous-booking-button">
-              Previous Bookings
-            </button>
           </div>
         </div>
 
@@ -97,7 +117,12 @@ const AccountSettings = () => {
                 </div>
                 <div className="form-data left-column">
                   <label>City</label>
-                  <input type="text" placeholder="Enter city" />
+                  <select defaultValue="">
+                    <option value="" disabled>Select city</option>
+                    {cities.map((city) => (
+                      <option key={city} value={city}>{city}</option>
+                    ))}
+                  </select>
                 </div>
                 <div className="form-data right-column">
                   <label>State</label>
@@ -109,15 +134,16 @@ const AccountSettings = () => {
                 </div>
                 <div className="form-data right-column">
                   <label>Country</label>
-                  <input type="text" placeholder="Enter country" />
+                  <select defaultValue="">
+                    <option value="" disabled>Select country</option>
+                    {countries.map((country) => (
+                      <option key={country} value={country}>{country}</option>
+                    ))}
+                  </select>
                 </div>
                 <div className="form-data full-width">
                   <label>Pincode</label>
-                  <select>
-                    <option>Select Pincode</option>
-                    <option>Guntur, Chilakaluripet</option>
-                    <option>Guntur, Patnam</option>
-                  </select>
+                  <input type="text" placeholder="Enter pincode" />
                 </div>
               </form>
 

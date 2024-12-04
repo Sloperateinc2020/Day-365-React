@@ -21,6 +21,13 @@ const EditVendorProfile = () => {
       emergency: false,
       maintenance: false,
     },
+    paymentMethods: { 
+      cash: false,
+      creditCard: false,
+      online: false,
+      bankAccount: false,
+    },
+    pricePerService: '',
   });
 
   const handleProfileChange = (e) => {
@@ -43,10 +50,20 @@ const EditVendorProfile = () => {
       services: { ...serviceData.services, [name]: checked },
     });
   };
-
+  const handlePaymentCheckboxChange = (e) => {
+    const { name, checked } = e.target;
+    setServiceData({
+      ...serviceData,
+      paymentMethods: { ...serviceData.paymentMethods, [name]: checked },
+    });
+  };
+  const handlePriceChange = (e) => {
+    const value = e.target.value;
+    setServiceData({ ...serviceData, pricePerService: value });
+  };  
   const validateForm = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
+  
     if (!profileData.fullName) return "Full Name is required.";
     if (!emailRegex.test(profileData.email)) return "A valid Email is required.";
     if (!profileData.phoneNumber) return "Phone Number is required.";
@@ -55,9 +72,17 @@ const EditVendorProfile = () => {
     if (!profileData.servicesOffered) return "Services Offered are required.";
     if (!serviceData.hourlyRate) return "Hourly Rate is required.";
     if (!serviceData.serviceArea) return "Service Area is required.";
-
+    const paymentMethodsSelected = Object.values(serviceData.paymentMethods).some((value) => value);
+    if (!paymentMethodsSelected) return "Please select at least one Payment Method.";
+    const servicesSelected = Object.values(serviceData.services).some((value) => value);
+    if (!servicesSelected) return "Please select at least one Service.";
+    if (!serviceData.pricePerService || serviceData.pricePerService <= 0) {
+      return "Please set a valid Price per Service.";
+    }
+  
     return null; // Form is valid
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -207,6 +232,70 @@ const EditVendorProfile = () => {
             </select>
           </div>
           <div>
+            <label style={{ display: 'block', marginBottom: '5px' }}>Price per Service</label>
+            <input
+              type="number"
+              name="pricePerService"
+              value={serviceData.pricePerService}
+              onChange={handlePriceChange}
+              placeholder="Enter price"
+              step="1"
+              min="0"
+              style={{
+                width: '100%',
+                padding: '8px',
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+              }}
+            />
+          </div>
+
+          <div>
+            <label style={{ display: 'block', marginBottom: '5px' }}>Payment Methods Accepted</label>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+              <label>
+                <input
+                  type="checkbox"
+                  name="cash"
+                  checked={serviceData.paymentMethods.cash}
+                  onChange={handlePaymentCheckboxChange}
+                  style={{ marginRight: '5px' }}
+                />
+                Cash
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  name="creditCard"
+                  checked={serviceData.paymentMethods.creditCard}
+                  onChange={handlePaymentCheckboxChange}
+                  style={{ marginRight: '5px' }}
+                />
+                Credit Card
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  name="online"
+                  checked={serviceData.paymentMethods.online}
+                  onChange={handlePaymentCheckboxChange}
+                  style={{ marginRight: '5px' }}
+                />
+                Online
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  name="bankAccount"
+                  checked={serviceData.paymentMethods.bankAccount}
+                  onChange={handlePaymentCheckboxChange}
+                  style={{ marginRight: '5px' }}
+                />
+                Bank Account
+              </label>
+            </div>
+          </div>
+          <div>
             <label htmlFor="availability" style={{ display: 'block', marginBottom: '5px' }}>Availability</label>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <div
@@ -286,17 +375,23 @@ const EditVendorProfile = () => {
           <button
             type="submit"
             style={{
-              backgroundColor: '#000',
+              backgroundColor: '#007bff', // Blue shade
               color: '#fff',
               padding: '10px',
               borderRadius: '4px',
               border: 'none',
               cursor: 'pointer',
               textAlign: 'center',
+              fontWeight: 'bold', // Bold text
+              boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)', // Subtle shadow for depth
+              transition: 'background-color 0.3s ease', // Smooth color transition
             }}
+            onMouseEnter={(e) => (e.target.style.backgroundColor = '#0056b3')} // Darker blue on hover
+            onMouseLeave={(e) => (e.target.style.backgroundColor = '#007bff')} // Original blue on mouse leave
           >
             Save Changes
           </button>
+
         </form>
       </div>
 

@@ -28,6 +28,7 @@ import UserVendorProfile from './Components/UserVendorProfile/UserVendorProfile'
 import JobRegistration from './Components/JobRegistration/JobRegistration';
 import Contact from './Components/Contact/Contact';
 import SignUpDetails from './Components/SignUpDetails/SignUpDetails';
+import VendorAvailability from './Components/VendorAvailability/VendorAvailability';
 
 function App() {
   const [selectedMenu, setSelectedMenu] = useState('Home'); // Initial selected menu
@@ -86,6 +87,8 @@ const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
         <Route path="/jobregistration" element={<JobRegistration />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/signupdetails" element={<SignUpDetails />} />
+        <Route path="/vendoravailability" element={<VendorAvailability />} />
+
 
         <Route path="*" element={<h1>404 - Page Not Found</h1>} />
       </Routes>

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import config from "../config"; // Import the config file for the API URL
 import { Search } from "lucide-react"; // Import Search icon from lucide-react
 import { Calendar, Phone } from "lucide-react"; // Import Calendar and Phone icons
-import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
-import Footer from './Footer';  
+import Footer from './Footer';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 
 const AllServices = () => {
   const [services, setServices] = useState([]); // State to hold the services
@@ -13,7 +13,7 @@ const AllServices = () => {
   const [filterQuery, setFilterQuery] = useState(""); // State for the filter query (Category or any other filter)
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
-  const navigate = useNavigate(); // Initialize useNavigate for navigation
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -73,7 +73,7 @@ const AllServices = () => {
   };
 
   const handleAvailabilityClick = (serviceId) => {
-    navigate(`/availability/${serviceId}`); // Navigate to the availability page for the selected service
+    navigate(`/vendoravailability`); // Navigate to the vendor availability page with the serviceId
   };
 
   if (loading) {
@@ -340,8 +340,9 @@ const AllServices = () => {
                       marginBottom: "1px",
                     }}
                   >
+                    {/* Availability button */}
                     <button
-                      onClick={() => handleAvailabilityClick(service.id)} // Navigate to availability page
+                      onClick={() => handleAvailabilityClick(service.id)} // Call handleAvailabilityClick with service id
                       style={{
                         flex: 1,
                         display: "flex",

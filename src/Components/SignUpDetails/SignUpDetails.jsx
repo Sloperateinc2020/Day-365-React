@@ -12,6 +12,13 @@ const SignUpDetails = () => {
   const [timer, setTimer] = useState(15);
   const inputRefs = Array(5).fill(0).map(() => React.createRef());
 
+  // Simulate sending OTP
+  const sendOTP = (mobile) => {
+    const generatedOTP = Math.floor(10000 + Math.random() * 90000).toString(); // Generate a 5-digit OTP
+    console.log(`OTP sent to ${mobile}: ${generatedOTP}`);
+    setOTP(generatedOTP.split('')); // Set the OTP in the state (split to individual digits)
+  };
+
   useEffect(() => {
     let interval;
     if (showOTPDialog && timer > 0) {
@@ -37,7 +44,14 @@ const SignUpDetails = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setShowOTPDialog(true);
+    // Check if all the fields are filled
+    if (formData.fullName && formData.email && formData.mobile && formData.password) {
+      // Simulate sending OTP for the mobile number entered
+      sendOTP(formData.mobile);
+      setShowOTPDialog(true); // Show OTP dialog after OTP is sent
+    } else {
+      alert('Please fill in all the details before submitting!');
+    }
   };
 
   const handleOTPChange = (index, value) => {
@@ -72,6 +86,13 @@ const SignUpDetails = () => {
     setTimer(15);
     setOTP(['', '', '', '', '']);
     inputRefs[0].current?.focus();
+    sendOTP(formData.mobile); // Resend OTP when requested
+  };
+
+  const handleCancel = () => {
+    setShowOTPDialog(false);
+    setOTP(['', '', '', '', '']);
+    setTimer(15);
   };
 
   return (
@@ -246,8 +267,26 @@ const SignUpDetails = () => {
             borderRadius: '8px',
             padding: '24px',
             width: '90%',
-            maxWidth: '400px'
+            maxWidth: '400px',
+            position: 'relative'
           }}>
+            {/* Cancel Button */}
+            <button 
+              onClick={handleCancel}
+              style={{
+                position: 'absolute',
+                top: '8px',
+                right: '8px',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '24px',
+                color: 'black' // Set the color to black
+              }}
+            >
+              &#10005; {/* This is the Unicode for "X" */}
+            </button>
+
             <h2 style={{
               textAlign: 'center',
               fontSize: '24px',

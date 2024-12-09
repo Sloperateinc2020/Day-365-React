@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import './App.css';
-
-// Import all necessary components
 import AboutPage from './About/AboutPage';
 import Home from './Components/Home';
 import Header from './Components/Header';
@@ -28,6 +26,7 @@ import UserVendorProfile from './Components/UserVendorProfile/UserVendorProfile'
 import JobRegistration from './Components/JobRegistration/JobRegistration';
 import Contact from './Components/Contact/Contact';
 import SignUpDetails from './Components/SignUpDetails/SignUpDetails';
+import ChatApp from './Components/ChatApp/ChatApp';
 import VendorAvailability from './Components/VendorAvailability/VendorAvailability';
 
 function App() {
@@ -84,12 +83,11 @@ const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
         <Route path="/confirmbooking" element={<ConfirmBooking />} />
         <Route path="/previousbooking" element={<PreviousBooking />} />
         <Route path="/uservendorprofile" element={<UserVendorProfile />} />
-        <Route path="/jobregistration" element={<JobRegistration />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/signupdetails" element={<SignUpDetails />} />
+        <Route path="/jobregistration" element={<JobRegistration />} /> 
+        <Route path="/contact" element={<Contact />} /> 
+        <Route path="/signupdetails" element={<SignUpDetails />} /> 
+        <Route path="/chat" element={<ChatApp />} />
         <Route path="/vendoravailability" element={<VendorAvailability />} />
-
-
         <Route path="*" element={<h1>404 - Page Not Found</h1>} />
       </Routes>
     </>

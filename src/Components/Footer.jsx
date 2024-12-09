@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FaTwitter, FaFacebookF, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
 import { IoMailOutline, IoChevronDown } from 'react-icons/io5';
+import { Link } from 'react-router-dom';  // Import the Link component
 
 export default function Footer() {
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
@@ -23,7 +24,10 @@ export default function Footer() {
         </div>
         <div style={{ width: '140px', marginLeft: '130px' }}>
           <span style={{ color: '#fff', fontWeight: 'bold', fontSize: '16px', marginBottom: '7px', display: 'block' }}>Product</span>
-          <span style={{ color: '#ccc', fontSize: '14px', marginBottom: '7px', display: 'block' }}>All Services</span>
+          {/* Link to All Services page */}
+          <Link to="/allservices" style={{ color: '#ccc', fontSize: '14px', marginBottom: '7px', display: 'block', textDecoration: 'none' }}>
+            All Services
+          </Link>
           <span style={{ color: '#ccc', fontSize: '14px', marginBottom: '7px', display: 'block' }}>Companies</span>
           <span style={{ color: '#ccc', fontSize: '14px', marginBottom: '7px', display: 'block' }}>Candidates</span>
         </div>
@@ -35,7 +39,10 @@ export default function Footer() {
         </div>
         <div style={{ width: '140px' }}>
           <span style={{ color: '#fff', fontWeight: 'bold', fontSize: '16px', marginBottom: '7px', display: 'block' }}>Company</span>
-          <span style={{ color: '#ccc', fontSize: '14px', marginBottom: '7px', display: 'block' }}>About</span>
+          {/* Link to About page */}
+          <Link to="/about" style={{ color: '#ccc', fontSize: '14px', marginBottom: '7px', display: 'block', textDecoration: 'none' }}>
+            About
+          </Link>
           <span style={{ color: '#ccc', fontSize: '14px', marginBottom: '7px', display: 'block' }}>Join Us</span>
         </div>
         <div style={{ width: '260px', marginLeft: '150px' }}>
@@ -78,6 +85,7 @@ export default function Footer() {
             <FaFacebookF size={18} color="#4A90E2" style={{ margin: '0 5px' }} />
             <FaLinkedinIn size={18} color="#4A90E2" style={{ margin: '0 5px' }} />
             <FaYoutube size={18} color="#FF0000" style={{ margin: '0 5px' }} />
+            
           </div>
         </div>
       </div>

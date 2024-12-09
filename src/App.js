@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import './App.css';
 
@@ -28,6 +28,7 @@ import UserVendorProfile from './Components/UserVendorProfile/UserVendorProfile'
 import JobRegistration from './Components/JobRegistration/JobRegistration';
 import Contact from './Components/Contact/Contact';
 import SignUpDetails from './Components/SignUpDetails/SignUpDetails';
+import VendorAvailability from './Components/VendorAvailability/VendorAvailability';
 
 function App() {
   const [selectedMenu, setSelectedMenu] = useState('Home'); // Initial selected menu
@@ -44,9 +45,14 @@ function App() {
 const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
   const location = useLocation(); // Get current route
 
+  // Scroll to top whenever location changes (global scroll to top logic)
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to top (0px from the top)
+  }, [location.pathname]); // This effect will run on each route change
+
   return (
     <>
-      {/* Conditionally render Header: don't display on /listings or /vendordashboard routes */}
+      {/* Conditionally render Header */}
       {location.pathname !== '/listings' && location.pathname !== '/vendordashboard' && 
       location.pathname !== '/booking' && (
         <Header selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
@@ -59,13 +65,16 @@ const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/booking" element={<Booking />} />
-        <Route path="/listings" element={<Listings />} /> {/* Listings page */}
-        <Route path="/availability" element={<Availability />} />
+        <Route path="/listings" element={<Listings />} />
+        
+        {/* Add the dynamic availability route with serviceId */}
+        <Route path="/availability/:serviceId" element={<Availability />} />
+        
         <Route path="/documents" element={<Profile />} />
         <Route path="/accountsettings" element={<AccountSettings />} />
         <Route path="/payments" element={<Payments />} />
         <Route path="/bankdetails" element={<BankDetails />} />
-        <Route path="/edit-vendor-profile/:listingId" element={<EditVendorProfile />} /> {/* Edit Vendor Profile Page */}
+        <Route path="/edit-vendor-profile/:listingId" element={<EditVendorProfile />} />
         <Route path="/join-as-vendor" element={<VendorRegistration />} />
         <Route path="/top-services" element={<TopServices />} />
         <Route path="/allservices" element={<AllServices />} />
@@ -75,9 +84,11 @@ const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
         <Route path="/confirmbooking" element={<ConfirmBooking />} />
         <Route path="/previousbooking" element={<PreviousBooking />} />
         <Route path="/uservendorprofile" element={<UserVendorProfile />} />
-        <Route path="/jobregistration" element={<JobRegistration />} /> 
-        <Route path="/contact" element={<Contact />} /> 
-        <Route path="/signupdetails" element={<SignUpDetails />} /> 
+        <Route path="/jobregistration" element={<JobRegistration />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/signupdetails" element={<SignUpDetails />} />
+        <Route path="/vendoravailability" element={<VendorAvailability />} />
+
 
         <Route path="*" element={<h1>404 - Page Not Found</h1>} />
       </Routes>

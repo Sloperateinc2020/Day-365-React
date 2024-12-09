@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Plus } from 'lucide-react';
-import './Listings.css';
+import './Listings.css';  // Assuming you added the CSS in Listings.css
 import Footer from './Footer';
 import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import { Bell, Home, ListOrdered, MessageSquare, Wallet, User, CalendarDays } from 'lucide-react';
@@ -19,6 +19,7 @@ const Sidebar = () => {
     flexDirection: 'column',
     alignItems: 'center',
     padding: '10px 0',
+    overflowX: 'hidden', // Prevent horizontal scrolling in the sidebar
   };
 
   const logoStyle = {

@@ -113,6 +113,10 @@
   color: #4f46e5;
 
 }
+/* Add this to your CSS file to disable the horizontal scrollbar */
+body {
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
 
 .listings-title {
   text-align: center; 

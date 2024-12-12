@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './UserVendorProfile.css';
 import Footer from '../Footer';
@@ -6,7 +6,35 @@ import Footer from '../Footer';
 const AccountSettings = () => {
   const [activeTab, setActiveTab] = useState('Account Settings');
   const [linkText, setLinkText] = useState('https://app.ahiregro...');
-  const navigate = useNavigate();  // Use navigate hook
+  const [selectedCity, setSelectedCity] = useState('');
+  const [isEditable, setIsEditable] = useState(false); // State to track whether the form is editable
+  const navigate = useNavigate();
+
+  const cities = [
+    "Chiakaluripet",
+    "Hyderabad",
+    "Mumbai",
+    "Delhi",
+    "Bangalore",
+    "Chennai",
+    "Kolkata",
+    "Pune",
+    "Ahmedabad",
+    "Jaipur"
+  ];
+
+  const countries = [
+    "India",
+    "United States",
+    "United Kingdom",
+    "Canada",
+    "Australia",
+    "Germany",
+    "France",
+    "Japan",
+    "Singapore",
+    "UAE"
+  ];
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -26,19 +54,26 @@ const AccountSettings = () => {
   };
 
   const handlePreviousBookingsClick = () => {
-    navigate('/previousbooking');  // Navigate to the Previous Booking page
+    navigate('/previousbooking');
   };
 
-  useEffect(() => {
-    document.body.classList.add('scroll-locked');
-    
-    return () => {
-      document.body.classList.remove('scroll-locked');
-    };
-  }, []);
+  // Handle city selection change
+  const handleCityChange = (event) => {
+    setSelectedCity(event.target.value); // Update the selected city
+  };
+
+  // Toggle the edit state
+  const handleEditProfileClick = () => {
+    setIsEditable(!isEditable); // Toggle editability
+  };
 
   return (
     <>
+      <div className="cover-text">
+        <i className="fas fa-camera" style={{ marginRight: '8px', fontSize: '20px' }}></i>
+        change cover
+      </div>
+
       <div className="profile-container">
         <div className="profile-sidebar">
           <div className="profile-image">
@@ -49,20 +84,14 @@ const AccountSettings = () => {
             <p>Haryak Inc.</p>
           </div>
           <div className="profile-stats">
-            <div className="stat-item">
+            <div className="stat-item" style={{ borderLeft: 'black', borderRight: 'black', padding: '10px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
               <span>Explore Services</span>
               <span className="stat-number green"></span>
             </div>
-            <div className="stat-item">
+            <div className="stat-item" style={{ borderLeft: 'black', borderRight: 'black', padding: '10px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }} onClick={handlePreviousBookingsClick}>
               <span>Previous Bookings</span>
               <span className="stat-number">2</span>
             </div>
-          </div>
-          <div className="profile-actions">
-            {/* Add a button to trigger navigation to Previous Booking */}
-            <button onClick={handlePreviousBookingsClick} className="previous-booking-button">
-              Previous Bookings
-            </button>
           </div>
         </div>
 
@@ -81,53 +110,102 @@ const AccountSettings = () => {
               <form className="account-form">
                 <div className="form-data left-column">
                   <label>First Name</label>
-                  <input type="text" placeholder="Enter first name" />
+                  <input 
+                    type="text" 
+                    placeholder="Enter first name" 
+                    disabled={!isEditable} // Disable input if not editable
+                  />
                 </div>
                 <div className="form-data right-column">
                   <label>Last Name</label>
-                  <input type="text" placeholder="Enter last name" />
+                  <input 
+                    type="text" 
+                    placeholder="Enter last name" 
+                    disabled={!isEditable} // Disable input if not editable
+                  />
                 </div>
                 <div className="form-data left-column">
                   <label>Phone Number</label>
-                  <input type="text" placeholder="Enter phone number" />
+                  <input 
+                    type="text" 
+                    placeholder="Enter phone number" 
+                    disabled={!isEditable} // Disable input if not editable
+                  />
                 </div>
                 <div className="form-data right-column">
                   <label>Email address</label>
-                  <input type="email" placeholder="Enter email address" />
+                  <input 
+                    type="email" 
+                    placeholder="Enter email address" 
+                    disabled={!isEditable} // Disable input if not editable
+                  />
                 </div>
                 <div className="form-data left-column">
                   <label>City</label>
-                  <input type="text" placeholder="Enter city" />
+                  <select 
+                    value={selectedCity} 
+                    onChange={handleCityChange} 
+                    disabled={!isEditable} // Disable select if not editable
+                  >
+                    <option value="" disabled>Select city</option>
+                    {cities.map((city) => (
+                      <option key={city} value={city}>{city}</option>
+                    ))}
+                  </select>
                 </div>
                 <div className="form-data right-column">
                   <label>State</label>
-                  <input type="text" placeholder="Enter state" />
+                  <input 
+                    type="text" 
+                    placeholder="Enter state" 
+                    disabled={!isEditable} // Disable input if not editable
+                  />
                 </div>
                 <div className="form-data left-column">
                   <label>Address</label>
-                  <input type="text" placeholder="Enter Address" />
+                  <input 
+                    type="text" 
+                    placeholder="Enter Address" 
+                    disabled={!isEditable} // Disable input if not editable
+                  />
                 </div>
+                <div style={{ marginBottom: '20px', marginLeft: '80px' }}></div> 
                 <div className="form-data right-column">
-                  <label>Country</label>
-                  <input type="text" placeholder="Enter country" />
-                </div>
-                <div className="form-data full-width">
-                  <label>Pincode</label>
-                  <select>
-                    <option>Select Pincode</option>
-                    <option>Guntur, Chilakaluripet</option>
-                    <option>Guntur, Patnam</option>
+                  <label style={{ marginLeft: '3px' }}>Country</label>
+                  <select 
+                    defaultValue="" 
+                    disabled={!isEditable} // Disable select if not editable
+                  >
+                    <option value="" disabled>Select country</option>
+                    {countries.map((country) => (
+                      <option key={country} value={country}>{country}</option>
+                    ))}
                   </select>
                 </div>
+                <div className="form-data left-column">
+                  <label>Pincode</label>
+                  <input 
+                    type="text" 
+                    placeholder="Enter pincode" 
+                    disabled={!isEditable} // Disable input if not editable
+                  />
+                </div>
               </form>
-
-              <div className="update-button-container">
-                <button type="submit" className="update-button">Update</button>
-              </div>
             </div>
           )}
+
+          <div className="update-button-container">
+            <button 
+              type="button" 
+              className="update-button"
+              onClick={handleEditProfileClick} // Toggle edit mode
+            >
+              {isEditable ? 'Save Changes' : 'Edit Profile'} {/* Change button text based on edit mode */}
+            </button>
+          </div>
         </div>
       </div>
+
       <Footer /> 
     </>
   );

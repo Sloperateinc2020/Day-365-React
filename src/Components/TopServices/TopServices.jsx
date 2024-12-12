@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import config from '../../config';
-import Footer from '../Footer'; 
+import config from '../../config'; // Import the config
+import Footer from '../Footer';
 
 function TopServices() {
   const [topServices, setTopServices] = useState([]);
@@ -11,7 +11,8 @@ function TopServices() {
 
   const fetchTopServices = async () => {
     try {
-      const response = await fetch(config.TOPSERVICE_API_URL);
+      // Fetch data from the URL provided in the config
+      const response = await fetch(config.TOPSERVICE_API_URL); 
       const data = await response.json();
       setTopServices(data.topServices);
     } catch (error) {
@@ -22,8 +23,11 @@ function TopServices() {
   return (
     <>
       <div style={{ padding: '20px' }}>
-        <h2 style={{ textAlign: 'center', fontSize: '32px', fontWeight: 'bold', marginBottom: '20px' }}>
-          All <span style={{ color: '#6666ff' }}>Top Services</span>
+        <h2 style={{ textAlign: 'center', fontSize: '32px', fontWeight: 'bold', marginBottom: '-25px' }}>
+          <span style={{ color: 'black' }}>Top Services</span>
+        </h2>
+        <h2 style={{ textAlign: 'center', fontSize: '15px', fontWeight: 'bold', marginBottom: '20px' }}>
+          <span style={{ color: '#666' }}>Browse through our comprehensive list of services</span>
         </h2>
         <div style={{
           display: 'grid',
@@ -41,7 +45,7 @@ function TopServices() {
             }}>
               <img src={service.iconUrl} alt={service.title} style={{
                 width: '60px',
-                height: '60px',
+                height: '40px',
                 marginBottom: '10px'
               }} />
               <h3 style={{
@@ -53,9 +57,31 @@ function TopServices() {
                 {service.title}
               </h3>
               <p style={{ fontSize: '14px', color: '#666' }}>{service.location}</p>
-              <p style={{ fontSize: '14px', color: '#4A90E2', fontWeight: 'bold' }}>
-                {service.jobCount} jobs available
+              {/* Jobs count */}
+              <p style={{ fontSize: '14px', color: 'black', fontWeight:'bold' }}>
+                {service.jobCount} 
               </p>
+              
+              {/* View Details Section */}
+              <div style={{ marginTop: '10px' }}>
+                <span style={{
+                  fontSize: '14px',
+                  color: 'black',  // Changed to black
+                  fontWeight: 'bold',
+                  cursor: 'pointer'
+                }}>
+                  View Details
+                </span>
+                {/* Arrow symbol */}
+                <span style={{
+                  marginLeft: '8px',
+                  fontSize: '18px',
+                  color: 'black',  // Arrow in black
+                  cursor: 'pointer'
+                }}>
+                  &#8594; {/* This is the Unicode for a right arrow symbol */}
+                </span>
+              </div>
             </div>
           ))}
         </div>

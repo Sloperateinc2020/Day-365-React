@@ -1,9 +1,17 @@
-// Header.js
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function Header({ selectedMenu, setSelectedMenu }) {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Scroll to top when route changes
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }, [location.pathname]);
 
   // Function to handle navigation and update selected menu
   const handleMenuClick = (menu) => {

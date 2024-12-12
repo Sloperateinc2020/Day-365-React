@@ -38,6 +38,7 @@ const Profile = () => {
       setLinkText('https://app.ahiregro...');
     }, 2000);
   };
+
   useEffect(() => {
     document.body.classList.add('scroll-locked');
     
@@ -45,6 +46,7 @@ const Profile = () => {
       document.body.classList.remove('scroll-locked');
     };
   }, []);
+
   return (
     <>
       <div className="profile-container">
@@ -101,7 +103,7 @@ const Profile = () => {
             </button>
           </div>
 
-          {activeTab === 'Documents' && (
+          <div className={activeTab === 'Documents' ? 'active-section' : ''}>
             <div className="documents-section">
               <h2>Uploaded Documents</h2>
               <table className="documents-table">
@@ -139,10 +141,10 @@ const Profile = () => {
                 <button className="delete-btn">Delete</button>
               </div>
             </div>
-          )}
+          </div>
         </div>
       </div>
-      <Footer /> {/* Place Footer outside the main container */}
+      <Footer />
     </>
   );
 };

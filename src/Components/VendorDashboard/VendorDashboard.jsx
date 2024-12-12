@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Bell, Home, ListOrdered, MessageSquare, Wallet, User, CalendarDays } from 'lucide-react';
 import config from '../../config';  // Import the config file for API URL
-import { Link } from 'react-router-dom'; // Import Link for navigation
-
+import { Link, useNavigate } from 'react-router-dom'; // Import Link and useNavigate for routing
 
 const VendorDashboard = () => {
   const [bookingsData, setBookingsData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); // useNavigate for programmatic navigation
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -18,18 +18,16 @@ const VendorDashboard = () => {
         }
         const data = await response.json();
 
-        // Log the API response to inspect the data structure
         console.log("API Data: ", data);
 
-        // Check if 'upcomingBookings' exists and is an array
         if (data && Array.isArray(data.upcomingBookings)) {
-          setBookingsData(data.upcomingBookings);  // Set data.upcomingBookings
+          setBookingsData(data.upcomingBookings);
         } else {
-          setBookingsData([]);  // Fallback if 'upcomingBookings' is not found or is not an array
+          setBookingsData([]);
         }
       } catch (err) {
         setError(err.message);
-        setBookingsData([]);  // Set to empty array on error
+        setBookingsData([]);
       } finally {
         setLoading(false);
       }
@@ -50,13 +48,13 @@ const VendorDashboard = () => {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: '10px 0', // Reduced padding to decrease gaps
+    padding: '10px 0',
   };
 
   const logoStyle = {
     width: '24px',
     height: '24px',
-    marginBottom: '16px', // Reduced margin to decrease gaps
+    marginBottom: '16px',
   };
 
   const sidebarItemStyle = {
@@ -64,12 +62,12 @@ const VendorDashboard = () => {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: '8px 0', // Reduced padding
+    padding: '8px 0',
     color: '#666',
     fontSize: '11px',
     cursor: 'pointer',
     textDecoration: 'none',
-    marginBottom: '4px', // Reduced margin to decrease gaps
+    marginBottom: '4px',
   };
 
   const activeItemStyle = {
@@ -97,10 +95,10 @@ const VendorDashboard = () => {
       display: "flex",
       fontFamily: "Arial, sans-serif",
       height: "100vh",
-      marginLeft:"10px"
+      marginLeft: "10px",
     },
     content: {
-      marginLeft: '80px', // to avoid content being overlapped by the sidebar
+      marginLeft: '80px',
       width: '100%',
     },
     header: {
@@ -110,8 +108,7 @@ const VendorDashboard = () => {
       padding: "10px 20px",
       borderBottom: "1px solid #ddd",
       backgroundColor: "#fff",
-      borderColor:"white",
-      marginBottom:"30px"
+      marginBottom: "30px",
     },
     headerTitle: {
       fontSize: "24px",
@@ -140,38 +137,35 @@ const VendorDashboard = () => {
       padding: "10px",
       border: "1px solid white",
       borderRadius: "5px",
-      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)", // Adds a light shadow around the element
+      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
     },
     bookingInfo: {
       flex: 1,
-      color: "#4a4a4a", // Light black color (pencil color)
+      color: "#4a4a4a",
     },
-    
     bookingImage: {
       width: "100px",
       height: "80px",
       borderRadius: "2px",
       marginLeft: "10px",
-      marginTop:"50px"
     },
     viewButton: {
       marginTop: "10px",
       padding: "5px 10px",
       backgroundColor: "White",
-      color: "#007bff",  // Blue color for text
-      border: "1px solid #007bff",  // Light blue (hex code)
+      color: "#007bff",
+      border: "1px solid #007bff",
       borderRadius: "5px",
       cursor: "pointer",
     },
-    
     paymentSection: {
       display: "flex",
-      justifyContent: "flex-start", // Align the items to the left
-      gap: "10px",  // Space between the boxes
-      marginTop: "20px", // Space above the section
+      justifyContent: "flex-start",
+      gap: "10px",
+      marginTop: "20px",
     },
     paymentBox: {
-      flex: "0 1 350px", // Adjust to a smaller width for each box
+      flex: "0 1 350px",
       textAlign: "left",
       padding: "15px",
       border: "1px solid #ddd",
@@ -180,24 +174,29 @@ const VendorDashboard = () => {
     balance: {
       fontWeight: "bold",
       color: "#28a745",
-      display: "flex", // Flex container for wallet icon and text
-      alignItems: "center", // Align icon with text
+      display: "flex",
+      alignItems: "center",
     },
     symbolIcon: {
       width: "20px",
       height: "20px",
-      marginRight: "5px", // Space between icon and text
+      marginRight: "5px",
     },
     earnings: {
       fontWeight: "bold",
       color: "#ffc107",
     },
     mapContainer: {
-      marginTop: '0px', // Space above the map
+      marginTop: '0px',
       width: '100%',
-      height: '250px',  // Set a fixed height for the map
+      height: '250px',
       overflow: 'hidden',
     },
+  };
+
+  // Handle Calendar Icon Click (Navigate to Availability Page)
+  const handleCalendarClick = () => {
+    navigate('/availability'); // Redirect to availability page
   };
 
   // Render loading, error, or actual data
@@ -206,41 +205,41 @@ const VendorDashboard = () => {
 
   return (
     <div style={styles.container}>
-    {/* Sidebar */}
-    <div style={sidebarStyle}>
-      <img
-        src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIgMkw0IDdWMjJIMjBWN0wxMiAyWiIgc3Ryb2tlPSIjMjU2M2ViIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvc3ZnPg=="
-        alt="Logo"
-        style={logoStyle}
-      />
-      <div style={{ width: '100%', display: 'flex', flexDirection: 'column', height: '100%' }}>
-        <Link to="/vendordashboard" style={activeItemStyle}>
-          <div style={activeDotStyle}></div>
-          <span style={iconContainerStyle}><Home size={20} /></span>
-          <span>Home</span>
-        </Link>
-        <Link to="/listings" style={sidebarItemStyle}>
-          <span style={iconContainerStyle}><ListOrdered size={20} /></span>
-          <span>Listings</span>
-        </Link>
-        <Link to="/booking" style={sidebarItemStyle}>
-          <span style={iconContainerStyle}><CalendarDays size={20} /></span>
-          <span>Booking</span>
-        </Link>
-        <Link to="/messages" style={sidebarItemStyle}>
-          <span style={iconContainerStyle}><MessageSquare size={20} /></span>
-          <span>Messages</span>
-        </Link>
-        <Link to="/payments" style={sidebarItemStyle}>
-          <span style={iconContainerStyle}><Wallet size={20} /></span>
-          <span>Payments</span>
-        </Link>
-        <Link to="/profile" style={sidebarItemStyle}>
-          <span style={iconContainerStyle}><User size={20} /></span>
-          <span>Profile</span>
-        </Link>
+      {/* Sidebar */}
+      <div style={sidebarStyle}>
+        <img
+          src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIgMkw0IDdWMjJIMjBWN0wxMiAyWiIgc3Ryb2tlPSIjMjU2M2ViIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvc3ZnPg=="
+          alt="Logo"
+          style={logoStyle}
+        />
+        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', height: '100%' }}>
+          <Link to="/vendordashboard" style={activeItemStyle}>
+            <div style={activeDotStyle}></div>
+            <span style={iconContainerStyle}><Home size={20} /></span>
+            <span>Home</span>
+          </Link>
+          <Link to="/listings" style={sidebarItemStyle}>
+            <span style={iconContainerStyle}><ListOrdered size={20} /></span>
+            <span>Listings</span>
+          </Link>
+          <Link to="/booking" style={sidebarItemStyle}>
+            <span style={iconContainerStyle}><CalendarDays size={20} /></span>
+            <span>Booking</span>
+          </Link>
+          <Link to="/messages" style={sidebarItemStyle}>
+            <span style={iconContainerStyle}><MessageSquare size={20} /></span>
+            <span>Messages</span>
+          </Link>
+          <Link to="/payments" style={sidebarItemStyle}>
+            <span style={iconContainerStyle}><Wallet size={20} /></span>
+            <span>Payments</span>
+          </Link>
+          <Link to="/profile" style={sidebarItemStyle}>
+            <span style={iconContainerStyle}><User size={20} /></span>
+            <span>Profile</span>
+          </Link>
+        </div>
       </div>
-    </div>
 
       {/* Main Content */}
       <div style={styles.content}>
@@ -252,6 +251,7 @@ const VendorDashboard = () => {
               src="https://cdn.iconscout.com/icon/free/png-512/free-calendar-icon-download-in-svg-png-gif-file-formats--feather-pack-user-interface-icons-433988.png?f=webp&w=256" 
               alt="Calendar Icon" 
               style={{ width: "20px", height: "20px", cursor: "pointer" }} 
+              onClick={handleCalendarClick} // Add onClick handler for calendar icon
             />
             <img 
               src="https://cdn-icons-png.flaticon.com/512/5035/5035563.png"
@@ -286,7 +286,7 @@ const VendorDashboard = () => {
           )}
         </div>
 
-        {/* Payments Section with Heading */}
+        {/* Payments Section */}
         <div style={styles.section}>
           <h2>Payments</h2>
           <div style={styles.paymentSection}>
@@ -306,21 +306,20 @@ const VendorDashboard = () => {
           </div>
         </div>
 
-        {/* Location and Availability Headings */}
+        {/* Location and Availability */}
         <div style={styles.section}>
-          <h2>Location and Availability</h2>      
-        {/* Google Map Embed */}
-        <div style={styles.mapContainer}>
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15334.224460882251!2d80.157599!3d16.088508!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4a6337b1dbf91d%3A0x1b400dcd5e894b67!2sHaryak%20Technologies%20India%20Private%20Limited!5e0!3m2!1sen!2sin!4v1732259787373!5m2!1sen!2sin"
-            width="100%" 
-            height="100%" 
-            style={{ border: 0 }} 
-            allowfullscreen="" 
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-          ></iframe>
-        </div>
+          <h2>Location and Availability</h2>
+          <div style={styles.mapContainer}>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15334.224460882251!2d80.157599!3d16.088508!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a4a6337b1dbf91d%3A0x1b400dcd5e894b67!2sHaryak%20Technologies%20India%20Private%20Limited!5e0!3m2!1sen!2sin!4v1732259787373!5m2!1sen!2sin"
+              width="100%" 
+              height="100%" 
+              style={{ border: 0 }} 
+              allowfullscreen="" 
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
         </div>
       </div>
     </div>

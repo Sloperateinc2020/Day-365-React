@@ -231,6 +231,9 @@ function Home() {
     navigate('/top-services');
   };
 
+  const handleSeeMoreLatestServices = () => {
+    navigate('/latestservices');
+  };
   return (
     <div style={{ overflowX: 'hidden', position: 'fixed', width: '100%', height: '90%',marginTop:"40px" }}>
 
@@ -657,20 +660,8 @@ function Home() {
   </button>
 </div>
 </div>
-        <button
-          onClick={handleSeeMore}
-          style={{
-            backgroundColor: '#6666ff',
-            color: 'white',
-            padding: '10px 20px',
-            border: 'none',
-            borderRadius: '5px',
-            marginTop: '20px',
-            cursor: 'pointer'
-          }}
-        >
-          See More
-        </button>
+       
+        
         {/* </div> */}
         <div style={{ padding: '20px', textAlign: 'center' }}>
           <h3 style={{
@@ -687,8 +678,8 @@ function Home() {
             maxWidth: '1200px',
             margin: '0 auto'
           }}>
-            {latestServices.map((service, index) => (
-              <div key={index} style={{
+           {latestServices.slice(0, 3).map((service, index) => (
+          <div key={index} style={{
                 borderRadius: '10px',
                 backgroundColor: '#f9f9f9',
                 padding: '20px',
@@ -703,7 +694,8 @@ function Home() {
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
-                  marginBottom: '10px'
+                  marginBottom: '10px',
+                  
                 }}>
                   <img src={service.iconUrl} alt="Service Icon" style={{
                     width: '40px',
@@ -777,7 +769,9 @@ function Home() {
           </div>
 
 
-          <button style={{
+          <button 
+          onClick={handleSeeMoreLatestServices}
+          style={{
             backgroundColor: '#6666ff',
             color: 'white',
             padding: '10px 20px',
@@ -791,7 +785,7 @@ function Home() {
         </div>
       </div>
       <div style={{ padding: '40px 0', textAlign: 'center' }}>
-      <h2 style={{ fontSize: '32px', fontWeight: 'bold', marginBottom: '20px' }}>
+      <h2 style={{ fontSize: '32px', fontWeight: 'bold', marginBottom: '10px' }}>
         Top <span style={{ color: '#6666ff' }}>Services</span>
       </h2>
       
@@ -799,7 +793,7 @@ function Home() {
         display: 'flex',
         justifyContent: 'center',
         gap: '20px',
-        marginTop: '50px',
+        marginTop: '30px',
       }}>
         {topServices.slice(0, 4).map((service, index) => (
           <div key={index} style={{
@@ -830,26 +824,25 @@ function Home() {
             </h3>
 
             <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginTop: '4px'
-            }}>
-              <span style={{
-                color: '#4A90E2',
-                textDecoration: 'underline',
-                fontSize: '14px',
-                marginRight: '4px'
-              }}>
-                {service.jobCount} jobs
-              </span>
-              <span style={{
-                color: '#333',
-                fontSize: '14px'
-              }}>
-                | {service.location}
-              </span>
-            </div>
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginTop: '4px'
+}}>
+  <span style={{
+    color: '6666ff',  
+    fontSize: '14px',
+    marginRight: '4px'
+  }}>
+    {service.jobCount}
+  </span>
+  <span style={{
+    color: '#333',  
+    fontSize: '14px'
+  }}>
+    {service.location}
+  </span>
+</div>
           </div>
         ))}
       </div>

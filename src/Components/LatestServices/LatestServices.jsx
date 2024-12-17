@@ -11,7 +11,7 @@ const LatestServices = () => {
   const [error, setError] = useState(null);
   const [showAll, setShowAll] = useState(false);
 
-  const LATESTSERVICE_API_URL = 'https://run.mocky.io/v3/8d88062e-45c5-4df3-97bc-3ece2305bffc';
+  const LATESTSERVICE_API_URL = 'https://run.mocky.io/v3/d8593c37-71e6-4378-9d72-e7a04d1a6495';
 
   useEffect(() => {
     const fetchLatestServices = async () => {

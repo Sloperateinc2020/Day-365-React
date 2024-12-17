@@ -1,24 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { Bell, Home, ListOrdered, MessageSquare, Wallet, User, CalendarDays } from 'lucide-react';
-import config from '../../config';  // Import the config file for API URL
-import { Link, useNavigate } from 'react-router-dom'; // Import Link and useNavigate for routing
+import config from '../../config';  
+import { Link, useNavigate } from 'react-router-dom'; 
 
 const VendorDashboard = () => {
   const [bookingsData, setBookingsData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const navigate = useNavigate(); // useNavigate for programmatic navigation
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchBookings = async () => {
       try {
+        console.log("Fetching bookings from URL: ", config.UPCOMINGBOOKING_API_URL);
+        
         const response = await fetch(config.UPCOMINGBOOKING_API_URL);
-        if (!response.ok) {
-          throw new Error("Failed to fetch bookings");
-        }
-        const data = await response.json();
+        
+        console.log("Response Status:", response.status);
 
-        console.log("API Data: ", data);
+        if (!response.ok) {
+          if (response.status === 404) {
+            throw new Error("Bookings not found (404).");
+          } else if (response.status === 500) {
+            throw new Error("Internal server error (500).");
+          } else {
+            throw new Error(`Failed to fetch bookings (status: ${response.status}).`);
+          }
+        }
+
+        const data = await response.json();
+        console.log("API Data:", data);
 
         if (data && Array.isArray(data.upcomingBookings)) {
           setBookingsData(data.upcomingBookings);
@@ -26,6 +37,7 @@ const VendorDashboard = () => {
           setBookingsData([]);
         }
       } catch (err) {
+        console.error("Error fetching data:", err.message);
         setError(err.message);
         setBookingsData([]);
       } finally {
@@ -36,7 +48,6 @@ const VendorDashboard = () => {
     fetchBookings();
   }, []);
 
-  // Sidebar Styles
   const sidebarStyle = {
     width: '80px',
     backgroundColor: 'white',
@@ -89,7 +100,6 @@ const VendorDashboard = () => {
     top: 0,
   };
 
-  // Main Content Styles
   const styles = {
     container: {
       display: "flex",
@@ -194,18 +204,14 @@ const VendorDashboard = () => {
     },
   };
 
-  // Handle Calendar Icon Click (Navigate to Availability Page)
   const handleCalendarClick = () => {
-    navigate('/availability'); // Redirect to availability page
+    navigate('/availability'); 
   };
 
-  // Render loading, error, or actual data
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
 
   return (
     <div style={styles.container}>
-      {/* Sidebar */}
       <div style={sidebarStyle}>
         <img
           src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIgMkw0IDdWMjJIMjBWN0wxMiAyWiIgc3Ryb2tlPSIjMjU2M2ViIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvc3ZnPg=="
@@ -262,31 +268,31 @@ const VendorDashboard = () => {
           </div>
         </div>
 
-        {/* Upcoming Bookings */}
         <div style={styles.section}>
           <div style={styles.sectionHeader}>Upcoming Bookings</div>
-          {Array.isArray(bookingsData) && bookingsData.length > 0 ? (
+          {error ? (
+            <div style={{ color: 'red' }}>Error: {error}</div> 
+          ) : bookingsData.length > 0 ? (
             bookingsData.map((booking) => (
               <div key={booking.id} style={styles.booking}>
                 <div style={styles.bookingInfo}>
                   <p>{booking.title}</p>
-                  <p>Date: {booking.date}</p>
-                  <p>Customer: {booking.customer}</p>
+                  <p>Date: {booking.bookingDate}</p>
+                  <p>Customer: {booking.customerName}</p>
                   <button style={styles.viewButton}>{booking.viewButtonText}</button>
                 </div>
                 <img
-                  src={booking.image}
+                  src={booking.bookingImage}
                   alt={booking.customer}
                   style={styles.bookingImage}
                 />
               </div>
             ))
           ) : (
-            <div>No bookings available</div>
+            <div>No bookings available</div> 
           )}
         </div>
 
-        {/* Payments Section */}
         <div style={styles.section}>
           <h2>Payments</h2>
           <div style={styles.paymentSection}>
@@ -306,7 +312,6 @@ const VendorDashboard = () => {
           </div>
         </div>
 
-        {/* Location and Availability */}
         <div style={styles.section}>
           <h2>Location and Availability</h2>
           <div style={styles.mapContainer}>

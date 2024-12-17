@@ -170,7 +170,20 @@ body.scroll-locked {
     height: 2px;
     background: #4051B5;
   }
-  
+  .cover-text {
+  font-size: 16px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -20px; /* Add margin to move it a bit lower */
+  padding: 10px;
+  cursor: pointer;
+}
+
+.cover-text i {
+  margin-right: 5px;
+}
   .documents-section {
     padding: 1.5rem;
   }
@@ -258,7 +271,23 @@ body.scroll-locked {
     cursor: pointer;
     font-size: 0.9rem;
   }
-  
+  .cover-text {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: #007bff;
+  font-size: 16px;
+}
+
+.cover-text i {
+  margin-right: 8px;
+  font-size: 20px;
+}
+
+.cover-text:hover {
+  text-decoration: underline;
+}
+
   .delete-btn {
     padding: 0.5rem 2rem;
     background-color: #F44336;

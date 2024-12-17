@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './Booking.css';
 import config from '../../config'; 
-import Footer from '../Footer'; // Ensure this is correctly imported
+import Footer from '../Footer'; 
 import { Bell, Home, ListOrdered, MessageSquare, Wallet, User, CalendarDays } from 'lucide-react';
 
-
 const Booking = () => {
-  const [bookings, setBookings] = useState([]);
+  const [bookings, setBookings] = useState([]);  // Ensure it's initialized as an array
   const [filterDate, setFilterDate] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -18,7 +17,13 @@ const Booking = () => {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        setBookings(data); 
+        
+        // Ensure bookings is an array before setting it
+        if (Array.isArray(data.bookings)) {
+          setBookings(data.bookings);
+        } else {
+          console.error('Bookings data is not an array:', data);
+        }
       } catch (error) {
         console.error('Error fetching bookings:', error);
       }
@@ -27,6 +32,7 @@ const Booking = () => {
     fetchBookings();
   }, []);
 
+  // Filtering bookings based on search term
   const filteredBookings = bookings.filter(booking =>
     booking.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     booking.mobile.includes(searchTerm)
@@ -40,7 +46,7 @@ const Booking = () => {
     };
   }, []);
 
-  // Sidebar Styles (from your original VendorDashboard)
+  // Sidebar Styles
   const sidebarStyle = {
     width: '80px',
     backgroundColor: 'white',
@@ -105,32 +111,28 @@ const Booking = () => {
       marginLeft: '80px', // to avoid content being overlapped by the sidebar
       width: '100%',
     },
-      content: {
-        marginLeft: '80px', // to avoid content being overlapped by the sidebar
-        width: '100%',
-      },
-      header: {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "10px 20px",
-        borderBottom: "1px solid #ddd",
-        backgroundColor: "#fff",
-        borderColor:"white",
-        marginBottom:"30px"
-      },
-      headerTitle: {
-        fontSize: "24px",
-      },
-      headerIcons: {
-        display: "flex",
-        alignItems: "center",
-        gap: "20px",
-      },
-      headerIcon: {
-        fontSize: "20px",
-        cursor: "pointer",
-      },
+    header: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: "10px 20px",
+      borderBottom: "1px solid #ddd",
+      backgroundColor: "#fff",
+      borderColor:"white",
+      marginBottom:"30px"
+    },
+    headerTitle: {
+      fontSize: "24px",
+    },
+    headerIcons: {
+      display: "flex",
+      alignItems: "center",
+      gap: "20px",
+    },
+    headerIcon: {
+      fontSize: "20px",
+      cursor: "pointer",
+    },
     section: {
       padding: "2px",
     },

@@ -37,6 +37,10 @@ const BankDetails = () => {
   }, []);
   return (
     <>
+    <div className="cover-text">
+        <i className="fas fa-camera" style={{ marginRight: '8px', fontSize: '20px' }}></i>
+        change cover
+      </div>
       <div className="profile-container">
         <div className="profile-sidebar">
           <div className="profile-image">

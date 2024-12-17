@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { format, addMonths, subMonths, startOfMonth, endOfMonth, eachDayOfInterval } from 'date-fns';
+import { format, addMonths, subMonths, addYears, subYears, startOfMonth, endOfMonth, eachDayOfInterval } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../Footer';
 
@@ -29,7 +29,7 @@ const styles = {
     padding: '8px 8px',
     border: '2px solid #000',
     marginBottom: '24px',
-    width:'300px'
+    width: '290px'  // Increased width to accommodate year
   },
   monthText: {
     fontSize: '24px',
@@ -41,7 +41,10 @@ const styles = {
     cursor: 'pointer',
     fontSize: '20px',
     color: '#000',
-    padding: '4px'
+    padding: '4px', // Adjust padding to reduce the gap
+  },
+  monthButtonPrevYear: {
+    paddingRight: '0', // Remove the right padding from the previous year button
   },
   calendar: {
     width: '50px',
@@ -125,13 +128,14 @@ const styles = {
     fontSize: '20px',
     marginBottom: '24px',
     fontWeight: '400'
-  },bookButton: {
+  },
+  bookButton: {
     backgroundColor: '#6366F1',
     color: 'white',
     padding: '16px 10px',
-    borderColor: 'black',  // Added borderColor to set the border to black
-    borderWidth: '2px',    // Specify border width to make the border visible
-    borderStyle: 'solid',  // Specify solid border style
+    borderColor: 'black',
+    borderWidth: '2px',
+    borderStyle: 'solid',
     borderRadius: '4px',
     cursor: 'pointer',
     fontSize: '15px',
@@ -140,20 +144,19 @@ const styles = {
     width: '200px',
     marginLeft: '60px',
   }
-  
-  
 };
 
 const VendorAvailability = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [selectedTime, setSelectedTime] = useState({ hours: '00', minutes: '00' });
+  const [selectedTime, setSelectedTime] = useState({ hours: '00', minutes: '00',  });
   const [showHours, setShowHours] = useState(false);
   const [showMinutes, setShowMinutes] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null); // Track selected date
+  const [selectedDate, setSelectedDate] = useState(null);
 
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
-  const hours = Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0'));
+  // Generate hours in 24-hour format
+  const hours24 = Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0'));
   const minutes = Array.from({ length: 60 }, (_, i) => i.toString().padStart(2, '0'));
 
   const getDaysInMonth = (date) => {
@@ -170,8 +173,17 @@ const VendorAvailability = () => {
     setCurrentDate(subMonths(currentDate, 1));
   };
 
+  const nextYear = () => {
+    setCurrentDate(addYears(currentDate, 1));
+  };
+
+  const prevYear = () => {
+    setCurrentDate(subYears(currentDate, 1));
+  };
+
   const handleHourClick = (hour) => {
-    setSelectedTime({ ...selectedTime, hours: hour });
+    const period = hour >= 12 ? 'PM' : 'AM';
+    setSelectedTime({ ...selectedTime, hours: hour, period });
     setShowHours(false);
   };
 
@@ -181,16 +193,23 @@ const VendorAvailability = () => {
   };
 
   const handleDayClick = (day) => {
-    setSelectedDate(day); // Update selected date when clicked
+    setSelectedDate(day);
   };
 
   const days = getDaysInMonth(currentDate);
 
   const handleBookNow = () => {
-    // Navigate to the ConfirmBooking page without passing any state
-    navigate('/confirmbooking');
-  };
+    const bookingDate = selectedDate ? format(selectedDate, 'yyyy-MM-dd') : ''; 
+    const bookingTime = `${selectedTime.hours}:${selectedTime.minutes} ${selectedTime.period}`;
   
+    navigate('/confirmbooking', {
+      state: {
+        date: bookingDate,
+        time: bookingTime,
+      }
+    });
+  };
+
   return (
     <>
       <div style={styles.container}>
@@ -198,7 +217,9 @@ const VendorAvailability = () => {
           <h2 style={styles.header}>Availability</h2>
           <div style={styles.monthSelector}>
             <button style={styles.monthButton} onClick={prevMonth}>◀</button>
-            <span style={styles.monthText}>{format(currentDate, 'MMMM')}</span>
+            <span style={styles.monthText}>
+              {format(currentDate, 'MMMM')} {format(currentDate, 'yyyy')}
+            </span>
             <button style={styles.monthButton} onClick={nextMonth}>▶</button>
           </div>
           <table style={styles.calendar}>
@@ -240,17 +261,17 @@ const VendorAvailability = () => {
                 style={styles.timeValue} 
                 onClick={() => setShowHours(!showHours)}
               >
-                {selectedTime.hours}
+                {selectedTime.hours} {selectedTime.period}
               </div>
               {showHours && (
                 <div style={styles.timeDropdown}>
-                  {hours.map((hour) => (
+                  {hours24.map((hour) => (
                     <div
                       key={hour}
                       style={styles.timeOption}
                       onClick={() => handleHourClick(hour)}
                     >
-                      {hour}
+                      {hour} {hour >= 12 ? 'PM' : 'AM'}
                     </div>
                   ))}
                 </div>
@@ -284,7 +305,7 @@ const VendorAvailability = () => {
         </div>
       </div>
 
-      <Footer /> {/* Closing Footer correctly */}
+      <Footer />
     </>
   );
 };

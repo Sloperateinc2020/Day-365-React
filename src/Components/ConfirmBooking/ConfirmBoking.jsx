@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import Footer from "../Footer";
 
 const ConfirmBooking = () => {
+  const location = useLocation();
+  const { date, time } = location.state || {};
+
   const [serviceType, setServiceType] = useState('normal');
   const [paymentMethod, setPaymentMethod] = useState('payAfterService');
   const [isEditingDateTime, setIsEditingDateTime] = useState(false);
-  const [selectedDate, setSelectedDate] = useState('2024-10-10');
-  const [selectedTime, setSelectedTime] = useState('21:30');
+  const [selectedDate, setSelectedDate] = useState(date || '2024-10-10');
+  const [selectedTime, setSelectedTime] = useState(time || '21:30');
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -15,8 +19,7 @@ const ConfirmBooking = () => {
     phone: '',
     pincode: ''
   });
-    // New state for booking confirmation
-    const [isBookingConfirmed, setIsBookingConfirmed] = useState(false);
+  const [isBookingConfirmed, setIsBookingConfirmed] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -45,20 +48,15 @@ const ConfirmBooking = () => {
       hour12: true
     });
   };
-  // Handle Confirm Booking
+
   const handleConfirmBooking = () => {
-    // Check if all required fields are filled
     const { name, email, address, phone, pincode } = formData;
     if (!name || !email || !address || !phone || !pincode) {
       alert("Please fill in all the required fields.");
-      return; // Prevent confirmation if any field is empty
+      return;
     }
-
-    // If all fields are filled, proceed to confirm the booking
     setIsBookingConfirmed(true);
   };
-
-  
 
   return (
     <div style={{
@@ -252,64 +250,63 @@ const ConfirmBooking = () => {
         </div>
       </div>
 
-      {/* Booking Date & Time */}
-      <div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
-          <h2 style={{ fontSize: '14px', fontWeight: 'bold', marginTop: '-15px', color: 'black' }}>Booking Date & Time</h2>
-          <button 
-            onClick={handleDateTimeEdit}
-            style={{ color: '#4F46E5', fontSize: '14px', border: 'none', background: 'none', cursor: 'pointer', fontWeight: 'bold' }}
-          >
-            EDIT
-          </button>
-        </div>
-        {isEditingDateTime ? (
-          <div style={{
-            border: '1px solid #ddd',
-            borderRadius: '8px',
-            padding: '15px',
-          }}>
-            <div style={{ marginBottom: '15px' }}>
-              <label style={{ fontSize: '12px', color: '#666', marginBottom: '5px' }}>Select Date</label>
-              <input
-                type="date"
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
-                style={{ width: '100%', padding: '8px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '13px' }}
-              />
-            </div>
-            <div style={{ marginBottom: '15px' }}>
-              <label style={{ fontSize: '12px', color: '#666', marginBottom: '5px' }}>Select Time</label>
-              <input
-                type="time"
-                value={selectedTime}
-                onChange={(e) => setSelectedTime(e.target.value)}
-                style={{ width: '100%', padding: '8px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '13px' }}
-              />
-            </div>
-            <button
-              onClick={handleDateTimeSubmit}
-              style={{
-                backgroundColor: '#4F46E5',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                padding: '8px 16px',
-                fontSize: '13px',
-                cursor: 'pointer',
-                width: '100%',
-              }}
-            >
-              Confirm Date & Time
-            </button>
-          </div>
-        ) : (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', fontWeight: 'bold' }}>
-            <span style={{ color: '#666' }}>📅</span>
-            <span>{formatDateTime()}</span>
-          </div>
-        )}
-      </div>
+    {/* Booking Date & Time */}
+<div>
+  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+    <h2 style={{ fontSize: '14px', fontWeight: 'bold', marginTop: '-15px', color: 'black' }}>Booking Date & Time</h2>
+    {/* Edit Button */}
+    <button 
+      onClick={handleDateTimeEdit} 
+      style={{
+        fontSize: '16px',
+        color: '#4F46E5',
+        background: 'none',
+        border: 'none',
+        cursor: 'pointer',
+        fontWeight:'bold',
+        marginTop:'-100px',
+      }}>
+      {isEditingDateTime ? 'Save' : 'Edit'}
+      </button>
+  </div>
+
+  {isEditingDateTime ? (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+      {/* Date Picker */}
+      <input 
+        type="date" 
+        value={selectedDate} 
+        onChange={(e) => setSelectedDate(e.target.value)} 
+        style={{ fontSize: '14px', padding: '5px' }}
+      />
+      {/* Time Picker */}
+      <input 
+        type="time" 
+        value={selectedTime} 
+        onChange={(e) => setSelectedTime(e.target.value)} 
+        style={{ fontSize: '14px', padding: '5px' }}
+      />
+      <button 
+        onClick={handleDateTimeSubmit} 
+        style={{
+          fontSize: '14px',
+          color: '#4F46E5',
+          background: 'none',
+          border: 'none',
+          cursor: 'pointer',
+        }}>
+        
+      </button>
+    </div>
+  ) : (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', fontWeight: 'bold' }}>
+      <span style={{ color: '#666' }}>📅</span>
+      <span>{date ? date : selectedDate} at {time ? time : selectedTime}</span>
+    </div>
+  )}
+</div>
+
+      
 
       {/* Payment Method */}
       <div>
@@ -401,15 +398,15 @@ const ConfirmBooking = () => {
         marginLeft: '400px'
       }}
         onClick={handleConfirmBooking}
-        >
+      >
         ₹99 Confirm Booking
       </button>
-       {/* Booking Confirmation Message */}
-       {isBookingConfirmed && (
+
+      {/* Booking Confirmation Message */}
+      {isBookingConfirmed && (
         <p style={{ color: 'green', textAlign: 'center', marginTop: '20px', fontSize: '16px' }}>
           Your booking has been confirmed! 🎉
         </p>
-        
       )}
 
       <Footer />

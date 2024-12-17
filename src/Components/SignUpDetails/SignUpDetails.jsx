@@ -135,7 +135,7 @@ const SignUpDetails = () => {
             name="fullName"
             value={formData.fullName}
             onChange={handleInputChange}
-            placeholder="enter your Full Name"
+            placeholder="Enter your Full Name"
             style={{
               width: '100%',
               padding: '12px 16px',
@@ -162,7 +162,7 @@ const SignUpDetails = () => {
             name="email"
             value={formData.email}
             onChange={handleInputChange}
-            placeholder="enter your email address"
+            placeholder="Enter your email address"
             style={{
               width: '100%',
               padding: '12px 16px',
@@ -189,7 +189,7 @@ const SignUpDetails = () => {
             name="mobile"
             value={formData.mobile}
             onChange={handleInputChange}
-            placeholder="enter your Mobile number"
+            placeholder="Enter your Mobile number"
             style={{
               width: '100%',
               padding: '12px 16px',
@@ -216,7 +216,7 @@ const SignUpDetails = () => {
             name="password"
             value={formData.password}
             onChange={handleInputChange}
-            placeholder="enter your password"
+            placeholder="Enter your password"
             style={{
               width: '100%',
               padding: '12px 16px',

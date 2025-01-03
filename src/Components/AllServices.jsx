@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from "react";
-import config from "../config"; // Import the config file for the API URL
-import { Search } from "lucide-react"; // Import Search icon from lucide-react
-import { Calendar, Phone } from "lucide-react"; // Import Calendar and Phone icons
+import config from "../config";
+import { Search, Calendar, Phone } from "lucide-react";
 import Footer from './Footer';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+import { useNavigate } from 'react-router-dom';
 
 const AllServices = () => {
-  const [services, setServices] = useState([]); // State to hold the services
-  const [originalServices, setOriginalServices] = useState([]); // Preserve the original data
-  const [searchQuery, setSearchQuery] = useState(""); // State for the search query
-  const [locationQuery, setLocationQuery] = useState(""); // State for the location query
-  const [filterQuery, setFilterQuery] = useState(""); // State for the filter query (Category or any other filter)
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(null); // Error state
-  const navigate = useNavigate(); // Initialize useNavigate
+  const [services, setServices] = useState([]);
+  const [originalServices, setOriginalServices] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [locationQuery, setLocationQuery] = useState("");
+  const [filterQuery, setFilterQuery] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -73,29 +72,37 @@ const AllServices = () => {
   };
 
   const handleAvailabilityClick = (serviceId) => {
-    navigate(`/vendoravailability`); // Navigate to the vendor availability page with the serviceId
+    navigate(`/vendoravailability`);
   };
 
-  if (loading) {
-    return <div>Loading services...</div>;
-  }
+  const StarIcon = () => (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#FFD700"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+    </svg>
+  );
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  if (loading) return <div>Loading services...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <>
       <div style={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
-        {/* Header Text with Search Icon */}
-        <div style={{ margintop: "10px", display: "flex", alignItems: "center" }}>
+        <div style={{ marginTop: "10px", display: "flex", alignItems: "center" }}>
           <Search size={20} style={{ marginRight: "10px" }} />
           <h2 style={{ fontSize: "24px", fontWeight: "600", color: "#333" }}></h2>
         </div>
 
-        {/* Search Bar - All fields side by side */}
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          {/* Search Input */}
           <div style={{ position: "relative", flex: 1 }}>
             <Search
               size={16}
@@ -124,7 +131,6 @@ const AllServices = () => {
             />
           </div>
 
-          {/* Location Input */}
           <input
             type="text"
             placeholder="Location"
@@ -141,9 +147,7 @@ const AllServices = () => {
             }}
           />
 
-          {/* Filter Input with Custom Hamburger Menu Icon on Left */}
           <div style={{ position: "relative", display: "flex", alignItems: "center", flex: 1 }}>
-            {/* Hamburger Menu Icon */}
             <div
               style={{
                 position: "absolute",
@@ -155,7 +159,6 @@ const AllServices = () => {
                 width: "18px",
               }}
             >
-              {/* Line 1 - Wider */}
               <div
                 style={{
                   width: "20px",
@@ -164,7 +167,6 @@ const AllServices = () => {
                   borderRadius: "2px",
                 }}
               />
-              {/* Line 2 - Narrower */}
               <div
                 style={{
                   width: "15px",
@@ -173,7 +175,6 @@ const AllServices = () => {
                   borderRadius: "2px",
                 }}
               />
-              {/* Line 3 - Narrowest */}
               <div
                 style={{
                   width: "10px",
@@ -184,14 +185,13 @@ const AllServices = () => {
               />
             </div>
 
-            {/* Filter Input */}
             <input
               type="text"
               placeholder="Filter"
               value={filterQuery}
               onChange={handleFilterChange}
               style={{
-                padding: "10px 12px 10px 35px", // Extra padding on left to make space for hamburger icon
+                padding: "10px 12px 10px 35px",
                 border: "1px solid #ddd",
                 borderRadius: "4px",
                 fontSize: "14px",
@@ -201,9 +201,8 @@ const AllServices = () => {
               }}
             />
 
-            {/* Filter Button on Right */}
             <button
-              onClick={resetFilters} // Trigger the reset function when clicked
+              onClick={resetFilters}
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -217,7 +216,7 @@ const AllServices = () => {
                 cursor: "pointer",
                 fontSize: "14px",
                 fontWeight: "500",
-                marginLeft: "10px", // space between the input and button
+                marginLeft: "10px",
               }}
             >
               <Search size={16} color="white" />
@@ -226,7 +225,6 @@ const AllServices = () => {
           </div>
         </div>
 
-        {/* Services Grid */}
         <div
           style={{
             display: "grid",
@@ -247,20 +245,22 @@ const AllServices = () => {
                   position: "relative",
                 }}
               >
-                {/* Rating Badge */}
                 <div
                   style={{
                     position: "absolute",
                     top: "12px",
                     left: "12px",
-                    color: "black",
                     padding: "2px 8px",
                     borderRadius: "9999px",
                     fontSize: "12px",
                     fontWeight: "500",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "4px",
                   }}
                 >
-                  {service.rating ? service.rating : "N/A"}★
+                  <StarIcon />
+                  <span style={{ color: "black" }}>{service.rating || "N/A"}</span>
                 </div>
 
                 <div
@@ -340,9 +340,8 @@ const AllServices = () => {
                       marginBottom: "1px",
                     }}
                   >
-                    {/* Availability button */}
                     <button
-                      onClick={() => handleAvailabilityClick(service.id)} // Call handleAvailabilityClick with service id
+                      onClick={() => handleAvailabilityClick(service.id)}
                       style={{
                         flex: 1,
                         display: "flex",

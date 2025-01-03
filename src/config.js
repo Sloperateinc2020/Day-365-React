@@ -5,17 +5,17 @@ const config = {
     // LATESTSERVICE_API_URL: 'https://run.mocky.io/v3/8d88062e-45c5-4df3-97bc-3ece2305bffc',
     // TOPSERVICE_API_URL:'https://run.mocky.io/v3/a560955a-c4bb-4f79-8a4f-c9ee5020b1aa',
 
-    SERVICE_API_URL: 'https://run.mocky.io/v3/9c3b644e-8da4-4a9e-91ef-847ee02e961f',
-    LATESTSERVICE_API_URL: 'https://run.mocky.io/v3/8d88062e-45c5-4df3-97bc-3ece2305bffc',
-    TOPSERVICE_API_URL:'https://run.mocky.io/v3/803b1846-148d-4896-a5ad-b042d648054b',
-    BOOKING_API_URL:'https://run.mocky.io/v3/42109b5a-0cee-4a43-bcf1-115321580021',
-    VENDORLISTINGS_API_URL:'https://run.mocky.io/v3/35927549-0903-4303-a6b9-494429ca33eb',
-    PAYMENTS_API_URL:'https://run.mocky.io/v3/96f0dd31-9880-41e4-b388-38c350512b20',
-    POPULARSERVICESNEARYOU_API_URL:'https://run.mocky.io/v3/74568ebb-9a32-49c1-b84e-26c21eeb1fa4',
-    SPECIALOFFERS_API_URL:'https://run.mocky.io/v3/ff4adade-b9ff-484e-97e3-cd5e6e1f83b5',
-    TOPRATEDPROVIDERS_API_URL:'https://run.mocky.io/v3/b6bd6747-0ee1-43f7-b70b-e38392c5c5c5',
-    UPCOMINGBOOKING_API_URL:'https://run.mocky.io/v3/8463a47b-e7a3-496f-94f5-cde19360cf95',
-    PREVIOUSBOOKING_API_URL:'https://run.mocky.io/v3/a24335a5-9994-41f1-88a9-af6601feac6d',
+    SERVICE_API_URL: 'https://run.mocky.io/v3/71fd6789-a660-4132-be0c-8ce98e8f2182',
+    LATESTSERVICE_API_URL: 'https://run.mocky.io/v3/d8593c37-71e6-4378-9d72-e7a04d1a6495',
+    TOPSERVICE_API_URL:'https://run.mocky.io/v3/cd385f9a-9bd8-4ab2-9a0b-259073350fb2',
+    BOOKING_API_URL:'https://run.mocky.io/v3/f6e665bf-ea2e-4e65-8e53-53e7020a3a3b',
+    VENDORLISTINGS_API_URL:'https://run.mocky.io/v3/3c99b43b-373b-4fc9-8632-fae5e6f773c3',
+    PAYMENTS_API_URL:'https://run.mocky.io/v3/9d98b7b1-1f53-45f0-b5fd-b57bf99eb9bd',
+    POPULARSERVICESNEARYOU_API_URL:'https://run.mocky.io/v3/6d92265d-1171-4daa-b2aa-08f86e07f7f1',
+    SPECIALOFFERS_API_URL:'https://run.mocky.io/v3/6b1fe97b-922b-46ba-8a61-506ce9a3f20f',
+    TOPRATEDPROVIDERS_API_URL:'https://run.mocky.io/v3/f2e2d187-075b-45c6-ad78-0673170b0106',
+    UPCOMINGBOOKING_API_URL:'https://run.mocky.io/v3/d1d0de4e-5ac6-40ec-a4ba-9ab4458d2ac5',
+    PREVIOUSBOOKING_API_URL:'https://run.mocky.io/v3/430f1f61-34ed-444c-a083-ac667c3f2d16',
 
 };
 

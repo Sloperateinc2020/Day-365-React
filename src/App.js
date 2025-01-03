@@ -7,15 +7,15 @@ import Header from './Components/Header';
 import SignIn from './Components/SignIn';
 import SignupPage from './SignUp/SignupPage';
 import Booking from './Components/Booking/Booking';
-import Listings from './Components/Listings'; // Make sure this is your Listings component
+import Listings from './Components/Listings';
 import Availability from './Availability/Availability';
-import Profile from './Components/Profile/Profile';
-import AccountSettings from './Components/AccountSettings/AccountSettings';
+import Profile from './Components/Profile/Profile'; // Ensure this is the correct path
+import AccountSettings from './Components/AccountSettings/AccountSettings'; // Ensure this is the correct path
 import Payments from './Components/Payments';
 import BankDetails from './Components/BankDetails/BankDetails';
 import TopServices from './Components/TopServices/TopServices';
 import VendorRegistration from './Components/VendorRegistration/VendorRegistration';
-import EditVendorProfile from './Components/EditVendorProfile/EditVendorProfile'; // Make sure this is the correct path
+import EditVendorProfile from './Components/EditVendorProfile/EditVendorProfile';
 import AllServices from './Components/AllServices';
 import Services from './Components/Services/Services';
 import VendorDashboard from './Components/VendorDashboard/VendorDashboard';
@@ -31,9 +31,7 @@ import VendorAvailability from './Components/VendorAvailability/VendorAvailabili
 import PopularServices from './Components/Services/PopularServices';
 import SpecialOffers from './Components/Services/SpecialOffers';
 import TopProviders from './Components/Services/TopProviders';
-
-
-
+import LatestServices from './Components/LatestServices/LatestServices';
 
 function App() {
   const [selectedMenu, setSelectedMenu] = useState('Home'); // Initial selected menu
@@ -59,7 +57,9 @@ const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
     <>
       {/* Conditionally render Header */}
       {location.pathname !== '/listings' && location.pathname !== '/vendordashboard' && 
-      location.pathname !== '/booking' && (
+      location.pathname !== '/booking' && 
+      location.pathname !== '/profile' && 
+      location.pathname !== '/accountsettings' && ( // Added condition for '/accountsettings'
         <Header selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
       )}
 
@@ -72,11 +72,16 @@ const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
         <Route path="/booking" element={<Booking />} />
         <Route path="/listings" element={<Listings />} />
         
+        
         {/* Add the dynamic availability route with serviceId */}
         <Route path="/availability/:serviceId" element={<Availability />} />
         
-        <Route path="/documents" element={<Profile />} />
+        {/* Profile and Account Settings Routes */}
+        <Route path="/profile" element={<Profile />} /> 
+        <Route path="/documents" element={<Profile />} /> {/* Ensure this works */}
         <Route path="/accountsettings" element={<AccountSettings />} />
+        
+        {/* Other Routes */}
         <Route path="/payments" element={<Payments />} />
         <Route path="/bankdetails" element={<BankDetails />} />
         <Route path="/edit-vendor-profile/:listingId" element={<EditVendorProfile />} />
@@ -85,6 +90,7 @@ const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
         <Route path="/allservices" element={<AllServices />} />
         <Route path="/services" element={<Services />} />
         <Route path="/search-result" element={<SearchResult />} />
+        <Route path="/availability" element={<Availability />} />
         <Route path="/vendordashboard" element={<VendorDashboard />} />
         <Route path="/confirmbooking" element={<ConfirmBooking />} />
         <Route path="/previousbooking" element={<PreviousBooking />} />
@@ -97,8 +103,8 @@ const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
         <Route path="/popularservices" element={<PopularServices />} />
         <Route path="/topproviders" element={<TopProviders />} />
         <Route path="/specialoffers" element={<SpecialOffers />} />
-
-
+        {/* LatestServices route */}
+        <Route path="/latestservices" element={<LatestServices />} />
         <Route path="*" element={<h1>404 - Page Not Found</h1>} />
       </Routes>
     </>

@@ -82,9 +82,9 @@ const Payments = () => {
                     <td>{transaction.date}</td>
                     <td>
                       <span className={`status ${
-                        transaction.status === 'Completed' ? 'completed' : 'progress'
+                        transaction.statusOfWork === 'Completed' ? 'completed' : 'progress'
                       }`}>
-                        {transaction.status}
+                        {transaction.statusOfWork}
                       </span>
                     </td>
                     <td>{transaction.paidAmount}</td>

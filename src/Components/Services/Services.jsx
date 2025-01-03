@@ -83,7 +83,10 @@ const handleSearchClick = () => {
   }
 };
 
-  
+   // Handle navigation to "See All" pages
+   const handleSeeAll = (category) => {
+    navigate(`/services/${category}`);
+  };
 
   return (
     <>
@@ -193,6 +196,8 @@ const handleSearchClick = () => {
             <h2 style={{ fontSize: '20px', fontWeight: '600' }}>Popular services near you</h2>
             <button
               style={{ color: '#4F46E5', background: 'none', border: 'none', cursor: 'pointer' }}
+              onClick={() => handleSeeAll('popular-services')} // Navigate to popular services page
+
             >
               See all
             </button>
@@ -243,6 +248,8 @@ const handleSearchClick = () => {
             <h2 style={{ fontSize: '18px', fontWeight: '600' }}>Special Offers</h2>
             <button
               style={{ color: '#4F46E5', background: 'none', border: 'none', cursor: 'pointer' }}
+              onClick={() => handleSeeAll('special-offers')} // Navigate to special offers page
+
             >
               See all
             </button>
@@ -305,6 +312,8 @@ const handleSearchClick = () => {
             <h2 style={{ fontSize: '18px', fontWeight: '600' }}>Top rated providers</h2>
             <button
               style={{ color: '#4F46E5', background: 'none', border: 'none', cursor: 'pointer' }}
+              onClick={() => handleSeeAll('top-providers')} // Navigate to top-rated providers page
+
             >
               See all
             </button>

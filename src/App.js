@@ -28,6 +28,9 @@ import Contact from './Components/Contact/Contact';
 import SignUpDetails from './Components/SignUpDetails/SignUpDetails';
 import ChatApp from './Components/ChatApp/ChatApp';
 import VendorAvailability from './Components/VendorAvailability/VendorAvailability';
+import PopularServices from './Components/Services/PopularServices';
+import SpecialOffers from './Components/Services/SpecialOffers';
+import TopProviders from './Components/Services/TopProviders';
 import LatestServices from './Components/LatestServices/LatestServices';
 
 function App() {
@@ -97,11 +100,11 @@ const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
         <Route path="/signupdetails" element={<SignUpDetails />} /> 
         <Route path="/chat" element={<ChatApp />} />
         <Route path="/vendoravailability" element={<VendorAvailability />} />
-        
+        <Route path="/popularservices" element={<PopularServices />} />
+        <Route path="/topproviders" element={<TopProviders />} />
+        <Route path="/specialoffers" element={<SpecialOffers />} />
         {/* LatestServices route */}
         <Route path="/latestservices" element={<LatestServices />} />
-
-        {/* 404 Page */}
         <Route path="*" element={<h1>404 - Page Not Found</h1>} />
       </Routes>
     </>

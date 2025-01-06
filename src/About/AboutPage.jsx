@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './AboutPage.css';
 import Footer from '../Components/Footer';
 
 const AboutPage = () => {
+  const navigate = useNavigate(); // Initialize navigate hook
   const [images, setImages] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -58,6 +60,10 @@ const AboutPage = () => {
       window.removeEventListener('touchmove', handleTouchMove);
     };
   }, []);
+
+  const handleExploreNowClick = () => {
+    navigate('/allservices'); // Navigate to the All Services page
+  };
 
   return (
     <>
@@ -120,7 +126,7 @@ const AboutPage = () => {
         {/* Booking Section */}
         <div className="booking">
           <p>Ready to book a service?</p>
-          <button>Explore Now</button>
+          <button onClick={handleExploreNowClick}>Explore Now</button> {/* Attach the click handler */}
         </div>
       </div>
 

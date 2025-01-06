@@ -105,7 +105,7 @@ function Listings() {
   useEffect(() => {
     const fetchListings = async () => {
       try {
-        const response = await fetch('https://run.mocky.io/v3/3c99b43b-373b-4fc9-8632-fae5e6f773c3');
+        const response = await fetch('https://run.mocky.io/v3/864ba685-8d15-4cd6-ba18-d08e081bc7ad');
         const data = await response.json();
         console.log('Fetched Data:', data);  // Log to check the structure
         setListings(data.Listings || []);  // Ensure 'Listings' key exists in response

@@ -83,6 +83,7 @@ const LatestServices = ({ hideFooter, limit, hideDescription }) => {
               flexDirection: 'column',
               alignItems: 'flex-start',
               gap: '12px'
+              
             }}>
               <div style={{
                 display: 'flex',

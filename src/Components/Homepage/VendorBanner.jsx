@@ -10,10 +10,11 @@ const VendorBanner = () => {
       borderRadius: '10px',
       padding: '20px',
       marginTop: '70px',
-      margin: '0 10px',
+      margin: '0 auto', 
       justifyContent: 'space-between',
-      width: '1000px',
-      marginLeft: '200px',
+      width: '90%', 
+      maxWidth: '830px', 
+      boxSizing: 'border-box', 
     }}>
       <div style={{
         flex: 1,
@@ -25,7 +26,7 @@ const VendorBanner = () => {
           fontWeight: 'bold',
           marginBottom: '10px',
           marginLeft: '30px',
-          marginTop: '40px'
+          marginTop: '40px',
         }}>
           Build a Vendor Profile
         </h2>
@@ -34,7 +35,7 @@ const VendorBanner = () => {
           fontSize: '13px',
           marginBottom: '15px',
           marginLeft: '30px',
-          whiteSpace: 'pre-line'
+          whiteSpace: 'pre-line',
         }}>
           With dedication, dedication to duty in mind,{'\n'}
           effort is made to execute responsibilities {'\n'}
@@ -50,11 +51,11 @@ const VendorBanner = () => {
           marginLeft: '30px',
           marginBottom: '30px',
           border: 'none',
-          cursor: 'pointer'
+          cursor: 'pointer',
         }}>
           <span style={{
             color: '#4A90E2',
-            fontSize: '16px'
+            fontSize: '16px',
           }}>
             Create
           </span>
@@ -67,7 +68,7 @@ const VendorBanner = () => {
         style={{
           width: '400px',
           height: '200px',
-          borderRadius: '50px'
+          borderRadius: '50px',
         }}
       />
     </div>

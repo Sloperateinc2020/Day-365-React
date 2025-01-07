@@ -215,11 +215,11 @@ const Contact = () => {
 
           <div style={{ marginBottom: '20px' }}>
             {infoItems.map((item, index) => (
-              <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
+              <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '18px' }}>
                 <span style={{ color: '#4F46E5', display: 'flex', alignItems: 'center' }}>{item.icon}</span>
                 <div>
-                  <h3 style={{ fontWeight: 'bold', marginBottom: '4px' }}>{item.title}</h3>
-                  <p style={{ color: '#666' }}>{item.content}</p>
+                  <h3 style={{ fontWeight: 'bold', marginBottom: '2px' }}>{item.title}</h3>
+                  <p style={{ color: '#666', margin: 0 }}>{item.content}</p>
                 </div>
               </div>
             ))}

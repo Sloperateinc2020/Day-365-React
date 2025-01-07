@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const VendorDashboard = () => {
   const [bookingsData, setBookingsData] = useState([]);
+  const [selectedBooking, setSelectedBooking] = useState(null); // Define selectedBooking
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate(); 
@@ -47,6 +49,13 @@ const VendorDashboard = () => {
 
     fetchBookings();
   }, []);
+  const handleViewBooking = (booking) => {
+    setSelectedBooking(booking); // Set the selected booking when "View Booking" is clicked
+  };
+
+  const handleClosePopup = () => {
+    setSelectedBooking(null); // Close the popup by setting selectedBooking to null
+  };
 
   const sidebarStyle = {
     width: '80px',
@@ -102,14 +111,30 @@ const VendorDashboard = () => {
 
   const styles = {
     container: {
-      display: "flex",
       fontFamily: "Arial, sans-serif",
-      height: "100vh",
-      marginLeft: "10px",
+      padding: "16px",
+      backgroundColor: "#fff",
+      color: "#000",
+      borderRadius: "8px",
+      boxShadow: "0 0px 0px rgba(0, 0, 0, 0.1)",
+      maxWidth: "400px",
+      margin: "0 auto",
     },
+    heading: {
+      fontSize: "20px",
+      fontWeight: "bold",
+      marginBottom: "8px",
+      color: "#333",
+    },
+    subHeading: {
+      fontSize: "14px",
+      marginBottom: "16px",
+      color: "#777",
+    },
+  
     content: {
-      marginLeft: '80px',
-      width: '100%',
+      marginLeft: '-360px',
+      width: '320%',
     },
     header: {
       display: "flex",
@@ -168,6 +193,72 @@ const VendorDashboard = () => {
       borderRadius: "5px",
       cursor: "pointer",
     },
+    popupOverlay: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      Index: 1000,
+    },
+    popupContent: {
+      backgroundColor: "#fff",
+      padding: "20px",
+      borderRadius: "8px",
+      width: "400px",
+      position: "relative",
+      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    },
+    closeButton: {
+      position: "absolute",
+      top: "10px",
+      right: "10px",
+      background: "none",
+      border: "none",
+      fontSize: "20px",
+      cursor: "pointer",
+    },
+     detailItem: {
+    display: "flex",
+    alignItems: "center",
+    marginBottom: "12px",
+  },
+  icon: {
+    marginRight: "12px",
+    fontSize: "18px",
+    color: "#555",
+  },
+  text: {
+    fontSize: "14px",
+    color: "#333",
+  },
+  label: {
+    display: "block",
+    fontSize: "14px",
+    fontWeight: "bold",
+    marginBottom: "8px",
+    color: "#555",
+  },
+  dropdown: {
+    width: "100%",
+    padding: "8px",
+    fontSize: "14px",
+    border: "1px solid #ccc",
+    borderRadius: "4px",
+  },
+  textarea: {
+    width: "100%",
+    height: "80px",
+    padding: "8px",
+    fontSize: "14px",
+    border: "1px solid #ccc",
+    borderRadius: "4px",
+    resize: "none",
+  },
     paymentSection: {
       display: "flex",
       justifyContent: "flex-start",
@@ -279,8 +370,13 @@ const VendorDashboard = () => {
                   <p>{booking.title}</p>
                   <p>Date: {booking.bookingDate}</p>
                   <p>Customer: {booking.customerName}</p>
-                  <button style={styles.viewButton}>{booking.viewButtonText}</button>
-                </div>
+                  <button
+                    style={styles.viewButton}
+                    onClick={() => handleViewBooking(booking)}
+                  >
+                    View Booking
+                  </button>           
+                       </div>
                 <img
                   src={booking.bookingImage}
                   alt={booking.customer}
@@ -292,7 +388,82 @@ const VendorDashboard = () => {
             <div>No bookings available</div> 
           )}
         </div>
+         {/* Popup for Booking Details */}
+         {selectedBooking && (
+          <div style={styles.popupOverlay}>
+            <div style={styles.popupContent}>
+              <button
+                style={styles.closeButton}
+                onClick={handleClosePopup}
+              >
+                &times;
+              </button>
+              <div style={styles.container}>
+  <h2 style={styles.heading}>Booking Details</h2>
+  <p style={styles.subHeading}>Booking information for John Doe</p>
+  
+  <div style={styles.detailItem}>
+    <span style={styles.icon}>📞</span>
+    <span style={styles.text}>+1 (555) 123-4567</span>
+  </div>
 
+  <div style={styles.detailItem}>
+    <span style={styles.icon}>📧</span>
+    <span style={styles.text}>john.doe@example.com</span>
+  </div>
+
+  <div style={styles.detailItem}>
+    <span style={styles.icon}>📅</span>
+    <span style={styles.text}>2024-10-29 at 10:00 AM</span>
+  </div>
+
+  <div style={styles.detailItem}>
+    <span style={styles.icon}>📍</span>
+    <span style={styles.text}>123 Main St, Anytown, USA</span>
+  </div>
+
+  <div style={styles.detailItem}>
+    <span style={styles.icon}>⏰</span>
+    <span style={styles.text}>Normal Service</span>
+  </div>
+
+  <div style={styles.detailItem}>
+    <span style={styles.icon}>🔧</span>
+    <span style={styles.text}>Pipe Repair</span>
+  </div>
+
+  <div style={styles.detailItem}>
+    <span style={styles.icon}>💵</span>
+    <span style={styles.text}>Advance Paid: $50 / Total: $200</span>
+  </div>
+
+  <div style={styles.detailItem}>
+    <span style={styles.icon}>⚠️</span>
+    <span style={styles.text}>Leaking pipe under the kitchen sink</span>
+  </div>
+
+  <div style={styles.detailItem}>
+    <label style={styles.label}>Status</label>
+    <select style={styles.dropdown}>
+      <option value="Scheduled">Scheduled</option>
+      <option value="In Progress">In Progress</option>
+      <option value="Completed">Completed</option>
+    </select>
+  </div>
+
+  <div style={styles.detailItem}>
+    <label style={styles.label}>Notes</label>
+    <textarea
+      style={styles.textarea}
+      placeholder="Customer mentioned the leak started yesterday"
+    />
+  </div>
+</div>
+
+
+          </div>
+        </div>
+      )}
         <div style={styles.section}>
           <h2>Payments</h2>
           <div style={styles.paymentSection}>

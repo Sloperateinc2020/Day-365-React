@@ -1,68 +1,39 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './AboutPage.css';
 import Footer from '../Components/Footer';
 
 const AboutPage = () => {
   const navigate = useNavigate(); // Initialize navigate hook
-  const [images, setImages] = useState([]);
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+
+  // Static images for services
+  const images = [
+    {
+      src: "https://media.istockphoto.com/id/866699668/photo/gourmet-chef-cooking-in-a-commercial-kitchen.jpg?s=612x612&w=0&k=20&c=rvWTwbW54nIHwsZIjSU8TzX1_VQqzAnjjJuWm5zOlhw=",
+      alt: "Chef Service",
+    },
+    {
+      src: "https://media.istockphoto.com/id/166736424/photo/mowing-the-grass.jpg?s=612x612&w=0&k=20&c=Bt91WCdmICMIO19uL9q2ijTOgtf-wPtIIU7hJ-stcf8=",
+      alt: "Lawn Mowing Service",
+    },
+    {
+      src: "https://cdn.create.vista.com/api/media/small/319583350/stock-photo-interested-doctor-earphones-having-online-consultation-digital-tablet-clinic-office",
+      alt: "Online Consultation",
+    },
+    {
+      src: "https://media.istockphoto.com/id/1049775258/photo/smiling-handsome-electrician-repairing-electrical-box-with-pliers-in-corridor-and-looking-at.jpg?s=612x612&w=0&k=20&c=stdWozouV2XsrHk2xXD3C31nT90BG7ydZvcpAn1Fx7I=",
+      alt: "Electrician Service",
+    },
+    {
+      src: "https://media.istockphoto.com/id/1042342584/photo/investors-and-contractors-on-construction-site.jpg?s=612x612&w=0&k=20&c=dfpqU0nr9BccCHOdHNyI1UanHGLt1nD2t6jZp95YUe4=",
+      alt: "Construction Service",
+    },
+  ];
+
   const serviceListRef = useRef(null);
 
-  useEffect(() => {
-    const fetchImages = async () => {
-      try {
-        const response = await fetch('https://mocki.io/v1/02042842-81dc-4965-b5d7-aaebd1b65c3b');
-        
-        if (!response.ok) {
-          throw new Error(`Network response was not ok, status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        const topServices = data.topServices;
-
-        if (!Array.isArray(topServices)) {
-          throw new Error("Unexpected data structure: 'topServices' is not an array");
-        }
-
-        const popularImages = topServices.filter(service => service.isPopularService === true);
-        const nonPopularImages = topServices.filter(service => service.isPopularService === false);
-
-        const selectedImages = [...popularImages.slice(0, 5)];
-        if (selectedImages.length < 5) {
-          selectedImages.push(...nonPopularImages.slice(0, 5 - selectedImages.length));
-        }
-
-        setImages(selectedImages);
-        setError(null);
-      } catch (error) {
-        console.error("Error fetching images:", error);
-        setError(error.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchImages();
-
-    // Prevent scrolling the main page while swiping horizontally in .service-list
-    const handleTouchMove = (e) => {
-      if (serviceListRef.current && serviceListRef.current.contains(e.target)) {
-        e.preventDefault();
-        serviceListRef.current.scrollLeft += e.touches[0].clientX - serviceListRef.current.clientX;
-      }
-    };
-
-    window.addEventListener('touchmove', handleTouchMove, { passive: false });
-
-    return () => {
-      window.removeEventListener('touchmove', handleTouchMove);
-    };
-  }, []);
-
   const handleExploreNowClick = () => {
-    navigate('/allservices'); // Navigate to the All Services page
+    navigate('/allservices'); // Navigate to All Services page
   };
 
   return (
@@ -108,17 +79,9 @@ const AboutPage = () => {
           <h2>OUR MOST POPULAR SERVICES</h2>
           <div className="service-list-container">
             <div className="service-list" ref={serviceListRef}>
-              {isLoading ? (
-                <p>Loading services...</p>
-              ) : error ? (
-                <p>Error loading images: {error}</p>
-              ) : images.length > 0 ? (
-                images.map((service, index) => (
-                  <img key={index} src={service.iconUrl} alt={service.title} className="service-image" />
-                ))
-              ) : (
-                <p>No popular services available.</p>
-              )}
+              {images.map((image, index) => (
+                <img key={index} src={image.src} alt={image.alt} className="service-image" />
+              ))}
             </div>
           </div>
         </section>

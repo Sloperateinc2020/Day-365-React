@@ -3,8 +3,10 @@ import { Search } from 'lucide-react';
 import config from '../config';
 import Footer from './Footer';
 import { useNavigate } from 'react-router-dom';
-
-
+import VendorBanner from './Homepage/VendorBanner';
+import CustomerHelp from './Homepage/CustomerHelp';
+import LatestServices from './LatestServices/LatestServices';
+import TopServices from './TopServices/TopServices'; // Import TopServices component
 
 function Home() {
   const [allServices, setAllServices] = useState([]);
@@ -226,14 +228,7 @@ function Home() {
     setStateValue(service ? service.state : '');
   };
   const navigate = useNavigate();
-
-  const handleSeeMoreTopServices = () => {
-    navigate('/top-services');
-  };
-
-  const handleSeeMoreLatestServices = () => {
-    navigate('/latestservices');
-  };
+  
   return (
     <div style={{ overflowX: 'hidden', position: 'fixed', width: '100%', height: '90%',marginTop:"40px" }}>
 
@@ -251,7 +246,7 @@ function Home() {
             fontWeight: 'bold',
             marginBottom: '16px'
           }}>
-            Welcome to <span style={{ color: '#4A90E2' }}>Day</span> 365
+            Welcome to <span style={{ color: '#4A90E2' }}>Urban</span> Maverick
           </h1>
           <p style={{
             fontSize: '13px',
@@ -267,7 +262,7 @@ function Home() {
             marginBottom: '24px',
             lineHeight: '22px'
           }}>
-            At <span style={{ fontWeight: 'bold' }}>Day 365</span>, we make it easier than ever to book trusted local services,<br />
+            At <span style={{ fontWeight: 'bold' }}>Urban Maverick</span>, we make it easier than ever to book trusted local services,<br />
             online. Whether you need a plumber, electrician, driver, or any other<br />
             professional, we've got you covered with a network of experts ready to<br />
             serve you.
@@ -445,7 +440,6 @@ function Home() {
     }}
   />
 </div>
-
 <select
   value={stateValue}
   onChange={handleStateChange}
@@ -548,8 +542,6 @@ function Home() {
     </div>
   )}
 </div>
-
-
           <button
             onClick={handleSearch}
             style={{
@@ -583,71 +575,71 @@ function Home() {
           gap: '20px',
         }}>
          <div style={{ display: 'flex', alignItems: 'center' }}>
-  <button
-    onClick={handlePrevService}
-    style={{
-      background: 'none',
-      border: 'none',
-      cursor: 'pointer',
-      opacity: isSearchActive ? 0.5 : 1,
-      fontSize: '24px',
-      color: '#bbb',
-      padding: '10px'
-    }}
-    disabled={isSearchActive}
-  >
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+         <button
+      onClick={handlePrevService}
+      style={{
+        background: 'none',
+        border: 'none',
+        cursor: 'pointer',
+        opacity: isSearchActive ? 0.5 : 1,
+        fontSize: '24px',
+        color: '#bbb',
+        padding: '10px'
+      }}
+      disabled={isSearchActive}
     >
-      <path d="M15 19L8 12L15 5" stroke="#bbb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
-  </button>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15 19L8 12L15 5" stroke="#bbb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    </button>
 
-  {displayedServices.map((service, index) => (
-    <div key={index} style={{
-      padding: '15px',
-      borderRadius: '10px',
-      textAlign: 'center',
-      width: '160px',
-      margin: '8px',
-      backgroundColor: service.color || '#f9f9f9',
-      boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-    }}>
-      <img src={service.imageUrl} alt={service.service} style={{
-        width: '60px',
-        height: '60px',
-        borderRadius: '30px',
-        marginBottom: '10px'
-      }} />
-      <p style={{
-        fontSize: '16px',
-        fontWeight: 'bold',
-        color: '#333'
-      }}>{service.service}</p>
-      <p style={{
-        fontSize: '12px',
-        color: '#666'
-      }}>{service.availableServices}</p>
-    </div>
-  ))}
+    {displayedServices.map((service, index) => (
+      <div
+        key={index}
+        onClick={() => navigate('/service-details', { state: { service } })} // Pass the service data as state
+        style={{
+          padding: '15px',
+          borderRadius: '10px',
+          textAlign: 'center',
+          width: '170px',
+          margin: '8px',
+          backgroundColor: service.color || '#f9f9f9',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+          cursor: 'pointer', // Change cursor to pointer
+        }}
+      >
+        <img src={service.imageUrl} alt={service.service} style={{
+          width: '60px',
+          height: '60px',
+          borderRadius: '30px',
+          marginBottom: '10px'
+        }} />
+        <p style={{
+          fontSize: '16px',
+          fontWeight: 'bold',
+          color: '#333'
+        }}>{service.service}</p>
+        <p style={{
+          fontSize: '12px',
+          color: '#666'
+        }}>{service.availableServices}</p>
+      </div>
+    ))}
 
-  <button
-    onClick={handleNextService}
-    style={{
-      background: 'none',
-      border: 'none',
-      cursor: 'pointer',
-      opacity: isSearchActive ? 0.5 : 1,
-      fontSize: '24px',
-      color: '#bbb',
-      padding: '10px'
-    }}
-    disabled={isSearchActive}
-  >
+    <button
+      onClick={handleNextService}
+      style={{
+        background: 'none',
+        border: 'none',
+        cursor: 'pointer',
+        opacity: isSearchActive ? 0.5 : 1,
+        fontSize: '24px',
+        color: '#bbb',
+        padding: '10px'
+      }}
+      disabled={isSearchActive}
+    >
+
     <svg
       width="24"
       height="24"
@@ -660,488 +652,58 @@ function Home() {
   </button>
 </div>
 </div>
-       
-        
-        {/* </div> */}
-        <div style={{ padding: '20px', textAlign: 'center' }}>
-          <h3 style={{
-            fontSize: '32px',
-            fontWeight: 'bold',
-            marginBottom: '20px',
-            color: '#6666ff'
-          }}>Latest Services</h3>
-
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '20px',
-            maxWidth: '1200px',
-            margin: '0 auto'
-          }}>
-           {latestServices.slice(0, 3).map((service, index) => (
-          <div key={index} style={{
-                borderRadius: '10px',
-                backgroundColor: '#f9f9f9',
-                padding: '20px',
-                boxShadow: '0px 4px 8px rgba(0,0,0,0.1)',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'flex-start',
-                textAlign: 'left',
-                position: 'relative',
-                width:'250px'
-              }}>
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  marginBottom: '10px',
-                  
-                }}>
-                  <img src={service.iconUrl} alt="Service Icon" style={{
-                    width: '40px',
-                    height: '40px',
-                    borderRadius: '5px',
-                    marginRight: '10px'
-                  }} />
-                  <div>
-                    <h4 style={{
-                      fontSize: '18px',
-                      fontWeight: 'bold',
-                      margin: 0
-                    }}>{service.title}</h4>
-                    <p style={{
-                      fontSize: '14px',
-                      color: '#666',
-                      margin: 0
-                    }}>{`₹${service.salaryRange.minimum} - ₹${service.salaryRange.maximum}`}</p>
-                  </div>
-                  <span style={{
-            position: 'absolute',  // To place it relative to the card
-            top: '10px',
-            right: '10px',
-            backgroundColor: '#FDEDEC',
-            color: '#FF6666',
-            padding: '2px 6px',
-            fontSize: '12px',
-            borderRadius: '5px',
-          }}>
-            {service.badge}
-          </span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
-                  <img src={service.location.districtIconUrl} alt="District Icon" style={{
-                    width: '20px',
-                    height: '20px',
-                    marginRight: '8px'
-                  }} />
-                  <p style={{
-                    fontSize: '12px',
-                    color: '#666',
-                    margin: 0
-                  }}>{service.location.district}</p>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
-                  <img src={service.location.cityIconUrl} alt="City Icon" style={{
-                    width: '16px',
-                    height: '16px',
-                    marginRight: '8px'
-                  }} />
-                  <p style={{
-                    fontSize: '12px',
-                    color: '#666',
-                    margin: 0
-                  }}>{service.location.city}, {service.location.pincode}</p>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <img src={service.workTypeIconUrl} alt="Work Type Icon" style={{
-                    width: '16px',
-                    height: '16px',
-                    marginRight: '8px'
-                  }} />
-                  <p style={{
-                    fontSize: '12px',
-                    color: '#666',
-                    margin: 0
-                  }}>{service.workType}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-
-          <button 
-          onClick={handleSeeMoreLatestServices}
-          style={{
-            backgroundColor: '#6666ff',
-            color: 'white',
-            padding: '10px 20px',
-            border: 'none',
-            borderRadius: '5px',
-            marginTop: '20px',
-            cursor: 'pointer'
-          }}>
+  <LatestServices limit={3} hideFooter={true} hideDescription={true} />
+   <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <button
+            onClick={() => navigate('/latestservices')}
+            style={{
+              backgroundColor: '#6666ff',
+              color: 'white',
+              padding: '10px 24px',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: '500',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
+            }}
+          >
             See More
           </button>
         </div>
-      </div>
-      <div style={{ padding: '40px 0', textAlign: 'center' }}>
-      <h2 style={{ fontSize: '32px', fontWeight: 'bold', marginBottom: '10px' }}>
-        Top <span style={{ color: '#6666ff' }}>Services</span>
-      </h2>
-      
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        gap: '20px',
-        marginTop: '30px',
-      }}>
-        {topServices.slice(0, 4).map((service, index) => (
-          <div key={index} style={{
-            flex: '0 0 14%', 
-            borderRadius: '8px',
-            padding: '20px',
-            alignItems: 'center',
-            border: '1px solid #f5f5f5',
-            backgroundColor: '#f1f1f1',
-            textAlign: 'center',
-          }}>
-            <img
-              src={service.iconUrl}
-              alt={service.title}
-              style={{
-                width: '50px',
-                height: '50px',
-                marginBottom: '8px'
-              }}
-            />
-            <h3 style={{
-              fontSize: '16px',
-              fontWeight: 'bold',
-              marginBottom: '4px',
-              textAlign: 'center'
-            }}>
-              {service.title}
-            </h3>
-
-            <div style={{
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  marginTop: '4px'
-}}>
-  <span style={{
-    color: '6666ff',  
-    fontSize: '14px',
-    marginRight: '4px'
-  }}>
-    {service.jobCount}
-  </span>
-  <span style={{
-    color: '#333',  
-    fontSize: '14px'
-  }}>
-    {service.location}
-  </span>
-</div>
-          </div>
-        ))}
-      </div>
-
-      <button
-          onClick={handleSeeMoreTopServices}
-          style={{
-            backgroundColor: '#6666ff',
-            color: 'white',
-            padding: '10px 20px',
-            border: 'none',
-            borderRadius: '5px',
-            marginTop: '20px',
-            cursor: 'pointer'
-          }}
-        >
-          See More
-        </button>
-
     </div>
-    <div style={{
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'center',
-      backgroundColor: '#6666ff',
-      borderRadius: '10px',
-      padding: '20px',
-      marginTop: '60px',
-      margin: '0 10px',
-      justifyContent: 'space-between',
-      width: '900px', // Increased width
-      marginLeft: '220px',
-    }}>
-      {/* Banner Content */}
-      <div style={{
-        flex: 1,
-        backgroundColor: '#6666ff',
-      }}>
-        <h2 style={{
-          color: '#FFFFFF',
-          fontSize: '20px',
-          fontWeight: 'bold',
-          marginBottom: '10px',
-          marginLeft: '30px',
-          marginTop: '40px'
-        }}>
-          Build a Vendor Profile
-        </h2>
-        <p style={{
-          color: '#FFFFFF',
-          fontSize: '13px',
-          marginBottom: '15px',
-          marginLeft: '30px',
-          whiteSpace: 'pre-line' // Ensures newline handling
-        }}>
-          With dedication, dedication to duty in mind,{'\n'}
-          effort is made to execute responsibilities {'\n'}
-          in the best possible way.
-        </p>
-        <button style={{
-          backgroundColor: '#FFFFFF',
-          borderRadius: '5px',
-          padding: '8px 20px',
-          marginTop: '10px',
-          alignItems: 'center',
-          width: '80px',
-          marginLeft: '30px',
-          marginBottom: '30px',
-          border: 'none',
-          cursor: 'pointer'
-        }}>
-          <span style={{
-            color: '#4A90E2',
-            fontSize: '16px'
-          }}>
-            Create
-          </span>
-        </button>
+
+        <TopServices limit={4} hideFooter={true} hideDescription={true} />
+        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <button
+            onClick={() => navigate('/top-services')}
+            style={{
+              backgroundColor: '#6666ff',
+              color: 'white',
+              padding: '10px 24px',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: '500',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
+            }}
+          >
+            See More
+          </button>
+      </div>
+    {/* Vendor Banner Section */}
+    <div style={{ marginTop: '60px' }}>
+        <VendorBanner />
       </div>
 
-      {/* Main Image */}
-      <img
-        src="https://img.freepik.com/free-photo/day-office-travel-agency_23-2150769946.jpg"
-        alt="Banner Main"
-        style={{
-          width: '300px',
-          height: '200px',
-          borderRadius: '50px'
-        }}
-      />
-    </div>
-    <div style={{ padding: '40px 0', textAlign: 'center' }}>
-      {/* Section Title */}
-      <h2 style={{
-        fontSize: '28px',
-        fontWeight: 'bold',
-        color: '#333',
-        marginTop: '70px'
-      }}>
-        For Customers – Get Help When You Need It
-      </h2>
-      <p style={{
-        textAlign: 'center',
-        color: '#666',
-        marginBottom: '20px',
-        marginTop: '15px'
-      }}>
-        Exercitation dolore reprehenderit fugi
-      </p>
-
-      {/* Card Row */}
-      <div style={{
-        display: 'flex',
-        justifyContent: 'flex-start',
-        padding: '0 5px',
-        marginLeft: '220px',
-        marginTop: '20px'
-      }}>
-        {/* Card 1 */}
-        <div style={{
-          width: '24%', // Reduced width for each card
-          backgroundColor: '#f5f5f5',
-          borderRadius: '10px',
-          padding: '10px',
-          alignItems: 'flex-start',
-          marginRight: '18px',
-          textAlign: 'left'
-        }}>
-          <img
-            src="https://media.istockphoto.com/id/1358911296/photo/businesspersons-having-a-meeting-in-an-office.jpg?s=612x612&w=0&k=20&c=UFkexkrxrYYx3Y-_HryVnhraANA5yrM3ieKANzDLr1w="
-            alt="Card 1"
-            style={{
-              width: '90%',
-              height: '130px',
-              borderRadius: '10px',
-              marginBottom: '10px'
-            }}
-          />
-          <p style={{
-            fontSize: '12px',
-            color: '#6666ff',
-            marginBottom: '5px'
-          }}>
-            Do consectetur
-          </p>
-          <h3 style={{
-            fontSize: '16px',
-            fontWeight: 'bold',
-            color: '#333',
-            marginBottom: '10px'
-          }}>
-            Register with Ease
-          </h3>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between', // Moves "1 min read" to the right
-            marginTop: '5px',
-            marginBottom: '10px'
-          }}>
-            <p style={{ fontSize: '12px', color: '#999' }}>Dec 22, 2022</p>
-            <p style={{
-              fontSize: '12px',
-              color: '#333',
-              backgroundColor: '#f0f0f0',
-              padding: '4px 8px',
-              borderRadius: '5px'
-            }}>
-              1 min read
-            </p>
-          </div>
-        </div>
-
-        {/* Card 2 */}
-        <div style={{
-          width: '24%', // Reduced width for each card
-          backgroundColor: '#f5f5f5',
-          borderRadius: '10px',
-          padding: '10px',
-          alignItems: 'flex-start',
-          marginRight: '18px',
-          textAlign: 'left'
-        }}>
-          <img
-            src="https://www.shutterstock.com/image-photo/busy-diverse-professional-business-people-260nw-2346440433.jpg"
-            alt="Card 2"
-            style={{
-              width: '90%',
-              height: '130px',
-              borderRadius: '10px',
-              marginBottom: '10px'
-            }}
-          />
-          <p style={{
-            fontSize: '12px',
-            color: '#6666ff',
-            marginBottom: '5px'
-          }}>
-            Consequat labore
-          </p>
-          <h3 style={{
-            fontSize: '16px',
-            fontWeight: 'bold',
-            color: '#333',
-            marginBottom: '10px'
-          }}>
-            Manage Your Schedule
-          </h3>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between', // Moves "1 min read" to the right
-            marginTop: '5px',
-            marginBottom: '10px'
-          }}>
-            <p style={{ fontSize: '12px', color: '#999' }}>Dec 22, 2022</p>
-            <p style={{
-              fontSize: '12px',
-              color: '#333',
-              backgroundColor: '#f0f0f0',
-              padding: '4px 8px',
-              borderRadius: '5px'
-            }}>
-              1 min read
-            </p>
-          </div>
-        </div>
-
-        {/* Card 3 */}
-        <div style={{
-          width: '24%', // Reduced width for each card
-          backgroundColor: '#f5f5f5',
-          borderRadius: '10px',
-          padding: '10px',
-          alignItems: 'flex-start',
-          textAlign: 'left'
-        }}>
-          <img
-            src="https://www.shutterstock.com/image-photo/portrait-enthusiastic-hispanic-young-woman-260nw-2242410029.jpg"
-            alt="Card 3"
-            style={{
-              width: '90%',
-              height: '130px',
-              borderRadius: '10px',
-              marginBottom: '10px'
-            }}
-          />
-          <p style={{
-            fontSize: '12px',
-            color: '#6666ff',
-            marginBottom: '5px'
-          }}>
-            Do consectetur
-          </p>
-          <h3 style={{
-            fontSize: '16px',
-            fontWeight: 'bold',
-            color: '#333',
-            marginBottom: '10px'
-          }}>
-            Platform Fee
-          </h3>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between', // Moves "1 min read" to the right
-            marginTop: '5px',
-            marginBottom: '10px'
-          }}>
-            <p style={{ fontSize: '12px', color: '#999' }}>Dec 22, 2022</p>
-            <p style={{
-              fontSize: '12px',
-              color: '#333',
-              backgroundColor: '#f0f0f0',
-              padding: '4px 8px',
-              borderRadius: '5px'
-            }}>
-              1 min read
-            </p>
-          </div>
-        </div>
+     {/* Customer Help Section */}
+     <div style={{ marginTop: '60px' }}>
+        <CustomerHelp />
       </div>
-
-      {/* See More Articles Button */}
-      <button style={{
-        marginTop: '20px',
-        padding: '10px 20px',
-        backgroundColor: '#6666ff',
-        borderRadius: '5px',
-        color: '#fff',
-        border: 'none',
-        cursor: 'pointer'
-      }}>
-        See more articles
-      </button>
     </div>
     <Footer />
 
-    </div>
     </div>
 
   );

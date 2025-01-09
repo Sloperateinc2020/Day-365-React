@@ -22,10 +22,21 @@ const AllServices = () => {
           throw new Error("Failed to fetch services");
         }
         const data = await response.json();
-
+  
         if (data && Array.isArray(data.services)) {
-          setServices(data.services);
-          setOriginalServices(data.services);
+          // Flatten persons from all services
+          const persons = data.services.flatMap(service => 
+            (service.persons || []).map(person => ({
+              ...person,
+              service: service.service,
+              details: service.details,
+              icon: service.icon,
+              color: service.color,
+            }))
+          );
+  
+          setServices(persons);
+          setOriginalServices(persons);
         } else {
           setError("Services data is missing or malformed");
         }
@@ -36,25 +47,26 @@ const AllServices = () => {
         setLoading(false);
       }
     };
-
+  
     fetchServices();
   }, []);
-
+  
   useEffect(() => {
-    const filtered = originalServices.filter((service) => {
-      const serviceName = service.service ? service.service.toLowerCase() : '';
-      const serviceLocation = service.city ? service.city.toLowerCase() : '';
-      const serviceCategory = service.category ? service.category.toLowerCase() : '';
-
+    const filtered = originalServices.filter((person) => {
+      const serviceName = person.service ? person.service.toLowerCase() : '';
+      const personName = person.name ? person.name.toLowerCase() : '';
+      const personCity = person.city ? person.city.toLowerCase() : '';
+  
       return (
         serviceName.includes(searchQuery.toLowerCase()) &&
-        serviceLocation.includes(locationQuery.toLowerCase()) &&
-        (serviceCategory.includes(filterQuery.toLowerCase()) || filterQuery === '')
+        personCity.includes(locationQuery.toLowerCase()) &&
+        (personName.includes(filterQuery.toLowerCase()) || filterQuery === '')
       );
     });
-
+  
     setServices(filtered);
   }, [searchQuery, locationQuery, filterQuery, originalServices]);
+  
 
   const resetFilters = () => {
     setSearchQuery("");
@@ -98,7 +110,6 @@ const AllServices = () => {
     <>
       <div style={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
         <div style={{ marginTop: "10px", display: "flex", alignItems: "center" }}>
-          <Search size={20} style={{ marginRight: "10px" }} />
           <h2 style={{ fontSize: "24px", fontWeight: "600", color: "#333" }}></h2>
         </div>
 
@@ -233,18 +244,18 @@ const AllServices = () => {
             marginTop: "80px",
           }}
         >
-          {services.length > 0 ? (
-            services.map((service, index) => (
-              <div
-                key={index}
-                style={{
-                  backgroundColor: "white",
-                  borderRadius: "1px",
-                  padding: "0px",
-                  border: "1px solid black",
-                  position: "relative",
-                }}
-              >
+{services.length > 0 ? (
+  services.map((person, index) => (
+    <div
+      key={index}
+      style={{
+        backgroundColor: "white",
+        borderRadius: "1px",
+        padding: "0px",
+        border: "1px solid black",
+        position: "relative",
+      }}
+    >
                 <div
                   style={{
                     position: "absolute",
@@ -260,7 +271,7 @@ const AllServices = () => {
                   }}
                 >
                   <StarIcon />
-                  <span style={{ color: "black" }}>{service.rating || "N/A"}</span>
+                  <span style={{ color: "black" }}>{person.rating || "N/A"}</span>
                 </div>
 
                 <div
@@ -272,8 +283,8 @@ const AllServices = () => {
                   }}
                 >
                   <img
-                    src={service.personimageUrl}
-                    alt={service.name}
+                    src={person.personimageUrl}
+                    alt={person.name}
                     style={{
                       width: "64px",
                       height: "64px",
@@ -289,7 +300,7 @@ const AllServices = () => {
                       marginBottom: "4px",
                     }}
                   >
-                    {service.name}
+                    {person.name}
                   </h3>
                   <p
                     style={{
@@ -298,7 +309,7 @@ const AllServices = () => {
                       marginBottom: "1px",
                     }}
                   >
-                    {service.profession}
+                    {person.availableServices}
                   </p>
                   <p
                     style={{
@@ -309,7 +320,7 @@ const AllServices = () => {
                       marginBottom: "1px",
                     }}
                   >
-                    {service.city}
+                    {person.city}
                   </p>
 
                   <p
@@ -325,7 +336,7 @@ const AllServices = () => {
                       marginBottom: "10px",
                     }}
                   >
-                    {service.service}
+                    {person.service}
                   </p>
 
                   <div
@@ -341,7 +352,7 @@ const AllServices = () => {
                     }}
                   >
                     <button
-                      onClick={() => handleAvailabilityClick(service.id)}
+                      onClick={() => handleAvailabilityClick(person.id)}
                       style={{
                         flex: 1,
                         display: "flex",

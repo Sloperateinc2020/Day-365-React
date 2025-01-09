@@ -33,6 +33,9 @@ import VendorAvailability from './Components/VendorAvailability/VendorAvailabili
 import LatestServices from './Components/LatestServices/LatestServices';
 import Articles from './Components/Articles';
 
+import ServiceDetails from './Components/ServiceDetails/ServiceDetails';
+
+
 function App() {
   const [selectedMenu, setSelectedMenu] = useState('Home'); // Initial selected menu
 
@@ -103,6 +106,9 @@ const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
         <Route path="/vendoravailability" element={<VendorAvailability />} />
         <Route path="/articles" element={<Articles />} />
 
+        <Route path="/service-details" element={<ServiceDetails />} />
+
+        
         {/* LatestServices route */}
         <Route path="/latestservices" element={<LatestServices />} />
 

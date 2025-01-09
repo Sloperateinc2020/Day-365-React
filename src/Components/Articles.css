@@ -1,0 +1,252 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Page Container */
+.page-container {
+  width: 100%;
+  min-height: 100vh;
+  background: #f7fafc;
+  padding: 2rem;
+}
+
+/* Article Container */
+.article-container {
+  width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* Search Input */
+.search-wrapper {
+  margin-bottom: 1.5rem;
+  margin-top: 20px;
+}
+
+.search-container {
+  max-width: 95%;
+}
+
+.search-input-wrapper {
+  position: relative;
+  margin-left: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 15px;
+  padding-left: 40px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  left: 15px;
+  color: #718096;
+  font-size: 14px;
+  z-index: 1;
+}
+
+/* Article Content */
+.article-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 1rem 0;
+  color: #2d3748;
+  width: 750px;
+  margin-left: 35px;
+}
+
+.author-profile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  margin-top: -10px;
+  margin-left: 35px;
+}
+
+.author-profile-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-top: 10px;
+}
+
+.author-profile-info {
+  display: flex;
+  flex-direction: column;
+  margin-top: -35px;
+}
+
+.author-profile-name {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #2d3748;
+  margin-bottom: 2px;
+}
+
+.author-profile-role {
+  font-size: 0.85rem;
+  color: #718096;
+  line-height: 1.2;
+}
+
+.article-description {
+  font-size: 1rem;
+  color: #4a5568;
+  line-height: 1.5;
+  margin: 1rem 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  width: 900px;
+  margin-left: 35px;
+}
+
+.main-image {
+  width: 90%;
+  border-radius: 8px;
+  margin: 1rem 0;
+  max-height: 400px;
+  object-fit: cover;
+  margin-left: 35px;
+}
+
+.image-caption {
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 2rem;
+  width: 850px;
+  margin-left: 35px;
+}
+
+/* Social Media Section */
+.reaction-section {
+  margin-bottom: 1.5rem;
+  margin-left: 35px;
+}
+
+.reaction-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.reaction-btn {
+  background: #edf2f7;
+  padding: 10px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.2s;
+}
+
+.reaction-btn:hover {
+  transform: scale(1.1);
+}
+
+.reaction-btn.facebook {
+  background: #1877f2;
+  color: #fff;
+}
+
+.reaction-btn.twitter {
+  background: #1da1f2;
+  color: #fff;
+}
+
+.reaction-btn.linkedin {
+  background: #0077b5;
+  color: #fff;
+}
+
+/* Related Articles */
+.related-articles h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: #2d3748;
+  margin-left: 35px;
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-left: 15px;
+  padding: 1rem;
+  border-radius: 8px;
+  width: 880px;
+}
+
+.related-article {
+  background-color: #ffffff;
+  padding: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.related-article img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+
+.related-article h3 {
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: #2d3748;
+}
+
+/* Comments Section */
+.comments-section {
+  margin-top: 2rem;
+  margin-left: 35px;
+}
+
+.comments-section h2 {
+  color: #2d3748;
+  margin-bottom: 1rem;
+}
+
+.comment-input {
+  width: 94%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  resize: vertical;
+  margin-bottom: 1rem;
+  min-height: 100px;
+}
+
+.post-comment-btn {
+  padding: 0.5rem 1rem;
+  background: #3182ce;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.post-comment-btn:hover {
+  background: #2c5282;
+}

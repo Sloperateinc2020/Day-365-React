@@ -228,14 +228,6 @@ function Home() {
     setStateValue(service ? service.state : '');
   };
   const navigate = useNavigate();
-
-  // const handleSeeMoreTopServices = () => {
-  //   navigate('/top-services');
-  // };
-
-  // const handleSeeMoreLatestServices = () => {
-  //   navigate('/latestservices');
-  // };
   
   return (
     <div style={{ overflowX: 'hidden', position: 'fixed', width: '100%', height: '90%',marginTop:"40px" }}>
@@ -270,7 +262,7 @@ function Home() {
             marginBottom: '24px',
             lineHeight: '22px'
           }}>
-            At <span style={{ fontWeight: 'bold' }}>Day 365</span>, we make it easier than ever to book trusted local services,<br />
+            At <span style={{ fontWeight: 'bold' }}>Urban Maverick</span>, we make it easier than ever to book trusted local services,<br />
             online. Whether you need a plumber, electrician, driver, or any other<br />
             professional, we've got you covered with a network of experts ready to<br />
             serve you.
@@ -583,71 +575,71 @@ function Home() {
           gap: '20px',
         }}>
          <div style={{ display: 'flex', alignItems: 'center' }}>
-  <button
-    onClick={handlePrevService}
-    style={{
-      background: 'none',
-      border: 'none',
-      cursor: 'pointer',
-      opacity: isSearchActive ? 0.5 : 1,
-      fontSize: '24px',
-      color: '#bbb',
-      padding: '10px'
-    }}
-    disabled={isSearchActive}
-  >
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+         <button
+      onClick={handlePrevService}
+      style={{
+        background: 'none',
+        border: 'none',
+        cursor: 'pointer',
+        opacity: isSearchActive ? 0.5 : 1,
+        fontSize: '24px',
+        color: '#bbb',
+        padding: '10px'
+      }}
+      disabled={isSearchActive}
     >
-      <path d="M15 19L8 12L15 5" stroke="#bbb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
-  </button>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15 19L8 12L15 5" stroke="#bbb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    </button>
 
-  {displayedServices.map((service, index) => (
-    <div key={index} style={{
-      padding: '15px',
-      borderRadius: '10px',
-      textAlign: 'center',
-      width: '170px',
-      margin: '8px',
-      backgroundColor: service.color || '#f9f9f9',
-      boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-    }}>
-      <img src={service.imageUrl} alt={service.service} style={{
-        width: '60px',
-        height: '60px',
-        borderRadius: '30px',
-        marginBottom: '10px'
-      }} />
-      <p style={{
-        fontSize: '16px',
-        fontWeight: 'bold',
-        color: '#333'
-      }}>{service.service}</p>
-      <p style={{
-        fontSize: '12px',
-        color: '#666'
-      }}>{service.availableServices}</p>
-    </div>
-  ))}
+    {displayedServices.map((service, index) => (
+      <div
+        key={index}
+        onClick={() => navigate('/service-details', { state: { service } })} // Pass the service data as state
+        style={{
+          padding: '15px',
+          borderRadius: '10px',
+          textAlign: 'center',
+          width: '170px',
+          margin: '8px',
+          backgroundColor: service.color || '#f9f9f9',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+          cursor: 'pointer', // Change cursor to pointer
+        }}
+      >
+        <img src={service.imageUrl} alt={service.service} style={{
+          width: '60px',
+          height: '60px',
+          borderRadius: '30px',
+          marginBottom: '10px'
+        }} />
+        <p style={{
+          fontSize: '16px',
+          fontWeight: 'bold',
+          color: '#333'
+        }}>{service.service}</p>
+        <p style={{
+          fontSize: '12px',
+          color: '#666'
+        }}>{service.availableServices}</p>
+      </div>
+    ))}
 
-  <button
-    onClick={handleNextService}
-    style={{
-      background: 'none',
-      border: 'none',
-      cursor: 'pointer',
-      opacity: isSearchActive ? 0.5 : 1,
-      fontSize: '24px',
-      color: '#bbb',
-      padding: '10px'
-    }}
-    disabled={isSearchActive}
-  >
+    <button
+      onClick={handleNextService}
+      style={{
+        background: 'none',
+        border: 'none',
+        cursor: 'pointer',
+        opacity: isSearchActive ? 0.5 : 1,
+        fontSize: '24px',
+        color: '#bbb',
+        padding: '10px'
+      }}
+      disabled={isSearchActive}
+    >
+
     <svg
       width="24"
       height="24"

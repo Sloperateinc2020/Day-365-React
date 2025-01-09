@@ -29,6 +29,8 @@ import SignUpDetails from './Components/SignUpDetails/SignUpDetails';
 import ChatApp from './Components/ChatApp/ChatApp';
 import VendorAvailability from './Components/VendorAvailability/VendorAvailability';
 import LatestServices from './Components/LatestServices/LatestServices';
+import ServiceDetails from './Components/ServiceDetails/ServiceDetails';
+
 
 function App() {
   const [selectedMenu, setSelectedMenu] = useState('Home'); // Initial selected menu
@@ -97,6 +99,8 @@ const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
         <Route path="/signupdetails" element={<SignUpDetails />} /> 
         <Route path="/chat" element={<ChatApp />} />
         <Route path="/vendoravailability" element={<VendorAvailability />} />
+        <Route path="/service-details" element={<ServiceDetails />} />
+
         
         {/* LatestServices route */}
         <Route path="/latestservices" element={<LatestServices />} />

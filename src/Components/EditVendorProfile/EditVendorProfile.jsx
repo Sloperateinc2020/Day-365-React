@@ -12,7 +12,7 @@ const EditVendorProfile = () => {
   });
 
   const [serviceData, setServiceData] = useState({
-    hourlyRate: '',
+    addressInformation: '',
     serviceArea: '',
     availability: true,
     services: {
@@ -70,7 +70,7 @@ const EditVendorProfile = () => {
     if (!profileData.yearsOfExperience) return "Years of Experience is required.";
     if (!profileData.licenseNumber) return "License Number is required.";
     if (!profileData.servicesOffered) return "Services Offered are required.";
-    if (!serviceData.hourlyRate) return "Hourly Rate is required.";
+    if (!serviceData.addressInformation) return "Address Information is required.";
     if (!serviceData.serviceArea) return "Service Area is required.";
     const paymentMethodsSelected = Object.values(serviceData.paymentMethods).some((value) => value);
     if (!paymentMethodsSelected) return "Please select at least one Payment Method.";
@@ -169,6 +169,8 @@ const EditVendorProfile = () => {
               name="phoneNumber"
               value={profileData.phoneNumber}
               onChange={handleProfileChange}
+              pattern="^[\d\+\-]*$"
+              title="Only numbers are allowed."
               style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
             />
           </div>
@@ -204,14 +206,13 @@ const EditVendorProfile = () => {
               style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc', minHeight: '60px' }}
             />
           </div>
-
           <div>
-            <label htmlFor="hourlyRate" style={{ display: 'block', marginBottom: '5px' }}>Hourly Rate ($)</label>
+            <label htmlFor="addressInformation" style={{ display: 'block', marginBottom: '5px' }}>Address Information</label>
             <input
-              type="number"
-              id="hourlyRate"
-              name="hourlyRate"
-              value={serviceData.hourlyRate}
+              type="text"
+              id="addressInformation"
+              name="addressInformation"
+              value={serviceData.addressInformation}
               onChange={handleServiceChange}
               style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
             />
@@ -249,7 +250,6 @@ const EditVendorProfile = () => {
               }}
             />
           </div>
-
           <div>
             <label style={{ display: 'block', marginBottom: '5px' }}>Payment Methods Accepted</label>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>

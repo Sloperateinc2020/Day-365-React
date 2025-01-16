@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from "../Footer";
 
-const LatestServices = ({ hideFooter, limit, hideDescription }) => {
+const LatestServices = ({ hideFooter, limit, hideDescription, isMobile }) => {
   const navigate = useNavigate();
   const [latestServices, setLatestServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const LATESTSERVICE_API_URL = 'https://run.mocky.io/v3/f07e0bed-0d93-46e0-9f9f-d7ead510e556';
+  const LATESTSERVICE_API_URL = 'https://run.mocky.io/v3/e96b3672-2b49-4bb4-bf86-8b95980a6ba6';
 
   useEffect(() => {
     const fetchLatestServices = async () => {
@@ -47,13 +47,14 @@ const LatestServices = ({ hideFooter, limit, hideDescription }) => {
     <div style={{ padding: '40px 20px', backgroundColor: '#fff' }}>
       <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
         <h2 style={{
-          fontSize: '32px',
+          fontSize: isMobile ? '20px' : '30px', // Align left only for mobile
           fontWeight: 'bold',
           marginBottom: '8px',
-          textAlign: 'center',
-          color: '#6666ff'
+          
+          textAlign: isMobile ? 'left' : 'center', // Align left only for mobile
+          color: isMobile ? 'black' : '#6666ff', // Black for mobile, default for others
         }}>
-          Latest <span style={{ color: '#6666ff' }}>Services</span>
+          Latest <span style={{ color: isMobile ? 'black' : '#6666ff' }}>Services</span>
         </h2>
 
         {/* Conditionally render the description */}
@@ -68,11 +69,15 @@ const LatestServices = ({ hideFooter, limit, hideDescription }) => {
           </p>
         )}
 
+        {/* Horizontal Scrollable Container */}
         <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '24px',
-        }}>
+          display: 'flex',
+          overflowX: 'auto',
+          gap: '16px',
+          paddingBottom: '16px',
+          scrollbarWidth: 'none', // For Firefox
+          msOverflowStyle: 'none', // For IE and Edge
+        }} className="no-scrollbar">
           {Array.isArray(servicesToDisplay) && servicesToDisplay.map((service, index) => (
             <div key={index} style={{
               backgroundColor: '#fff',
@@ -82,8 +87,9 @@ const LatestServices = ({ hideFooter, limit, hideDescription }) => {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'flex-start',
-              gap: '12px'
-              
+              gap: '12px',
+              minWidth: '260px',
+              flexShrink: 0,
             }}>
               <div style={{
                 display: 'flex',

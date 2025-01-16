@@ -1,21 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome, faListAlt, faInfoCircle, faEnvelope, faUser, faStore } from '@fortawesome/free-solid-svg-icons';
 
 export default function Header({ selectedMenu, setSelectedMenu }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  // Detect screen resize to adjust header layout dynamically
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Scroll to top when route changes
   useEffect(() => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   }, [location.pathname]);
 
   // Function to handle navigation and update selected menu
   const handleMenuClick = (menu) => {
-    setSelectedMenu(menu);  // Set the selected menu in the parent component
+    setSelectedMenu(menu);
 
     if (menu === 'Contact') {
       navigate('/contact');
@@ -26,7 +37,7 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
     } else if (menu === 'About') {
       navigate('/about');
     } else if (menu === 'Login/Register') {
-      navigate('/signup');  // Navigate to the SignUp page
+      navigate('/signup');
     }
   };
 
@@ -34,121 +45,116 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
     navigate('/join-as-vendor');
   };
 
-  return (
-    <div style={styles.outerContainer}>
-      <div style={styles.container}>
-        <h1 style={styles.logoText}>LOGO</h1>
-
-        <div style={styles.menuContainer}>
-          <button
-            onClick={() => handleMenuClick('Home')}
-            style={{
-              ...styles.textWithGap,
-              ...(selectedMenu === 'Home' ? styles.selectedText : {}),
-            }}
-          >
-            Home
-          </button>
-          <button
-            onClick={() => handleMenuClick('All Services')}
-            style={{
-              ...styles.textWithGap,
-              ...(selectedMenu === 'All Services' ? styles.selectedText : {}),
-            }}
-          >
-            All Services
-          </button>
-          <button
-            onClick={() => handleMenuClick('About')}
-            style={{
-              ...styles.textWithGap,
-              ...(selectedMenu === 'About' ? styles.selectedText : {}),
-            }}
-          >
-            About
-          </button>
-          <button
-            onClick={() => handleMenuClick('Contact')}
-            style={{
-              ...styles.textWithGap,
-              ...(selectedMenu === 'Contact' ? styles.selectedText : {}),
-            }}
-          >
-            Contact
-          </button>
-          <button
-            onClick={() => handleMenuClick('Login/Register')}
-            style={{
-              ...styles.textWithGap,
-              ...(selectedMenu === 'Login/Register' ? styles.selectedText : {}),
-            }}
-          >
-            Login/Register
-          </button>
-          {/* Add onClick for vendor button */}
-          <button style={styles.vendorButton} onClick={handleVendorClick}>
-            Join As Vendor
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-const styles = {
-  outerContainer: {
+  const outerContainerStyle = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#f5f5f5',
-    position: 'fixed', 
-    top: 0, 
-    width: '100%', 
+    position: 'fixed',
+    width: '100%',
     zIndex: 1000,
-  },
-  container: {
+    top: isMobile ? 'unset' : 0, // Top for desktop
+    bottom: isMobile ? 0 : 'unset', // Bottom for mobile
+    boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)',
+  };
+
+  const containerStyle = {
     display: 'flex',
     alignItems: 'center',
     backgroundColor: 'white',
     padding: 10,
-    width: '100%', 
+    width: '100%',
     maxWidth: 1500,
     height: 60,
-    borderRadius: 8,
-    boxSizing: 'border-box', 
-  },
-  logoText: {
+    boxSizing: 'border-box',
+    justifyContent: isMobile ? 'space-around' : 'flex-start',
+  };
+
+  const logoTextStyle = {
     fontWeight: 'bold',
     fontSize: 18,
     marginRight: 10,
     marginLeft: 20,
-  },
-  menuContainer: {
+    display: isMobile ? 'none' : 'block', // Hide logo on mobile
+  };
+
+  const menuContainerStyle = {
     display: 'flex',
-    marginLeft: 65,
-    gap: 20,
+    gap: isMobile ? 0 : 20, // Remove gap for mobile to fit in one line
     flexGrow: 1,
-  },
-  textWithGap: {
+    justifyContent: isMobile ? 'space-around' : 'flex-start',
+    width: '100%',
+  };
+
+  const textWithGapStyle = (isSelected) => ({
     background: 'none',
     border: 'none',
     cursor: 'pointer',
-    fontSize: 16,
-    color: 'black',
-  },
-  selectedText: {
-    color: 'blue', // Highlight selected menu with blue
-  },
-  vendorButton: {
+    fontSize: isMobile ? 12 : 16, // Smaller font size for mobile
+    color: isSelected ? 'blue' : 'black', // Highlight selected menu with blue
+  });
+
+  const vendorButtonStyle = {
     backgroundColor: '#8a6ded',
     color: 'white',
-    padding: '10px 25px',
+    padding: '5px 10px',
     borderRadius: 25,
     border: 'none',
     cursor: 'pointer',
     fontWeight: 'bold',
     fontSize: 12,
-    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.3)',
     marginLeft: 'auto',
-  },
-};
+  };
+
+  return (
+    <div style={outerContainerStyle}>
+      <div style={containerStyle}>
+        <h1 style={logoTextStyle}>LOGO</h1>
+
+        <div style={menuContainerStyle}>
+          <button
+            onClick={() => handleMenuClick('Home')}
+            style={textWithGapStyle(selectedMenu === 'Home')}
+          >
+            <FontAwesomeIcon icon={faHome} /> Home
+          </button>
+          <button
+            onClick={() => handleMenuClick('All Services')}
+            style={textWithGapStyle(selectedMenu === 'All Services')}
+          >
+            <FontAwesomeIcon icon={faListAlt} /> All Services
+          </button>
+          <button
+            onClick={() => handleMenuClick('About')}
+            style={textWithGapStyle(selectedMenu === 'About')}
+          >
+            <FontAwesomeIcon icon={faInfoCircle} /> About
+          </button>
+          <button
+            onClick={() => handleMenuClick('Contact')}
+            style={textWithGapStyle(selectedMenu === 'Contact')}
+          >
+            <FontAwesomeIcon icon={faEnvelope} /> Contact
+          </button>
+
+          {/* Display Login/Register only on desktop/laptop */}
+          {!isMobile && (
+            <button
+              onClick={() => handleMenuClick('Login/Register')}
+              style={textWithGapStyle(selectedMenu === 'Login/Register')}
+            >
+              <FontAwesomeIcon icon={faUser} /> Login/Register
+            </button>
+          )}
+
+          {/* Hide "Join As A Vendor" button on mobile */}
+          {!isMobile && (
+            <button style={vendorButtonStyle} onClick={handleVendorClick}>
+              <FontAwesomeIcon icon={faStore} /> Join As A Vendor
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

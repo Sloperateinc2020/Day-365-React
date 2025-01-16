@@ -831,6 +831,7 @@ const handleServiceSelection = (service) => {
       )}
 
       <Footer />
+      
     </div>
   );
 };

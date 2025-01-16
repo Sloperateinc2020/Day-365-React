@@ -33,7 +33,7 @@ export default function Footer() {
         </div>
         <div style={{ width: '140px' }}>
           <span style={{ color: '#fff', fontWeight: 'bold', fontSize: '16px', marginBottom: '7px', display: 'block' }}>Resources</span>
-          <span style={{ color: '#ccc', fontSize: '14px', marginBottom: '7px', display: 'block' }}>Blog</span>
+          <Link to="/Blog" style={{ color: '#ccc', fontSize: '14px', marginBottom: '7px', display: 'block' }}>Blog</Link>
           <span style={{ color: '#ccc', fontSize: '14px', marginBottom: '7px', display: 'block' }}>User Guides</span>
           <span style={{ color: '#ccc', fontSize: '14px', marginBottom: '7px', display: 'block' }}>Webinars</span>
         </div>
@@ -44,6 +44,9 @@ export default function Footer() {
             About
           </Link>
           <span style={{ color: '#ccc', fontSize: '14px', marginBottom: '7px', display: 'block' }}>Join Us</span>
+          <Link to="/Articles" style={{ color: '#ccc', fontSize: '14px', marginBottom: '7px', display: 'block', textDecoration: 'none' }}>
+            Articles
+          </Link>
         </div>
         <div style={{ width: '260px', marginLeft: '150px' }}>
           <span style={{ color: '#6666ff', fontSize: '16px' }}>Subscribe to our newsletter</span>

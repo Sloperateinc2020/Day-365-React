@@ -1,9 +1,8 @@
-
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate hook for navigation
-import config from '../../config'; // Adjust the path as needed
-import Footer from "../Footer"; // Import the Footer component
+import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import config from '../../config';
+import Footer from "../Footer";
 
 const SearchResult = () => {
   const location = useLocation();
@@ -16,75 +15,62 @@ const SearchResult = () => {
       <h1>Search Results</h1>
       <p>Search query: {searchQuery}</p>
       <p>Location: {searchLocation}</p>
-      {/* Your logic to fetch and display search results */}
     </div>
   );
 };
-
 
 const Services = () => {
   const [popularServices, setPopularServices] = useState([]);
   const [specialOffers, setSpecialOffers] = useState([]);
   const [topProviders, setTopProviders] = useState([]);
-  const [searchQuery, setSearchQuery] = useState(""); // State for search query
-  const [location, setLocation] = useState(""); // State for location
+  const [searchQuery, setSearchQuery] = useState("");
+  const [location, setLocation] = useState("");
+  const navigate = useNavigate();
 
-
-  const navigate = useNavigate(); // useNavigate hook to programmatically navigate
-
-  // Fetch popular services, special offers, and top-rated providers
   useEffect(() => {
-    // Fetch popular services from the API
     const fetchPopularServices = async () => {
       try {
         const response = await fetch(config.POPULARSERVICESNEARYOU_API_URL);
         const data = await response.json();
-        setPopularServices(data.popularServicesNearYou); // Assuming the data structure matches
+        setPopularServices(data.popularServicesNearYou);
       } catch (error) {
         console.error('Error fetching popular services:', error);
       }
     };
 
-    // Fetch special offers from the API
     const fetchSpecialOffers = async () => {
       try {
         const response = await fetch(config.SPECIALOFFERS_API_URL);
         const data = await response.json();
-        setSpecialOffers(data.specialOffers); // Assuming the data structure matches
+        setSpecialOffers(data.specialOffers);
       } catch (error) {
         console.error('Error fetching special offers:', error);
       }
     };
 
-    // Fetch top-rated providers from the API
     const fetchTopProviders = async () => {
       try {
         const response = await fetch(config.TOPRATEDPROVIDERS_API_URL);
         const data = await response.json();
-        setTopProviders(data.topRatedProviders); // Assuming the data structure matches
+        setTopProviders(data.topRatedProviders);
       } catch (error) {
         console.error('Error fetching top-rated providers:', error);
       }
     };
 
-    // Call all the fetch functions when the component mounts
     fetchPopularServices();
     fetchSpecialOffers();
     fetchTopProviders();
-  }, []); // Empty dependency array ensures this only runs once when the component mounts
+  }, []);
 
-   // Inside the Services component
-const handleSearchClick = () => {
-  // Only navigate if either searchQuery or location is provided
-  if (searchQuery.trim() || location.trim()) {
-    // Build the query string based on search and location
-    const queryString = `?q=${encodeURIComponent(searchQuery)}&location=${encodeURIComponent(location)}`;
-    navigate(`/search-result${queryString}`);
-  }
-};
+  const handleSearchClick = () => {
+    if (searchQuery.trim() || location.trim()) {
+      const queryString = `?q=${encodeURIComponent(searchQuery)}&location=${encodeURIComponent(location)}`;
+      navigate(`/search-result${queryString}`);
+    }
+  };
 
-   // Handle navigation to "See All" pages
-   const handleSeeAll = (category) => {
+  const handleSeeAll = (category) => {
     navigate(`/services/${category}`);
   };
 
@@ -117,7 +103,7 @@ const handleSearchClick = () => {
             type="text"
             placeholder="Search services"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)} // Update the search query state
+            onChange={(e) => setSearchQuery(e.target.value)}
             style={{
               flex: '1',
               padding: '0 8px',
@@ -128,20 +114,19 @@ const handleSearchClick = () => {
             }}
           />
           <input
-  type="text"
-  placeholder="Location"
-  value={location}  // Bind the location state
-  onChange={(e) => setLocation(e.target.value)}  // Update location state
-  style={{
-    width: '120px',
-    padding: '0 8px',
-    border: 'none',
-    outline: 'none',
-    fontSize: '13px',
-    borderRight: '1px solid #ccc',
-  }}
-/>
-
+            type="text"
+            placeholder="Location"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            style={{
+              width: '120px',
+              padding: '0 8px',
+              border: 'none',
+              outline: 'none',
+              fontSize: '13px',
+              borderRight: '1px solid #ccc',
+            }}
+          />
           <div
             style={{
               position: 'relative',
@@ -173,7 +158,7 @@ const handleSearchClick = () => {
             />
           </div>
           <button
-            onClick={handleSearchClick} // Trigger the search functionality when clicked
+            onClick={handleSearchClick}
             style={{
               backgroundColor: '#4F46E5',
               color: 'white',
@@ -190,25 +175,16 @@ const handleSearchClick = () => {
 
         {/* Popular Services */}
         <div style={{ marginBottom: '25px' }}>
-          <div
-            style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '30px' }}
-          >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '30px' }}>
             <h2 style={{ fontSize: '20px', fontWeight: '600' }}>Popular services near you</h2>
             <button
               style={{ color: '#4F46E5', background: 'none', border: 'none', cursor: 'pointer' }}
-              onClick={() => handleSeeAll('popular-services')} // Navigate to popular services page
-
+              onClick={() => handleSeeAll('popular-services')}
             >
               See all
             </button>
           </div>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
-              gap: '16px',
-            }}
-          >
+          <div className="services-grid popular-services">
             {popularServices.map((service) => (
               <div key={service.id}>
                 <div
@@ -220,14 +196,7 @@ const handleSearchClick = () => {
                     marginBottom: '8px',
                   }}
                 ></div>
-                <div
-                  style={{
-                    height: '16px',
-                    width: '70%',
-                    borderRadius: '4px',
-                    textAlign: 'center',
-                  }}
-                >
+                <div style={{ height: '16px', width: '70%', borderRadius: '4px', textAlign: 'center' }}>
                   {service.name}
                 </div>
               </div>
@@ -237,30 +206,16 @@ const handleSearchClick = () => {
 
         {/* Special Offers */}
         <div style={{ marginBottom: '32px', fontSize: '20px' }}>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: '16px',
-            }}
-          >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
             <h2 style={{ fontSize: '18px', fontWeight: '600' }}>Special Offers</h2>
             <button
               style={{ color: '#4F46E5', background: 'none', border: 'none', cursor: 'pointer' }}
-              onClick={() => handleSeeAll('special-offers')} // Navigate to special offers page
-
+              onClick={() => handleSeeAll('special-offers')}
             >
               See all
             </button>
           </div>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
-              gap: '16px',
-            }}
-          >
+          <div className="services-grid special-offers">
             {specialOffers.map((offer) => (
               <div key={offer.id}>
                 <div
@@ -273,25 +228,10 @@ const handleSearchClick = () => {
                     marginBottom: '8px',
                   }}
                 ></div>
-                <div
-                  style={{
-                    height: '16px',
-                    width: '80%',
-                    borderRadius: '4px',
-                    textAlign: 'center',
-                    marginBottom: '4px',
-                  }}
-                >
+                <div style={{ height: '16px', width: '80%', borderRadius: '4px', textAlign: 'center', marginBottom: '4px' }}>
                   {offer.offer}
                 </div>
-                <div
-                  style={{
-                    height: '16px',
-                    width: '50%',
-                    borderRadius: '4px',
-                    textAlign: 'center',
-                  }}
-                >
+                <div style={{ height: '16px', width: '50%', borderRadius: '4px', textAlign: 'center' }}>
                   {offer.discount}
                 </div>
               </div>
@@ -301,58 +241,31 @@ const handleSearchClick = () => {
 
         {/* Top Rated Providers */}
         <div style={{ marginBottom: '32px', fontSize: '20px' }}>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: '16px',
-            }}
-          >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
             <h2 style={{ fontSize: '18px', fontWeight: '600' }}>Top rated providers</h2>
             <button
               style={{ color: '#4F46E5', background: 'none', border: 'none', cursor: 'pointer' }}
-              onClick={() => handleSeeAll('top-providers')} // Navigate to top-rated providers page
-
+              onClick={() => handleSeeAll('top-providers')}
             >
               See all
             </button>
           </div>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
-              gap: '16px',
-            }}
-          >
+          <div className="services-grid top-providers">
             {topProviders.map((provider, index) => (
               <div key={`provider-${index}`}>
                 <div
                   style={{
-                    backgroundImage: `url(${provider.image})`, // Assuming provider has an image property
+                    backgroundImage: `url(${provider.image})`,
                     backgroundSize: 'cover',
                     borderRadius: '8px',
                     height: '90px',
                     marginBottom: '8px',
                   }}
                 ></div>
-                <div
-                  style={{
-                    height: '16px',
-                    width: '75%',
-                    borderRadius: '4px',
-                    marginBottom: '4px',
-                  }}
-                >
+                <div style={{ height: '16px', width: '75%', borderRadius: '4px', marginBottom: '4px' }}>
                   {provider.name}
                 </div>
-                <div
-                  style={{
-                    height: '16px',
-                    width: '50%',
-                    borderRadius: '4px',
-                  }}
-                >
+                <div style={{ height: '16px', width: '50%', borderRadius: '4px' }}>
                   {provider.rating}
                 </div>
               </div>
@@ -366,6 +279,34 @@ const handleSearchClick = () => {
               0% { opacity: 0.6; }
               50% { opacity: 1; }
               100% { opacity: 0.6; }
+            }
+
+            .services-grid {
+              display: grid;
+              gap: 16px;
+            }
+
+            /* Desktop layout */
+            @media (min-width: 769px) {
+              .services-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+              }
+              .services-grid.special-offers {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+              }
+            }
+
+            /* Mobile layout */
+            @media (max-width: 768px) {
+              .services-grid.popular-services {
+                grid-template-columns: repeat(5, 1fr);
+              }
+              .services-grid.special-offers {
+                grid-template-columns: repeat(3, 1fr);
+              }
+              .services-grid.top-providers {
+                grid-template-columns: repeat(4, 1fr);
+              }
             }
           `}
         </style>

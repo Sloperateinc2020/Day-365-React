@@ -19,166 +19,211 @@ function ServiceDetails() {
       style={{
         width: '100%',
         maxWidth: '1400px',
-        margin: '50px auto',
-        fontFamily: 'Arial, sans-serif',
-        border: '1px solid #e0e0e0',
-        borderRadius: '12px',
-        padding: '15px',
-        backgroundColor: '#fff',
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+        margin: '8px auto',
+        fontFamily: '"Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+        padding: '8px',
+        background: 'linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%)',
+        marginTop:"18px"
       }}
     >
       <div
         style={{
           textAlign: 'center',
-          marginBottom: '20px',
+          marginBottom: '16px',
+          padding: '12px',
+          borderRadius: '16px',
+          background: 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)',
+          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
         }}
       >
         <h1
           style={{
-            marginBottom: '8px',
-            fontSize: '26px',
-            fontWeight: 'bold',
+            marginBottom: '6px',
+            fontSize: '22px',
+            fontWeight: '700',
+            background: 'linear-gradient(45deg, #2563eb, #1d4ed8)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            letterSpacing: '-0.02em',
+            // marginTop:"25px"
           }}
         >
           {service.service} - Providers
         </h1>
-        <p style={{ color: '#777', fontSize: '14px' }}>{service.details}</p>
+        <p style={{ 
+          color: '#64748b', 
+          fontSize: '13px',
+          margin: '0 auto',
+          lineHeight: '1.3',
+          maxWidth: '600px'
+        }}>
+          {service.details}
+        </p>
       </div>
 
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '20px',
-          justifyContent: 'flex-start',
-          marginLeft: '20px',
-        }}
-      >
+      <div className="grid-container" style={{ display: 'grid' }}>
         {service.persons.map((person, index) => (
           <div
             key={index}
             style={{
-              border: '1px solid #e0e0e0',
-              borderRadius: '12px',
-              padding: '10px',
-              width: '250px',
-              backgroundColor: '#fff',
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-              textAlign: 'center',
-              position: 'relative',
+              border: 'none',
+              borderRadius: '16px',
+              backgroundColor: '#ffffff',
+              boxShadow: '0 10px 25px rgba(0, 0, 0, 0.06)',
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column',
+              height: 'auto',
+              transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+              cursor: 'pointer',
+              ':hover': {
+                transform: 'translateY(-2px)',
+                boxShadow: '0 12px 30px rgba(0, 0, 0, 0.08)',
+              },
             }}
           >
-            {/* Person Image */}
-            <img
-              src={person.personimageUrl}
-              alt={person.name}
-              style={{
-                width: '230px',
-                height: '130px',
-                objectFit: 'cover',
-                border: '2px solid #007bff',
-                boxShadow: '0 2px 6px rgba(0, 0, 0, 0.2)',
-                position: 'relative',
-                top: '10px', // Move the image down within the box
-              }}
-            />
-
-            {/* Person Name */}
-            <h2
-              style={{
-                fontSize: '16px',
-                fontWeight: 'bold',
-                color: '#333',
-                margin: '8px 0',
-              }}
-            >
-              {person.name}
-            </h2>
-
-            {/* City and State */}
-            <p
-              style={{
-                color: '#777',
-                fontSize: '12px',
-                marginBottom: '5px',
-              }}
-            >
-              {person.city}, {person.state}
-            </p>
-
-            {/* Service Name */}
-            <p
-              style={{
-                color: '#007bff',
-                fontSize: '12px',
-                fontWeight: 'bold',
-                marginBottom: '8px',
-              }}
-            >
-              {service.service}
-            </p>
-
-            {/* Rating */}
-            <div
-              style={{
-                fontSize: '14px',
-                fontWeight: 'bold',
-                color: '#333',
-                marginBottom: '10px',
-              }}
-            >
-              <span
+            <div style={{ position: 'relative', paddingTop: '55%' }}>
+              <img
+                src={person.personimageUrl}
+                alt={person.name}
                 style={{
-                  fontSize: '16px',
-                  color: '#FFD700',
-                  marginRight: '5px',
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  transition: 'transform 0.3s ease',
+                }}
+              />
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%)',
+                  height: '60%',
+                }}
+              />
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: '8px',
+                  left: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  background: 'rgba(255, 255, 255, 0.9)',
+                  padding: '4px 8px',
+                  borderRadius: '12px',
+                  backdropFilter: 'blur(4px)',
                 }}
               >
-                ★
-              </span>
-              {person.rating}
+                <span style={{ color: '#ffd700', fontSize: '14px' }}>★</span>
+                <span style={{ 
+                  fontWeight: '600', 
+                  color: '#1e293b',
+                  fontSize: '13px'
+                }}>{person.rating}</span>
+              </div>
             </div>
 
-            {/* Action Buttons */}
-            <div
-              style={{
-                display: 'flex',
-                gap: '8px',
-                justifyContent: 'center',
-              }}
-            >
-              <button
+            <div style={{ 
+              padding: '10px',
+              background: 'linear-gradient(to bottom, #ffffff 0%, #f8f9fa 100%)',
+            }}>
+              <div style={{ 
+                display: 'flex', 
+                justifyContent: 'space-between', 
+                alignItems: 'center',
+                marginBottom: '8px',
+                gap: '8px'
+              }}>
+                <h2
+                  style={{
+                    fontSize: '15px',
+                    fontWeight: '600',
+                    color: '#1e293b',
+                    margin: 0,
+                    letterSpacing: '-0.01em',
+                    flex: '1',
+                  }}
+                >
+                  {person.name}
+                </h2>
+                <div
+                  style={{
+                    background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+                    padding: '4px 8px',
+                    borderRadius: '8px',
+                    fontSize: '11px',
+                    color: '#fff',
+                    fontWeight: '500',
+                    letterSpacing: '0.02em',
+                    whiteSpace: 'nowrap',
+                    boxShadow: '0 2px 4px rgba(37, 99, 235, 0.2)',
+                  }}
+                >
+                  {service.service}
+                </div>
+              </div>
+
+              <div
                 style={{
-                  flex: 1,
-                  backgroundColor: '#007bff',
-                  color: '#fff',
-                  border: 'none',
-                  padding: '8px',
-                  borderRadius: '6px',
-                  fontSize: '12px',
-                  fontWeight: 'bold',
-                  cursor: 'pointer',
-                }}
-                onClick={() => handleAvailabilityClick(person)}
-              >
-                Availability
-              </button>
-              <button
-                style={{
-                  flex: 1,
-                  backgroundColor: '#28a745',
-                  color: '#fff',
-                  border: 'none',
-                  padding: '8px',
-                  borderRadius: '6px',
-                  fontSize: '12px',
-                  fontWeight: 'bold',
-                  cursor: 'pointer',
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 1fr',
+                  gap: '6px',
+                  marginTop: '6px',
                 }}
               >
-                Call Now
-              </button>
+                <button
+                  onClick={() => handleAvailabilityClick(person)}
+                  style={{
+                    background: 'linear-gradient(45deg, #3b82f6, #2563eb)',
+                    color: '#fff',
+                    border: 'none',
+                    padding: '7px',
+                    borderRadius: '8px',
+                    fontSize: '8px',
+                    fontWeight: '600',
+                    marginTop:"20px",
+
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    boxShadow: '0 2px 8px rgba(37, 99, 235, 0.2)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '4px',
+                  }}
+                >
+                  <span style={{ fontSize: '11px' }}>📅</span>
+                  Availability
+                </button>
+                <button
+                  style={{
+                    background: 'linear-gradient(45deg, #22c55e, #16a34a)',
+                    color: '#fff',
+                    border: 'none',
+                    padding: '7px',
+                    borderRadius: '8px',
+                    marginTop:"20px",
+                    fontSize: '8px',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    boxShadow: '0 2px 8px rgba(22, 163, 74, 0.2)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '4px',
+                  }}
+                >
+                  <span style={{ fontSize: '11px' }}>📞</span>
+                  Call Now
+                </button>
+              </div>
             </div>
           </div>
         ))}

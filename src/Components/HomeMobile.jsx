@@ -139,6 +139,7 @@ function HomeMobile() {
               </div>
             ))}
           </div>
+          
         </section>
         {/* Render LatestServices and VendorBanner */}
         <LatestServices hideFooter={true} hideDescription={true} isMobile={true} />

@@ -32,6 +32,7 @@ import LatestServices from './Components/LatestServices/LatestServices';
 import ServiceDetails from './Components/ServiceDetails/ServiceDetails';
 
 
+
 function App() {
   const [selectedMenu, setSelectedMenu] = useState('Home'); // Initial selected menu
 

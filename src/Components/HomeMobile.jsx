@@ -137,9 +137,10 @@ function HomeMobile() {
                   {service.service} {/* Display the service name */}
                 </span>
               </div>
+              
             ))}
           </div>
-          
+
         </section>
         {/* Render LatestServices and VendorBanner */}
         <LatestServices hideFooter={true} hideDescription={true} isMobile={true} />

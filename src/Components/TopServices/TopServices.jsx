@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom'; // Import useLocation
-import config from '../../config'; // Import the config
-import Footer from '../Footer'; // Ensure Footer is correctly imported
+import { useNavigate, useLocation } from 'react-router-dom';
+import config from '../../config';
+import Footer from '../Footer';
 
-const TopServices = ({ limit, hideFooter, hideDescription }) => {
+const TopServices = ({ limit, hideFooter, hideDescription, isMobile }) => {
   const [topServices, setTopServices] = useState([]);
   const navigate = useNavigate();
-  const location = useLocation(); // Get the current location
+  const location = useLocation();
 
   useEffect(() => {
     fetchTopServices();
@@ -23,33 +23,54 @@ const TopServices = ({ limit, hideFooter, hideDescription }) => {
   };
 
   const servicesToDisplay = limit ? topServices.slice(0, limit) : topServices;
-
-  // Check if we're on the TopServices page
   const isTopServicesPage = location.pathname === '/top-services';
 
   return (
     <>
       <div
         style={{
-          padding: '20px',
-          maxWidth: '900px',
+          padding: isMobile ? '10px' : '20px',
+          maxWidth: isMobile ? '100%' : '900px',
           margin: '0 auto',
           boxSizing: 'border-box',
         }}
       >
-        <h2
+        <div
           style={{
-            textAlign: 'center',
-            fontSize: '28px',
-            fontWeight: 'bold',
+            display: 'flex',
+            justifyContent: isMobile ? 'flex-start' : 'space-between', // Left-align the heading for mobile
+            alignItems: 'center',
             marginBottom: '20px',
-            color: isTopServicesPage ? 'black' : '#6666ff',
+            paddingRight: isMobile ? '10px' : '0'
           }}
         >
-          Top Services
-        </h2>
+          <h2
+            style={{
+              fontSize: isMobile ? '22px' : '28px',
+              fontWeight: 'bold',
+              color: isTopServicesPage ? 'black' : '#6666ff',
+              textAlign: isMobile ? 'left' : 'center', // Ensure left alignment for mobile
+              width: '100%', // Make sure it spans across if needed
+            }}
+          >
+            Top Services
+          </h2>
+          
+          {isMobile && (
+            <button
+              onClick={() => navigate('/top-services')}
+              style={{ 
+                fontSize: '14px',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer'
+              }}
+            >
+              More
+            </button>
+          )}
+        </div>
 
-        {/* Conditionally render description based on hideDescription */}
         {!hideDescription && (
           <h2
             style={{
@@ -68,11 +89,11 @@ const TopServices = ({ limit, hideFooter, hideDescription }) => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-            gap: '15px',
+            gridTemplateColumns: isMobile ? 'repeat(3, 1fr)' : 'repeat(auto-fit, minmax(180px, 1fr))',
+            gap: isMobile ? '10px' : '15px',
             justifyContent: 'center',
             alignItems: 'center',
-            padding: '10px',
+            padding: isMobile ? '5px' : '10px',
           }}
         >
           {servicesToDisplay.map((service, index) => (
@@ -81,11 +102,11 @@ const TopServices = ({ limit, hideFooter, hideDescription }) => {
               style={{
                 backgroundColor: '#f9f9f9',
                 borderRadius: '10px',
-                padding: '15px',
+                padding: isMobile ? '10px' : '15px',
                 textAlign: 'center',
                 boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-                width: '93%',
-                maxWidth: '180px',
+                width: isMobile ? '100%' : '93%',
+                maxWidth: isMobile ? 'none' : '180px',
                 margin: '0 auto',
               }}
             >
@@ -93,14 +114,14 @@ const TopServices = ({ limit, hideFooter, hideDescription }) => {
                 src={service.iconUrl}
                 alt={service.title}
                 style={{
-                  width: '40px',
-                  height: '40px',
-                  marginBottom: '10px',
+                  width: isMobile ? '30px' : '40px',
+                  height: isMobile ? '30px' : '40px',
+                  marginBottom: isMobile ? '5px' : '10px',
                 }}
               />
               <h3
                 style={{
-                  fontSize: '14px',
+                  fontSize: isMobile ? '12px' : '14px',
                   fontWeight: 'bold',
                   color: '#333',
                   marginBottom: '8px',
@@ -111,16 +132,17 @@ const TopServices = ({ limit, hideFooter, hideDescription }) => {
               <div style={{ display: 'flex', justifyContent: 'center', gap: '3px' }}>
                 <p
                   style={{
-                    fontSize: '12px',
+                    fontSize: isMobile ? '10px' : '12px',
                     color: 'blue',
                     fontWeight: 'bold',
                   }}
                 >
                   {service.jobCount} |
                 </p>
-                <p style={{ fontSize: '12px', color: '#666' }}>{service.location}</p>
+                <p style={{ fontSize: isMobile ? '10px' : '12px', color: '#666' }}>
+                  {service.location}
+                </p>
               </div>
-              {/* Add View Details with arrow only on /top-services page */}
               {isTopServicesPage && (
                 <div
                   style={{
@@ -149,8 +171,6 @@ const TopServices = ({ limit, hideFooter, hideDescription }) => {
           ))}
         </div>
       </div>
-
-      {/* Conditionally render footer based on hideFooter */}
       {!hideFooter && <Footer />}
     </>
   );

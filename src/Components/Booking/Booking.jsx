@@ -1,13 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import './Booking.css';
-import config from '../../config'; 
-import Footer from '../Footer'; 
-import { Bell, Home, ListOrdered, MessageSquare, Wallet, User, CalendarDays } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Home, ListOrdered, MessageSquare, Wallet, User, CalendarDays, MapPin } from 'lucide-react';
+import config from '../../config';
 
-const Booking = () => {
-  const [bookings, setBookings] = useState([]);  // Ensure it's initialized as an array
-  const [filterDate, setFilterDate] = useState('');
+function Booking() {
+  const [bookings, setBookings] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const handleViewDetails = (bookingId) => {
+    console.log('Viewing details for booking:', bookingId);
+  };
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -17,12 +30,10 @@ const Booking = () => {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        
-        // Ensure bookings is an array before setting it
         if (Array.isArray(data.bookings)) {
           setBookings(data.bookings);
         } else {
-          console.error('Bookings data is not an array:', data);
+          console.error('Invalid bookings data format:', data);
         }
       } catch (error) {
         console.error('Error fetching bookings:', error);
@@ -32,272 +43,366 @@ const Booking = () => {
     fetchBookings();
   }, []);
 
-  // Filtering bookings based on search term
-  const filteredBookings = bookings.filter(booking =>
-    booking.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    booking.mobile.includes(searchTerm)
-  );
-
-  useEffect(() => {
-    document.body.classList.add('scroll-locked');
-
-    return () => {
-      document.body.classList.remove('scroll-locked');
-    };
-  }, []);
-
-  // Sidebar Styles
-  const sidebarStyle = {
-    width: '80px',
-    backgroundColor: 'white',
-    borderRight: '1px solid #eee',
-    height: '100vh',
-    position: 'fixed',
-    left: 0,
-    top: 0,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '10px 0',
-  };
-
-  const logoStyle = {
-    width: '24px',
-    height: '24px',
-    marginBottom: '16px',
-  };
-
-  const sidebarItemStyle = {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '8px 0',
-    color: '#666',
-    fontSize: '11px',
-    cursor: 'pointer',
-    textDecoration: 'none',
-    marginBottom: '4px',
-  };
-
-  const activeItemStyle = {
-    ...sidebarItemStyle,
-    color: '#2563eb',
-    position: 'relative',
-  };
-
-  const iconContainerStyle = {
-    marginBottom: '4px',
-  };
-
-  const activeDotStyle = {
-    width: '3px',
-    height: '100%',
-    backgroundColor: '#2563eb',
-    position: 'absolute',
-    left: 0,
-    top: 0,
-  };
-
-  // Main Content Styles
   const styles = {
     container: {
-      display: "flex",
-      fontFamily: "Arial, sans-serif",
-      height: "100vh",
-      marginLeft:"10px"
+      display: 'flex',
+      minHeight: '100vh',
+      backgroundColor: '#f9fafb',
+      position: 'relative',
+      paddingBottom: isMobile ? '60px' : '0'
     },
-    content: {
-      marginLeft: '80px', // to avoid content being overlapped by the sidebar
-      width: '100%',
+    sidebar: {
+      width: '80px',
+      backgroundColor: 'white',
+      padding: '20px 0',
+      display: isMobile ? 'none' : 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      borderRight: '1px solid #e5e7eb',
+      position: 'fixed',
+      height: '100vh'
+    },
+    bottomNav: {
+      display: isMobile ? 'flex' : 'none',
+      position: 'fixed',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      backgroundColor: 'white',
+      borderTop: '1px solid #e5e7eb',
+      justifyContent: 'space-around',
+      padding: '8px 0',
+      zIndex: 1000
+    },
+    mainContent: {
+      flex: 1,
+      marginLeft: isMobile ? '0' : '80px',
+      padding: '20px'
     },
     header: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      padding: "10px 20px",
-      borderBottom: "1px solid #ddd",
-      backgroundColor: "#fff",
-      borderColor:"white",
-      marginBottom:"30px"
+      marginBottom: '20px'
     },
-    headerTitle: {
-      fontSize: "24px",
+    title: {
+      fontSize: '24px',
+      fontWeight: 'bold',
+      marginBottom: '4px',
+      textAlign: 'center'
     },
-    headerIcons: {
-      display: "flex",
-      alignItems: "center",
-      gap: "20px",
+    subtitle: {
+      fontSize: '20px',
+      fontWeight: '600',
+      color: '#374151',
+      textAlign: 'center'
     },
-    headerIcon: {
-      fontSize: "20px",
-      cursor: "pointer",
+    searchContainer: {
+      display: 'flex',
+      flexDirection: isMobile ? 'column' : 'row',
+      gap: '12px',
+      marginBottom: '24px'
     },
-    section: {
-      padding: "2px",
+    dateInput: {
+      padding: '8px 12px',
+      border: '1px solid #e5e7eb',
+      borderRadius: '6px',
+      width: isMobile ? '100%' : '150px'
     },
-    sectionHeader: {
-      fontSize: "18px",
-      marginBottom: "10px",
-    },
-    booking: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "flex-start",
-      marginBottom: "10px",
-      padding: "10px",
-      border: "1px solid white",
-      borderRadius: "5px",
-      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-    },
-    bookingInfo: {
+    searchInput: {
       flex: 1,
-      color: "#4a4a4a",
+      padding: '8px 12px',
+      border: '1px solid #e5e7eb',
+      borderRadius: '6px',
+      width: isMobile ? '100%' : 'auto'
     },
-    bookingImage: {
-      width: "100px",
-      height: "80px",
-      borderRadius: "2px",
-      marginLeft: "10px",
+    searchButton: {
+      padding: '8px 16px',
+      backgroundColor: '#4f46e5',
+      color: 'white',
+      border: 'none',
+      borderRadius: '6px',
+      cursor: 'pointer',
+      width: isMobile ? '100%' : 'auto'
     },
-    viewButton: {
-      marginTop: "10px",
-      padding: "5px 10px",
-      backgroundColor: "White",
-      color: "#007bff",
-      border: "1px solid #007bff",
-      borderRadius: "5px",
-      cursor: "pointer",
+    bookingCard: {
+      backgroundColor: 'white',
+      borderRadius: '12px',
+      padding: '16px',
+      marginBottom: '16px',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+      display: isMobile ? 'block' : 'none'
     },
+    table: {
+      width: '100%',
+      backgroundColor: 'white',
+      borderRadius: '8px',
+      overflow: 'hidden',
+      boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
+      display: isMobile ? 'none' : 'block'
+    },
+    thead: {
+      backgroundColor: '#f9fafb'
+    },
+    th: {
+      padding: '12px 24px',
+      textAlign: 'left',
+      fontSize: '12px',
+      fontWeight: '500',
+      color: '#6b7280',
+      textTransform: 'uppercase',
+      letterSpacing: '0.05em',
+      borderBottom: '1px solid #e5e7eb'
+    },
+    td: {
+      padding: '16px 24px',
+      fontSize: '14px',
+      color: '#374151',
+      borderBottom: '1px solid #e5e7eb'
+    },
+    viewDetailsLink: {
+      color: '#3b82f6',
+      textDecoration: 'none',
+      fontSize: '14px',
+      float: 'right'
+    },
+    status: {
+      padding: '6px 12px',
+      borderRadius: '20px',
+      fontSize: '14px',
+      fontWeight: '500',
+      display: 'inline-block',
+      textAlign: 'center',
+      minWidth: '100px'
+    },
+    statusCompleted: {
+      backgroundColor: '#22c55e',
+      color: '#fff'
+    },
+    statusPending: {
+      backgroundColor: '#f59e0b',
+      color: '#fff'
+    },
+    locationContainer: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '4px',
+      color: '#6b7280',
+      fontSize: '14px',
+      marginTop: '8px'
+    },
+    cardName: {
+      fontSize: '16px',
+      fontWeight: '600',
+      color: '#111827',
+      marginBottom: '4px'
+    },
+    cardAmount: {
+      fontSize: '14px',
+      color: '#374151',
+      marginBottom: '4px'
+    },
+    cardDate: {
+      fontSize: '14px',
+      color: '#6b7280'
+    },
+    navLink: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      color: '#6b7280',
+      textDecoration: 'none',
+      padding: '12px 0',
+      width: '100%'
+    },
+    navLinkActive: {
+      color: '#4f46e5',
+      position: 'relative'
+    },
+    activeDot: {
+      position: 'absolute',
+      top: '0',
+      width: '4px',
+      height: '4px',
+      backgroundColor: '#4f46e5',
+      borderRadius: '50%'
+    },
+    pagination: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: '20px',
+      gap: '12px'
+    },
+    paginationButton: {
+      padding: '8px 16px',
+      backgroundColor: '#f9fafb',
+      border: '1px solid #e5e7eb',
+      borderRadius: '6px',
+      cursor: 'pointer'
+    },
+    paginationText: {
+      fontSize: '14px',
+      color: '#6b7280'
+    }
   };
 
-  return (
-    <>
-      <div style={styles.container}>
-        {/* Sidebar */}
-        <div style={sidebarStyle}>
-          <img
-            src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIgMkw0IDdWMjJIMjBWN0wxMiAyWiIgc3Ryb2tlPSIjMjU2M2ViIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvc3ZnPg=="
-            alt="Logo"
-            style={logoStyle}
-          />
-          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', height: '100%' }}>
-            <a href="/vendordashboard" style={activeItemStyle}>
-              <div style={activeDotStyle}></div>
-              <span style={iconContainerStyle}><Home size={20} /></span>
-              <span>Home</span>
-            </a>
-            <a href="/listings" style={sidebarItemStyle}>
-              <span style={iconContainerStyle}><ListOrdered size={20} /></span>
-              <span>Listings</span>
-            </a>
-            <a href="/booking" style={sidebarItemStyle}>
-              <span style={iconContainerStyle}><CalendarDays size={20} /></span>
-              <span>Booking</span>
-            </a>
-            <a href="/messages" style={sidebarItemStyle}>
-              <span style={iconContainerStyle}><MessageSquare size={20} /></span>
-              <span>Messages</span>
-            </a>
-            <a href="/payments" style={sidebarItemStyle}>
-              <span style={iconContainerStyle}><Wallet size={20} /></span>
-              <span>Payments</span>
-            </a>
-            <a href="/profile" style={sidebarItemStyle}>
-              <span style={iconContainerStyle}><User size={20} /></span>
-              <span>Profile</span>
-            </a>
-          </div>
-        </div>
-
-       {/* Main Content */}
-       <div style={styles.content}>
-        {/* Header */}
-        <div style={styles.header}>
-          <div style={styles.headerTitle}>Day 365</div>
-          <div style={styles.headerIcons}>
-            <img 
-              src="https://cdn.iconscout.com/icon/free/png-512/free-calendar-icon-download-in-svg-png-gif-file-formats--feather-pack-user-interface-icons-433988.png?f=webp&w=256" 
-              alt="Calendar Icon" 
-              style={{ width: "20px", height: "20px", cursor: "pointer" }} 
-            />
-            <img 
-              src="https://cdn-icons-png.flaticon.com/512/5035/5035563.png"
-              alt="Bell Icon"
-              style={{ width: "20px", height: "20px", cursor: "pointer" }} 
-            />
-            <span style={styles.headerIcon}>👤</span>
-          </div>
-        </div>
-
-
-          <div style={styles.section}>
-            <div style={styles.sectionHeader}>Completed Bookings</div>
-
-            {/* Filters */}
-            <div className="filters">
-              <input
-                type="date"
-                value={filterDate}
-                onChange={e => setFilterDate(e.target.value)}
-                className="date-filter"
-              />
-              <input
-                type="text"
-                placeholder="Search"
-                value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
-                className="search-input"
-              />
-              <button className="search-button">Search</button>
+  const MobileCards = () => (
+    <div style={{ display: isMobile ? 'block' : 'none' }}>
+      {bookings.map((booking, index) => (
+        <div key={index} style={styles.bookingCard}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <div>
+              <div style={styles.cardName}>{booking.name}</div>
+              <div style={styles.locationContainer}>
+                <MapPin size={16} />
+                <span>{booking.address}</span>
+              </div>
+              <div style={styles.cardAmount}>Amount Paid: ${booking.amountPaid}</div>
+              <div style={styles.cardDate}>{booking.date}</div>
             </div>
-
-            {/* Bookings Table */}
-            <div className="bookings-table">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Mobile</th>
-                    <th>Amount Paid</th>
-                    <th>Status</th>
-                    <th>Address</th>
-                    <th>Date</th>
-                    <th>Service Type</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredBookings.map((booking, index) => (
-                    <tr key={index}>
-                      <td>{booking.name}</td>
-                      <td>{booking.mobile}</td>
-                      <td>{booking.amountPaid}</td>
-                      <td>
-                        <span className={`state ${booking.status}`}>
-                          {booking.status}
-                        </span>
-                      </td>
-                      <td>{booking.address}</td>
-                      <td>{booking.date}</td>
-                      <td>{booking.serviceType}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            {/* Pagination */}
-            <div className="pagination">
-              <button className="prev-btn">← Previous</button>
-              <span>Page 1 of 10</span>
-              <button className="next-btn">Next →</button>
+            <div>
+              <a href="#" onClick={() => handleViewDetails(booking.id)} style={styles.viewDetailsLink}>
+                View Details
+              </a>
             </div>
           </div>
+          <div style={{ marginTop: '12px', textAlign: 'right' }}>
+            <span style={{
+              ...styles.status,
+              ...(booking.status === 'completed' ? styles.statusCompleted : styles.statusPending)
+            }}>
+              {booking.status}
+            </span>
+          </div>
         </div>
-      </div>
-      <Footer />
-    </>
+      ))}
+    </div>
   );
-};
+
+  return (
+    <div style={styles.container}>
+      <nav style={styles.sidebar}>
+        <Link to="/" style={{...styles.navLink, ...styles.navLinkActive}}>
+          <div style={styles.activeDot}></div>
+          <Home size={24} />
+          <span>Home</span>
+        </Link>
+        <Link to="/listings" style={styles.navLink}>
+          <ListOrdered size={24} />
+          <span>Listings</span>
+        </Link>
+        <Link to="/booking" style={styles.navLink}>
+          <CalendarDays size={24} />
+          <span>Booking</span>
+        </Link>
+        <Link to="/messages" style={styles.navLink}>
+          <MessageSquare size={24} />
+          <span>Messages</span>
+        </Link>
+        <Link to="/payments" style={styles.navLink}>
+          <Wallet size={24} />
+          <span>Payments</span>
+        </Link>
+        <Link to="/profile" style={styles.navLink}>
+          <User size={24} />
+          <span>Profile</span>
+        </Link>
+      </nav>
+
+      <nav style={styles.bottomNav}>
+        <Link to="/" style={{...styles.navLink, ...styles.navLinkActive}}>
+          <Home size={20} />
+          <span>Home</span>
+        </Link>
+        <Link to="/listings" style={styles.navLink}>
+          <ListOrdered size={20} />
+          <span>Listings</span>
+        </Link>
+        <Link to="/booking" style={styles.navLink}>
+          <CalendarDays size={20} />
+          <span>Booking</span>
+        </Link>
+        <Link to="/messages" style={styles.navLink}>
+          <MessageSquare size={20} />
+          <span>Messages</span>
+        </Link>
+        <Link to="/payments" style={styles.navLink}>
+          <Wallet size={20} />
+          <span>Payments</span>
+        </Link>
+        <Link to="/profile" style={styles.navLink}>
+          <User size={20} />
+          <span>Profile</span>
+        </Link>
+      </nav>
+
+      <main style={styles.mainContent}>
+        <div style={styles.header}>
+          <h1 style={styles.title}>Day 365</h1>
+          <h2 style={styles.subtitle}>Completed Bookings</h2>
+        </div>
+
+        <div style={styles.searchContainer}>
+          <input
+            type="date"
+            value={selectedDate}
+            onChange={(e) => setSelectedDate(e.target.value)}
+            style={styles.dateInput}
+          />
+          <input
+            type="text"
+            placeholder="Search"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={styles.searchInput}
+          />
+          <button style={styles.searchButton}>Search</button>
+        </div>
+
+        <MobileCards />
+
+        <div style={styles.table}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <thead style={styles.thead}>
+              <tr>
+                <th style={styles.th}>Name</th>
+                <th style={styles.th}>Mobile</th>
+                <th style={styles.th}>Amount Paid</th>
+                <th style={styles.th}>Status</th>
+                <th style={styles.th}>Address</th>
+                <th style={styles.th}>Date</th>
+                <th style={styles.th}>Service Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              {bookings.map((booking, index) => (
+                <tr key={index}>
+                  <td style={styles.td}>{booking.name}</td>
+                  <td style={styles.td}>{booking.mobile}</td>
+                  <td style={styles.td}>${booking.amountPaid}</td>
+                  <td style={styles.td}>
+                    <span style={{
+                      ...styles.status,
+                      ...(booking.status === 'completed' ? styles.statusCompleted : styles.statusPending)
+                    }}>
+                      {booking.status}
+                    </span>
+                  </td>
+                  <td style={styles.td}>{booking.address}</td>
+                  <td style={styles.td}>{booking.date}</td>
+                  <td style={styles.td}>{booking.serviceType}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div style={styles.pagination}>
+          <button style={styles.paginationButton}>← Previous</button>
+          <span style={styles.paginationText}>Page 1 of 10</span>
+          <button style={styles.paginationButton}>Next →</button>
+        </div>
+      </main>
+    </div>
+  );
+}
 
 export default Booking;

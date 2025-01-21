@@ -8,7 +8,7 @@ const config = {
     SERVICE_API_URL: 'https://run.mocky.io/v3/4d7ee0dd-4b17-466c-83ff-0e0f21bb18cf',
     LATESTSERVICE_API_URL: 'https://run.mocky.io/v3/12b510f8-f22f-4478-a6ca-75ca79160b3d',
     TOPSERVICE_API_URL:'https://run.mocky.io/v3/81b07e1f-d4c3-4d50-909f-c9185998a216',
-    BOOKING_API_URL:'https://run.mocky.io/v3/55785275-d222-4b74-b203-0eaca1734d45',
+    BOOKING_API_URL:'https://run.mocky.io/v3/7c52b0e8-5141-4b72-a3e2-923c873320ce',
     VENDORLISTINGS_API_URL:'https://run.mocky.io/v3/0d1e77ac-335f-443d-acc7-9d7b0b5bff48',
     PAYMENTS_API_URL:'https://run.mocky.io/v3/d1ed81a3-5a8e-46a1-b328-539c2db59cc6',
     POPULARSERVICESNEARYOU_API_URL:'https://run.mocky.io/v3/41190fbb-eb4e-4129-9749-afd1f3c530eb',

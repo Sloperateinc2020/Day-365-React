@@ -471,6 +471,7 @@ const handleServiceSelection = (service) => {
             borderRadius: "5px",
             fontSize: "16px",
             cursor: "pointer",
+            marginBottom:'70px'
           }}
         >
           Pay $20 & Confirm Booking
@@ -518,8 +519,8 @@ const handleServiceSelection = (service) => {
             />
             <div>
               <p style={{ fontSize: '14px', fontWeight: 'bold', marginBottom: '-5px' }}>Suresh Babu</p>
-              <p style={{ fontSize: '12px', color: 'blue' }}>Plumber</p>
-              <div style={{ display: 'flex', gap: '4px', fontSize: '12px', color: '#666' }}>
+              <p style={{ fontSize: '12px', color: 'blue',marginTop:'12px',marginLeft:'12px' }}>Plumber</p>
+              <div style={{ display: 'flex', gap: '4px', fontSize: '12px', color: '#666',marginTop:'8px' }}>
                 <span>4.7</span>
                 <span>•</span>
                 <span>1,000 reviews</span>
@@ -831,9 +832,9 @@ const handleServiceSelection = (service) => {
       )}
 
       <Footer />
-      
+
     </div>
   );
 };
 
-export default ConfirmBooking;
+export default ConfirmBooking; 

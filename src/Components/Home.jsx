@@ -697,7 +697,7 @@ function Home() {
         </div>
 
         {/* Customer Help Section */}
-        <div style={{ marginTop: '60px' }}>
+        <div style={{ marginTop: '3px' }}>
           <CustomerHelp />
         </div>
       </div>

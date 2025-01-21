@@ -118,12 +118,16 @@ if (isMobile) {
                         cursor: "pointer",
                     }}
                 >
-                    {"<"}
                 </button>
-                <h2 style={{ flex: 1, textAlign: "center", margin: "0", fontSize: "18px" }}>
-                    Select Date and Time
-                </h2>
+               
             </header>
+            
+            <h2 style={{ marginTop: "-20px" }}>Manage your availability</h2>
+<p style={{ marginTop: "-12px" }}>
+  Choose the days and times you're available. for appointments. You'll receive a notification when someone books an appointment.
+</p>
+
+                  
 
             {/* Month and Year Navigation */}
   <div
@@ -133,6 +137,7 @@ if (isMobile) {
     justifyContent: "center",
     gap: "4px", // Adds a small gap between the elements
     marginBottom: "16px",
+    
   }}
 >
   {/* Previous Button */}
@@ -145,6 +150,9 @@ if (isMobile) {
       cursor: "pointer",
       fontWeight: "bold",
       color: "black",
+      marginTop: "10px",
+      marginRight:'100px'
+
     }}
   >
     {"<"}
@@ -153,11 +161,12 @@ if (isMobile) {
   {/* Month and Year */}
   <h3
     style={{
-      margin: "0",
+      marginTop: "10px",
       fontSize: "16px",
       fontWeight: "bold",
       display: "flex",
       alignItems: "center",
+      marginRight:'100px'
     }}
   >
     {startDate.toLocaleString("default", { month: "long" })} {startDate.getFullYear()}
@@ -173,6 +182,8 @@ if (isMobile) {
       cursor: "pointer",
       fontWeight: "bold",
       color: "black",
+      marginTop: "10px",
+
     }}
   >
     {">"}

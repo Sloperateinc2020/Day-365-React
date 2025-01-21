@@ -8,7 +8,7 @@
   max-width: 1200px; 
   margin: 0 auto; 
   position: relative; 
-  margin-top: 100px;
+  margin-top: 100px;margin-right: 150px;
 }
 
 .inner-containers {
@@ -95,12 +95,12 @@
   top: 10px; 
   right: 10px;  
   background-color: #f3f3f8; 
-  padding: 0.75rem 1.5rem; 
-  font-size: 11px; 
-  border-radius: 0.375rem; 
+  padding: 10px; 
+  font-size: 16px;
+  border-radius: 20px; 
   border: none; 
-  cursor: pointer; 
-  margin-top: 50px;
+  cursor: cover;
+  margin-top: 50px;margin-right: 60px;
   color: #4f46e5;
 }
 
@@ -110,7 +110,7 @@ body {
 
 .listings-title {
   text-align: center; 
-  font-size: 24px;
+  font-size: 25px;
   font-weight: 600;
   margin: 20px 0;
   color: #111827;
@@ -120,19 +120,22 @@ body {
   display: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 800px) {
   .outer-container {
-    padding: 1rem;
+    padding: 1px;
     margin-top: 0;
     border-radius: 0;
     box-shadow: none;
     background-color: #f5f5f5;
+    width: 100%;
+
   }
 
   .inner-containers {
     flex-direction: column;
     gap: 0.75rem;
     padding: 0 1rem;
+    
   }
 
   .listing-container {
@@ -173,19 +176,19 @@ body {
   .register-button {
     position: fixed;
     top: 70px;
-    right: 12px;
+    right: 5px;
     margin: 0;
     background-color: #f0f0ff;
     color: #6366f1;
     box-shadow: none;
     display: flex;
-    align-items: center;
+    align-items: centre;
     gap: 4px;
     padding: 6px 12px;
-    font-size: 12px;
+    font-size: 14px;
     border-radius: 4px;
-    z-index: 10;
-    border-color: #2145aa;margin-right: 20px;
+    z-index: 15;
+    border-color: #2145aa;margin-right: 14px;
   }
 
   .listings-title {

@@ -6,10 +6,11 @@ const config = {
     // LATESTSERVICE_API_URL: 'https://run.mocky.io/v3/8d88062e-45c5-4df3-97bc-3ece2305bffc',
     // TOPSERVICE_API_URL:'https://run.mocky.io/v3/a560955a-c4bb-4f79-8a4f-c9ee5020b1aa',
 
-    SERVICE_API_URL: 'https://run.mocky.io/v3/2bdb68b8-f440-44bb-9a85-8866a32bce41',
-    LATESTSERVICE_API_URL: 'https://run.mocky.io/v3/33751478-3408-4de9-adc3-53388f344914',
-    TOPSERVICE_API_URL:'https://run.mocky.io/v3/364cb283-7bdb-4020-9ca2-4f38f6872b95',
-    BOOKING_API_URL:'https://run.mocky.io/v3/55785275-d222-4b74-b203-0eaca1734d45',
+    SERVICE_API_URL: 'https://run.mocky.io/v3/4d7ee0dd-4b17-466c-83ff-0e0f21bb18cf',
+    LATESTSERVICE_API_URL: 'https://run.mocky.io/v3/12b510f8-f22f-4478-a6ca-75ca79160b3d',
+    TOPSERVICE_API_URL:'https://run.mocky.io/v3/81b07e1f-d4c3-4d50-909f-c9185998a216',
+    BOOKING_API_URL:'https://run.mocky.io/v3/7c52b0e8-5141-4b72-a3e2-923c873320ce',
+   
     VENDORLISTINGS_API_URL:'https://run.mocky.io/v3/0d1e77ac-335f-443d-acc7-9d7b0b5bff48',
     PAYMENTS_API_URL:'https://run.mocky.io/v3/d1ed81a3-5a8e-46a1-b328-539c2db59cc6',
     POPULARSERVICESNEARYOU_API_URL:'https://run.mocky.io/v3/072412ed-4b3e-409f-be11-2d71d3ad20bb',

@@ -2,15 +2,44 @@ import React, { useEffect, useState } from "react";
 import { Bell, Home, ListOrdered, MessageSquare, Wallet, User, CalendarDays } from 'lucide-react';
 import config from '../../config';  
 import { Link, useNavigate } from 'react-router-dom'; 
+import { useMediaQuery } from 'react-responsive';
+import VendorDashboardMobile from './VendorDaashboardMobile';
 
 const VendorDashboard = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [bookingsData, setBookingsData] = useState([]);
-  const [selectedBooking, setSelectedBooking] = useState(null); // Define selectedBooking
-
+  const [selectedBooking, setSelectedBooking] = useState(null);
+  const API_URL = 'https://run.mocky.io/v3/754a59cd-a326-47bd-87c8-cc553896732d';
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate(); 
 
+  // Handle resize effect
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Fetch vendor dashboard data
+  useEffect(() => {
+    const fetchVendorDashboard = async () => {
+      try {
+        const response = await fetch(API_URL);
+        const data = await response.json();
+        // Handle the data as needed
+      } catch (error) {
+        console.error('Error fetching services:', error);
+      }
+    };
+
+    fetchVendorDashboard();
+  }, [API_URL]);
+
+  // Fetch bookings effect
   useEffect(() => {
     const fetchBookings = async () => {
       try {
@@ -49,12 +78,21 @@ const VendorDashboard = () => {
 
     fetchBookings();
   }, []);
+
+  if (isMobile) {
+    return <VendorDashboardMobile />;
+  }
+
   const handleViewBooking = (booking) => {
-    setSelectedBooking(booking); // Set the selected booking when "View Booking" is clicked
+    setSelectedBooking(booking);
   };
 
   const handleClosePopup = () => {
-    setSelectedBooking(null); // Close the popup by setting selectedBooking to null
+    setSelectedBooking(null);
+  };
+
+  const handleCalendarClick = () => {
+    navigate('/availability'); 
   };
 
   const sidebarStyle = {
@@ -131,7 +169,6 @@ const VendorDashboard = () => {
       marginBottom: "16px",
       color: "#777",
     },
-  
     content: {
       marginLeft: '-360px',
       width: '320%',
@@ -172,7 +209,7 @@ const VendorDashboard = () => {
       padding: "10px",
       border: "1px solid white",
       borderRadius: "5px",
-      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
     },
     bookingInfo: {
       flex: 1,
@@ -203,7 +240,7 @@ const VendorDashboard = () => {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      Index: 1000,
+      zIndex: 1000,
     },
     popupContent: {
       backgroundColor: "#fff",
@@ -222,43 +259,43 @@ const VendorDashboard = () => {
       fontSize: "20px",
       cursor: "pointer",
     },
-     detailItem: {
-    display: "flex",
-    alignItems: "center",
-    marginBottom: "12px",
-  },
-  icon: {
-    marginRight: "12px",
-    fontSize: "18px",
-    color: "#555",
-  },
-  text: {
-    fontSize: "14px",
-    color: "#333",
-  },
-  label: {
-    display: "block",
-    fontSize: "14px",
-    fontWeight: "bold",
-    marginBottom: "8px",
-    color: "#555",
-  },
-  dropdown: {
-    width: "100%",
-    padding: "8px",
-    fontSize: "14px",
-    border: "1px solid #ccc",
-    borderRadius: "4px",
-  },
-  textarea: {
-    width: "100%",
-    height: "80px",
-    padding: "8px",
-    fontSize: "14px",
-    border: "1px solid #ccc",
-    borderRadius: "4px",
-    resize: "none",
-  },
+    detailItem: {
+      display: "flex",
+      alignItems: "center",
+      marginBottom: "12px",
+    },
+    icon: {
+      marginRight: "12px",
+      fontSize: "18px",
+      color: "#555",
+    },
+    text: {
+      fontSize: "14px",
+      color: "#333",
+    },
+    label: {
+      display: "block",
+      fontSize: "14px",
+      fontWeight: "bold",
+      marginBottom: "8px",
+      color: "#555",
+    },
+    dropdown: {
+      width: "100%",
+      padding: "8px",
+      fontSize: "14px",
+      border: "1px solid #ccc",
+      borderRadius: "4px",
+    },
+    textarea: {
+      width: "100%",
+      height: "80px",
+      padding: "8px",
+      fontSize: "14px",
+      border: "1px solid #ccc",
+      borderRadius: "4px",
+      resize: "none",
+    },
     paymentSection: {
       display: "flex",
       justifyContent: "flex-start",
@@ -293,10 +330,6 @@ const VendorDashboard = () => {
       height: '250px',
       overflow: 'hidden',
     },
-  };
-
-  const handleCalendarClick = () => {
-    navigate('/availability'); 
   };
 
   if (loading) return <div>Loading...</div>;
@@ -348,7 +381,7 @@ const VendorDashboard = () => {
               src="https://cdn.iconscout.com/icon/free/png-512/free-calendar-icon-download-in-svg-png-gif-file-formats--feather-pack-user-interface-icons-433988.png?f=webp&w=256" 
               alt="Calendar Icon" 
               style={{ width: "20px", height: "20px", cursor: "pointer" }} 
-              onClick={handleCalendarClick} // Add onClick handler for calendar icon
+              onClick={handleCalendarClick}
             />
             <img 
               src="https://cdn-icons-png.flaticon.com/512/5035/5035563.png"
@@ -376,7 +409,7 @@ const VendorDashboard = () => {
                   >
                     View Booking
                   </button>           
-                       </div>
+                </div>
                 <img
                   src={booking.bookingImage}
                   alt={booking.customer}
@@ -388,8 +421,9 @@ const VendorDashboard = () => {
             <div>No bookings available</div> 
           )}
         </div>
-         {/* Popup for Booking Details */}
-         {selectedBooking && (
+
+        {/* Popup for Booking Details */}
+        {selectedBooking && (
           <div style={styles.popupOverlay}>
             <div style={styles.popupContent}>
               <button
@@ -399,79 +433,81 @@ const VendorDashboard = () => {
                 &times;
               </button>
               <div style={styles.container}>
-  <h2 style={styles.heading}>Booking Details</h2>
-  <p style={styles.subHeading}>Booking information for John Doe</p>
-  
-  <div style={styles.detailItem}>
-    <span style={styles.icon}>📞</span>
-    <span style={styles.text}>+1 (555) 123-4567</span>
-  </div>
+                <h2 style={styles.heading}>Booking Details</h2>
+                <p style={styles.subHeading}>Booking information for John Doe</p>
+                
+                <div style={styles.detailItem}>
+                  <span style={styles.icon}>📞</span>
+                  <span style={styles.text}>+1 (555) 123-4567</span>
+                </div>
 
-  <div style={styles.detailItem}>
-    <span style={styles.icon}>📧</span>
-    <span style={styles.text}>john.doe@example.com</span>
-  </div>
+                <div style={styles.detailItem}>
+                  <span style={styles.icon}>📧</span>
+                  <span style={styles.text}>john.doe@example.com</span>
+                </div>
 
-  <div style={styles.detailItem}>
-    <span style={styles.icon}>📅</span>
-    <span style={styles.text}>2024-10-29 at 10:00 AM</span>
-  </div>
+                <div style={styles.detailItem}>
+                  <span style={styles.icon}>📅</span>
+                  <span style={styles.text}>2024-10-29 at 10:00 AM</span>
+                </div>
 
-  <div style={styles.detailItem}>
-    <span style={styles.icon}>📍</span>
-    <span style={styles.text}>123 Main St, Anytown, USA</span>
-  </div>
+                <div style={styles.detailItem}>
+                  <span style={styles.icon}>📍</span>
+                  <span style={styles.text}>123 Main St, Anytown, USA</span>
+                </div>
 
-  <div style={styles.detailItem}>
-    <span style={styles.icon}>⏰</span>
-    <span style={styles.text}>Normal Service</span>
-  </div>
+                <div style={styles.detailItem}>
+                  <span style={styles.icon}>⏰</span>
+                  <span style={styles.text}>Normal Service</span>
+                </div>
 
-  <div style={styles.detailItem}>
-    <span style={styles.icon}>🔧</span>
-    <span style={styles.text}>Pipe Repair</span>
-  </div>
+                <div style={styles.detailItem}>
+                  <span style={styles.icon}>🔧</span>
+                  <span style={styles.text}>Pipe Repair</span>
+                </div>
 
-  <div style={styles.detailItem}>
-    <span style={styles.icon}>💵</span>
-    <span style={styles.text}>Advance Paid: $50 / Total: $200</span>
-  </div>
+                <div style={styles.detailItem}>
+                  <span style={styles.icon}>💵</span>
+                  <span style={styles.text}>Advance Paid: $50 / Total: $200</span>
+                </div>
 
-  <div style={styles.detailItem}>
-    <span style={styles.icon}>⚠️</span>
-    <span style={styles.text}>Leaking pipe under the kitchen sink</span>
-  </div>
+                <div style={styles.detailItem}>
+                  <span style={styles.icon}>⚠️</span>
+                  <span style={styles.text}>Leaking pipe under the kitchen sink</span>
+                </div>
 
-  <div style={styles.detailItem}>
-    <label style={styles.label}>Status</label>
-    <select style={styles.dropdown}>
-      <option value="Scheduled">Scheduled</option>
-      <option value="In Progress">In Progress</option>
-      <option value="Completed">Completed</option>
-    </select>
-  </div>
+                <div style={styles.detailItem}>
+                  <label style={styles.label}>Status</label>
+                  <select style={styles.dropdown}>
+                    <option value="Scheduled">Scheduled</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                  </select>
+                </div>
 
-  <div style={styles.detailItem}>
-    <label style={styles.label}>Notes</label>
-    <textarea
-      style={styles.textarea}
-      placeholder="Customer mentioned the leak started yesterday"
-    />
-  </div>
-</div>
-
-
+                <div style={styles.detailItem}>
+                  <label style={styles.label}>Notes</label>
+                  <textarea
+                    style={styles.textarea}
+                    placeholder="Customer mentioned the leak started yesterday"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+
         <div style={styles.section}>
           <h2>Payments</h2>
           <div style={styles.paymentSection}>
             <div style={styles.paymentBox}>
               <h4>Wallet Balance</h4>
               <p style={styles.balance}>
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuGCLVghxjwPmyDwfPfsQblAestPOS6_pBjQ&s" 
-                  alt="Bitcoin Icon" style={styles.symbolIcon} />
+                <img 
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuGCLVghxjwPmyDwfPfsQblAestPOS6_pBjQ&s" 
+                  alt="Bitcoin Icon" 
+                  style={styles.symbolIcon} 
+                />
                 $5,400.99
               </p>
             </div>
@@ -491,9 +527,9 @@ const VendorDashboard = () => {
               width="100%" 
               height="100%" 
               style={{ border: 0 }} 
-              allowfullscreen="" 
+              allowFullScreen="" 
               loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
+              referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
           </div>
         </div>

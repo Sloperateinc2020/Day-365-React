@@ -44,7 +44,7 @@ if (isMobile) {
         boxSizing: "border-box", // Include padding in element's total width/height
         marginRight:'-90px',
         marginLeft:'-90px',
-        marginTop:'-75px',
+        marginTop:'-95px',
         
 
       }}
@@ -499,7 +499,7 @@ function navigateToSignUp() {
                 borderRadius: "20px",
                 backgroundColor: "#fff",
                 cursor: "pointer",
-              }}
+              }} 
             >
               <FaFacebook /> Facebook
             </button>

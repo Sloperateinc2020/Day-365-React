@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
 
 function ServiceDetails() {
   const location = useLocation();
@@ -17,13 +18,13 @@ function ServiceDetails() {
   return (
     <div
       style={{
-        width: '100%',
+        width: isMobile ? '100%' : '100%',
         maxWidth: '1400px',
         margin: '8px auto',
         fontFamily: '"Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
         padding: '8px',
         background: 'linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%)',
-        marginTop:"18px"
+        marginTop: isMobile ? '10px' : '40px',
       }}
     >
       <div
@@ -45,18 +46,19 @@ function ServiceDetails() {
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             letterSpacing: '-0.02em',
-            // marginTop:"25px"
           }}
         >
           {service.service} - Providers
         </h1>
-        <p style={{ 
-          color: '#64748b', 
-          fontSize: '13px',
-          margin: '0 auto',
-          lineHeight: '1.3',
-          maxWidth: '600px'
-        }}>
+        <p
+          style={{
+            color: '#64748b',
+            fontSize: '13px',
+            margin: '0 auto',
+            lineHeight: '1.3',
+            maxWidth: '600px',
+          }}
+        >
           {service.details}
         </p>
       </div>
@@ -76,10 +78,6 @@ function ServiceDetails() {
               height: 'auto',
               transition: 'transform 0.2s ease, box-shadow 0.2s ease',
               cursor: 'pointer',
-              ':hover': {
-                transform: 'translateY(-2px)',
-                boxShadow: '0 12px 30px rgba(0, 0, 0, 0.08)',
-              },
             }}
           >
             <div style={{ position: 'relative', paddingTop: '55%' }}>
@@ -121,25 +119,33 @@ function ServiceDetails() {
                 }}
               >
                 <span style={{ color: '#ffd700', fontSize: '14px' }}>★</span>
-                <span style={{ 
-                  fontWeight: '600', 
-                  color: '#1e293b',
-                  fontSize: '13px'
-                }}>{person.rating}</span>
+                <span
+                  style={{
+                    fontWeight: '600',
+                    color: '#1e293b',
+                    fontSize: '13px',
+                  }}
+                >
+                  {person.rating}
+                </span>
               </div>
             </div>
 
-            <div style={{ 
-              padding: '10px',
-              background: 'linear-gradient(to bottom, #ffffff 0%, #f8f9fa 100%)',
-            }}>
-              <div style={{ 
-                display: 'flex', 
-                justifyContent: 'space-between', 
-                alignItems: 'center',
-                marginBottom: '8px',
-                gap: '8px'
-              }}>
+            <div
+              style={{
+                padding: '10px',
+                background: 'linear-gradient(to bottom, #ffffff 0%, #f8f9fa 100%)',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  marginBottom: '8px',
+                  gap: '8px',
+                }}
+              >
                 <h2
                   style={{
                     fontSize: '15px',
@@ -187,8 +193,7 @@ function ServiceDetails() {
                     borderRadius: '8px',
                     fontSize: '8px',
                     fontWeight: '600',
-                    marginTop:"20px",
-
+                    marginTop: '20px',
                     cursor: 'pointer',
                     transition: 'all 0.2s ease',
                     boxShadow: '0 2px 8px rgba(37, 99, 235, 0.2)',
@@ -208,7 +213,7 @@ function ServiceDetails() {
                     border: 'none',
                     padding: '7px',
                     borderRadius: '8px',
-                    marginTop:"20px",
+                    marginTop: '20px',
                     fontSize: '8px',
                     fontWeight: '600',
                     cursor: 'pointer',

@@ -22,9 +22,20 @@ const VendorAvailability = () => {
   }, []);
 
   const mobileStyles = {
-    container: {
+    outerContainer: {
+      display: 'flex',
+      flexDirection: 'column',
       padding: '20px',
       fontFamily: 'system-ui, -apple-system, sans-serif'
+    },
+    sectionsWrapper: {
+      display: 'flex',
+      gap: '20px',
+      marginBottom: '20px'
+    },
+    calendarSection: {
+      flex: '1',
+      minWidth: '180px'
     },
     header: {
       fontSize: '16px',
@@ -61,26 +72,50 @@ const VendorAvailability = () => {
       cursor: 'pointer'
     },
     timeSection: {
-      marginTop: '20px'
+      flex: '1',
+      minWidth: '140px'
     },
     timeHeader: {
       fontSize: '16px',
       marginBottom: '15px'
     },
     timeGrid: {
-      display: 'flex',
-      gap: '20px',
-      marginBottom: '20px'
+      display: 'grid',
+      gridTemplateColumns: 'auto auto',
+      gap: '40px',
+      marginBottom: '40px',
+      marginLeft:"10px"
     },
     timeContainer: {
-      flex: 1
+      position: 'relative'
     },
-    timeValue: {
-      fontSize: '24px',
-      padding: '5px',
-      border: '1px solid #ddd',
+    timeSelect: {
+      width: '100%',
+      padding: '8px',
+      fontSize: '14px',
+      borderBottom: '1px solid #000',
+      backgroundColor: '#fff',
       textAlign: 'center',
-      backgroundColor: '#fff'
+      cursor: 'pointer'
+    },
+    dropdownList: {
+      position: 'absolute',
+      top: '100%',
+      left: 0,
+      width: '100%',
+      maxHeight: '200px',
+      overflowY: 'auto',
+      backgroundColor: '#fff',
+      borderRadius: '4px',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+      zIndex: 1000,
+      border: '1px solid #ddd'
+    },
+    dropdownItem: {
+      padding: '8px',
+      borderBottom: '1px solid #eee',
+      cursor: 'pointer',
+      textAlign: 'center'
     },
     message: {
       fontSize: '14px',
@@ -96,8 +131,11 @@ const VendorAvailability = () => {
       borderRadius: '4px',
       fontSize: '16px',
       fontWeight: '500',
-      cursor: 'pointer',
-      marginTop: '20px'
+      cursor: 'pointer'
+    },
+    timeLabel: {
+      fontSize: '14px',
+      marginBottom: '8px'
     }
   };
 
@@ -228,127 +266,108 @@ const VendorAvailability = () => {
   const days = getDaysInMonth(currentDate);
 
   const renderMobileVersion = () => (
-  <div style={styles.container}>
-    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between',marginTop:"10PX" }}>
-      <div style={{ flex: 1 }}>
-        <h2 style={styles.header}>Availability</h2>
-        <div style={styles.monthSelector}>
-          <button onClick={prevMonth} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>◀</button>
-          <span>{format(currentDate, 'MMMM')}</span>
-          <button onClick={nextMonth} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>▶</button>
-        </div>
-        <table style={styles.calendar}>
-          <thead>
-            <tr>
-              {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
-                <th key={index} style={styles.dayHeader}>{day}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {Array.from({ length: Math.ceil(days.length / 7) }).map((_, weekIndex) => (
-              <tr key={weekIndex}>
-                {days.slice(weekIndex * 7, (weekIndex + 1) * 7).map((day, dayIndex) => (
-                  <td
-                    key={dayIndex}
-                    style={{
-                      ...styles.day,
-                      backgroundColor: selectedDate && selectedDate.getDate() === day.getDate() ? '#6366F1' : 'transparent',
-                      color: selectedDate && selectedDate.getDate() === day.getDate() ? 'white' : 'black'
-                    }}
-                    onClick={() => handleDayClick(day)}
-                  >
-                    {format(day, 'd')}
-                  </td>
+    <div style={styles.outerContainer}>
+      <div style={styles.sectionsWrapper}>
+        <div style={styles.calendarSection}>
+          <h2 style={styles.header}>Availability</h2>
+          <div style={styles.monthSelector}>
+            <button onClick={prevMonth} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>◀</button>
+            <span>{format(currentDate, 'MMMM')}</span>
+            <button onClick={nextMonth} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>▶</button>
+          </div>
+          <table style={styles.calendar}>
+            <thead>
+              <tr>
+                {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
+                  <th key={index} style={styles.dayHeader}>{day}</th>
                 ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {Array.from({ length: Math.ceil(days.length / 7) }).map((_, weekIndex) => (
+                <tr key={weekIndex}>
+                  {days.slice(weekIndex * 7, (weekIndex + 1) * 7).map((day, dayIndex) => (
+                    <td
+                      key={dayIndex}
+                      style={{
+                        ...styles.day,
+                        backgroundColor: selectedDate && selectedDate.getDate() === day.getDate() ? '#6366F1' : 'transparent',
+                        color: selectedDate && selectedDate.getDate() === day.getDate() ? 'white' : 'black'
+                      }}
+                      onClick={() => handleDayClick(day)}
+                    >
+                      {format(day, 'd')}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-      <div style={{ flex: 1, marginLeft: '20px' }}>
-        <h2 style={styles.timeHeader}>Time Slots</h2>
-        <div style={styles.timeGrid}>
-          <div style={styles.timeContainer}>
-            <div style={styles.timeValue} onClick={() => setShowHours(!showHours)}>
-              {selectedTime.hours}
-            </div>
-            {showHours && (
-              <div style={{
-                position: 'absolute',
-                top: '100%',
-                left: '0',
-                width: '100%',
-                maxHeight: '200px',
-                overflowY: 'auto',
-                background: 'white',
-                border: '1px solid #ccc',
-                borderRadius: '4px',
-                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                zIndex: 1000
-              }}>
-                {hours24.map((hour) => (
-                  <div
-                    key={hour}
-                    style={{
-                      padding: '8px',
-                      cursor: 'pointer',
-                      textAlign: 'center'
-                    }}
-                    onClick={() => handleHourClick(hour)}
-                  >
-                    {hour}
-                  </div>
-                ))}
+        <div style={styles.timeSection}>
+          <h2 style={styles.header}>Time Slots</h2>
+          <div style={styles.timeGrid}>
+            <div style={styles.timeContainer}>
+              <div style={styles.timeLabel}>Time</div>
+              <div 
+                style={styles.timeSelect}
+                onClick={() => {
+                  setShowHours(!showHours);
+                  setShowMinutes(false);
+                }}
+              >
+                {selectedTime.hours}
               </div>
-            )}
-          </div>
-          <div style={styles.timeContainer}>
-            <div style={styles.timeValue} onClick={() => setShowMinutes(!showMinutes)}>
-              {selectedTime.minutes}
+              {showHours && (
+                <div style={styles.dropdownList}>
+                  {hours24.map((hour) => (
+                    <div
+                      key={hour}
+                      style={styles.dropdownItem}
+                      onClick={() => handleHourClick(hour)}
+                    >
+                      {hour}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
-            {showMinutes && (
-              <div style={{
-                position: 'absolute',
-                top: '100%',
-                left: '0',
-                width: '100%',
-                maxHeight: '200px',
-                overflowY: 'auto',
-                background: 'white',
-                border: '1px solid #ccc',
-                borderRadius: '4px',
-                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                zIndex: 1000
-              }}>
-                {minutes.map((minute) => (
-                  <div
-                    key={minute}
-                    style={{
-                      padding: '8px',
-                      cursor: 'pointer',
-                      textAlign: 'center'
-                    }}
-                    onClick={() => handleMinuteClick(minute)}
-                  >
-                    {minute}
-                  </div>
-                ))}
+            <div style={styles.timeContainer}>
+              <div style={styles.timeLabel}>Minutes</div>
+              <div 
+                style={styles.timeSelect}
+                onClick={() => {
+                  setShowMinutes(!showMinutes);
+                  setShowHours(false);
+                }}
+              >
+                {selectedTime.minutes}
               </div>
-            )}
+              {showMinutes && (
+                <div style={styles.dropdownList}>
+                  {minutes.map((minute) => (
+                    <div
+                      key={minute}
+                      style={styles.dropdownItem}
+                      onClick={() => handleMinuteClick(minute)}
+                    >
+                      {minute}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div style={styles.timeSection}>
       <p style={styles.message}>Select your time slots to book your service</p>
       <button style={styles.bookButton} onClick={handleBookNow}>
         BOOK NOW
       </button>
     </div>
-  </div>
-);
+  );
+
   const renderDesktopVersion = () => (
     <>
       <div style={styles.container}>
@@ -454,7 +473,7 @@ const VendorAvailability = () => {
                       style={{
                         padding: '8px',
                         cursor: 'pointer',
-                        textAlign: 'center'
+                        textAlign: 'center',
                       }}
                       onClick={() => handleMinuteClick(minute)}
                     >

@@ -346,3 +346,6 @@ body, html {
         font-size: 16px;
     }
 }
+.availability-summary-container {
+    margin-top: 25px;
+}

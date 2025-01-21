@@ -1,3 +1,4 @@
+import { version } from "react";
 import AllServices from "./Components/AllServices";
 
 const config = {
@@ -14,8 +15,9 @@ const config = {
     POPULARSERVICESNEARYOU_API_URL:'https://run.mocky.io/v3/41190fbb-eb4e-4129-9749-afd1f3c530eb',
     SPECIALOFFERS_API_URL:'https://run.mocky.io/v3/10464951-e0cf-4c8b-8b36-c6561ea3c92a',
     TOPRATEDPROVIDERS_API_URL:'https://run.mocky.io/v3/9d0ec7ae-0fbe-497e-afd1-afe2f7de052d',
-    UPCOMINGBOOKING_API_URL:'https://run.mocky.io/v3/6a49ba07-b284-45cc-ba6f-31d075825347',
+    UPCOMINGBOOKING_API_URL:'https://run.mocky.io/v3/19473cfa-b430-489e-ab68-412730cf2e8e',
     PREVIOUSBOOKING_API_URL:'https://run.mocky.io/v3/d4b00619-810f-4828-9a7a-c96e24d06353',
+    UPCOMINGBOOKING_API_URL_mobile_version:'https://run.mocky.io/v3/754a59cd-a326-47bd-87c8-cc553896732d'
 
 };
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { createClient } from "@supabase/supabase-js";
 import { Loader2 } from "lucide-react";
 import "./VendorRegistration.css";
@@ -9,12 +10,12 @@ const VendorRegistration = () => {
     firstName: "",
     lastName: "",
     email: "",
-    phone: "",
+    phoneNumber: "",
     gender: "",
     dateOfBirth: "",
     address: "",
     city: "",
-    zipCode: "",
+    pincode: "",
     state: "",
     country: "",
     skills: "",
@@ -22,21 +23,23 @@ const VendorRegistration = () => {
     panCard: ""
   });
   const [showOtpSection, setShowOtpSection] = useState(false);
-  const [otp, setOtp] = useState(["", "", "", ""]);
   const [isBackgroundDisabled, setIsBackgroundDisabled] = useState(false);
   const [aadhaarError, setAadhaarError] = useState("");
   const [panCardError, setPanCardError] = useState("");
   const [aadhaarFile, setAadhaarFile] = useState(null);
   const [panFile, setPanFile] = useState(null);
-  const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [phoneErrorMessage, setPhoneErrorMessage] = useState("");
 
-  const supabaseUrl = "https://ztoddnqhksgmlanzcaqi.supabase.co";
-  const supabaseKey = "e7b579035c0fb435601ff4448ae7746917d38c4da1eb68fe243b9047e139e94c";
+  const supabaseUrl = "";
+  const supabaseKey = "";
   const supabase = createClient(supabaseUrl, supabaseKey);
+  const navigate = useNavigate();
+
 
   const STORAGE_CONFIG = {
-    BUCKET_NAME: "images",
+    BUCKET_NAME: "urban-maverick",
     MAX_FILE_SIZE: 2 * 1024 * 1024,
     ALLOWED_MIME_TYPES: ["image/jpeg", "image/png", "image/gif", "image/webp"],
   };
@@ -76,6 +79,34 @@ const VendorRegistration = () => {
     }
   };
 
+  const sendToAPI = async (vendorData) => {
+    try {
+      const response = await fetch("http://localhost:8080/api/vendor/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(vendorData),
+      });
+
+      if (response.status === 409) {
+        const errorText = await response.text();
+        return { status: 409, message: errorText };
+      }
+  
+      if (!response.ok) {
+        throw new Error("Failed to register vendor");
+      }
+  
+      return response;
+    } catch (error) {
+      console.error("Error sending data to API:", error);
+      throw error;
+    }
+  };
+
+  
+
   async function uploadImage(file, bucket) {
     try {
       if (file.size > STORAGE_CONFIG.MAX_FILE_SIZE) {
@@ -85,7 +116,7 @@ const VendorRegistration = () => {
       if (!STORAGE_CONFIG.ALLOWED_MIME_TYPES.includes(file.type)) {
         throw new Error("Invalid file type. Only images are allowed.");
       }
-
+      
       const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, "_")}`;
       const { data, error } = await supabase.storage
         .from(bucket)
@@ -114,59 +145,50 @@ const VendorRegistration = () => {
     }
   }
 
-  const handleLogin = async () => {
-    try {
-      const { data: session, error } = await supabase.auth.signInWithPassword({
-        email: "thirupathiraju52@outlook.in",
-        password: "Haryak@552",
-      });
-
-      if (error) throw error;
-      setUser(session.user);
-      return session.user;
-    } catch (err) {
-      throw err;
-    }
-  };
-
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-
+    setSuccessMessage(""); 
+    setPhoneErrorMessage("");  
+  
     try {
-      const loggedInUser = await handleLogin();
-
-      if (!loggedInUser) {
-        throw new Error("Authentication required");
-      }
-
       if (!aadhaarFile || !panFile) {
         throw new Error("Please upload both Aadhaar and PAN card files.");
       }
-
+  
+      
       const aadhaarResult = await uploadImage(aadhaarFile, STORAGE_CONFIG.BUCKET_NAME);
       const panResult = await uploadImage(panFile, STORAGE_CONFIG.BUCKET_NAME);
-
-      const { error } = await supabase
-        .from('vendors')
-        .insert([{
-          ...formData,
-          aadhaar_url: aadhaarResult.url,
-          pan_url: panResult.url,
-          user_id: loggedInUser.id,
-          status: 'pending'
-        }]);
-
-      if (error) throw error;
-
-      setShowOtpSection(true);
-      setIsBackgroundDisabled(true);
+  
+      const vendorData = {
+        ...formData,
+        aadhaarUrl: aadhaarResult.url,  
+        panUrl: panResult.url,          
+        status: 'pending',              
+      };
+    
+      const response = await sendToAPI(vendorData);
+  
+      if (response.ok) {
+        setSuccessMessage("Your details have been successfully submitted. Your status will be updated soon.");
+        setIsBackgroundDisabled(true);
+      } 
+      
+      if (response.status === 409) {
+        if (response.status === 409 && response.message.includes("This phone number is already associated with a vendor account.")) {
+          setPhoneErrorMessage("Vendor already exists with this mobile number. Please provide a different one."); 
+        }else if (response.message.includes("No user found with the provided phone number. Please register as a user first.")) {
+          setPhoneErrorMessage("This mobile number is not registered as a user.");
+        }
+        return;
+      }
     } catch (error) {
-      alert(`Error during form submission: ${error.message}`);
+      setPhoneErrorMessage(error.message);
     } finally {
       setIsLoading(false);
     }
   };
+  
 
   useEffect(() => {
     if (showOtpSection) {
@@ -185,7 +207,40 @@ const VendorRegistration = () => {
       <div className="vendor-registration-container">
         {isBackgroundDisabled && <div className="overlay"></div>}
 
-        {showOtpSection && (
+        {successMessage && (
+          <div className="success-message-popup">
+            <div className="popup-content">
+              <p>{successMessage}</p>
+              <button
+                className="close-button"
+                onClick={() =>{
+                  setSuccessMessage("")
+                  navigate("/");
+                } 
+                }
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+
+        {phoneErrorMessage && (
+          <div className="success-message-popup">
+            <div className="popup-content">
+              <p>{phoneErrorMessage}</p>
+              <button
+                className="close-button"
+                onClick={() => setPhoneErrorMessage("")}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+
+
+        {/* {showOtpSection && (
           <div className="otp-modal">
             <h2 className="otp-title">Verification Code</h2>
             <p className="otp-subtitle">
@@ -235,7 +290,7 @@ const VendorRegistration = () => {
               </button>
             </div>
           </div>
-        )}
+        )} */}
 
         <h1 className="title">Become a Service Provider</h1>
         <p className="subtitle">
@@ -282,8 +337,8 @@ const VendorRegistration = () => {
               <label>Phone Number</label>
               <input
                 type="text"
-                name="phone"
-                value={formData.phone}
+                name="phoneNumber"
+                value={formData.phoneNumber}
                 onChange={handleInputChange}
                 placeholder="Phone Number"
               />
@@ -339,8 +394,8 @@ const VendorRegistration = () => {
               <label>Zip Code</label>
               <input
                 type="text"
-                name="zipCode"
-                value={formData.zipCode}
+                name="pincode"
+                value={formData.pincode}
                 onChange={handleInputChange}
                 placeholder="Enter your Zipcode"
               />

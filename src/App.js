@@ -7,6 +7,8 @@ import Header from './Components/Header';
 import SignIn from './Components/SignIn';
 import SignupPage from './SignUp/SignupPage';
 import Booking from './Components/Booking/Booking';
+import Blog from './Components/Blog/Blog';
+
 import Listings from './Components/Listings';
 import Availability from './Availability/Availability';
 import Profile from './Components/Profile/Profile'; // Ensure this is the correct path
@@ -29,6 +31,11 @@ import SignUpDetails from './Components/SignUpDetails/SignUpDetails';
 import ChatApp from './Components/ChatApp/ChatApp';
 import VendorAvailability from './Components/VendorAvailability/VendorAvailability';
 import LatestServices from './Components/LatestServices/LatestServices';
+import Articles from './Components/Articles';
+
+import ServiceDetails from './Components/ServiceDetails/ServiceDetails';
+
+
 
 function App() {
   const [selectedMenu, setSelectedMenu] = useState('Home'); // Initial selected menu
@@ -87,6 +94,7 @@ const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
         <Route path="/allservices" element={<AllServices />} />
         <Route path="/services" element={<Services />} />
         <Route path="/search-result" element={<SearchResult />} />
+        <Route path="/Blog" element={<Blog />} />
         <Route path="/availability" element={<Availability />} />
         <Route path="/vendordashboard" element={<VendorDashboard />} />
         <Route path="/confirmbooking" element={<ConfirmBooking />} />
@@ -97,6 +105,10 @@ const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
         <Route path="/signupdetails" element={<SignUpDetails />} /> 
         <Route path="/chat" element={<ChatApp />} />
         <Route path="/vendoravailability" element={<VendorAvailability />} />
+        <Route path="/articles" element={<Articles />} />
+
+        <Route path="/service-details" element={<ServiceDetails />} />
+
         
         {/* LatestServices route */}
         <Route path="/latestservices" element={<LatestServices />} />

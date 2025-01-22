@@ -28,8 +28,18 @@ const SearchResults = () => {
         }
         const data = await response.json();
         if (data && Array.isArray(data.services)) {
-          setServices(data.services);
-          setOriginalServices(data.services);
+          // Flatten persons array with additional service details
+          const persons = data.services.flatMap((service) =>
+            (service.persons || []).map((person) => ({
+              ...person,
+              service: service.service,
+              details: service.details,
+              icon: service.icon,
+              color: service.color,
+            }))
+          );
+          setServices(persons);
+          setOriginalServices(persons);
         } else {
           setError("Services data is missing or malformed");
         }
@@ -39,9 +49,10 @@ const SearchResults = () => {
         setLoading(false);
       }
     };
-
+  
     fetchServices();
   }, []);
+  
 
   // If query parameter 'q' exists, set the searchQuery to that value
   useEffect(() => {
@@ -53,17 +64,22 @@ const SearchResults = () => {
     }
   }, [query]);
 
-  // Filter services based on search query
   useEffect(() => {
-    if (searchQuery) {
-      const filtered = originalServices.filter((service) =>
-        service.service.toLowerCase().includes(searchQuery.toLowerCase())
+    const filtered = originalServices.filter((person) => {
+      const serviceName = person.service ? person.service.toLowerCase() : "";
+      const personName = person.name ? person.name.toLowerCase() : "";
+      const personCity = person.city ? person.city.toLowerCase() : "";
+  
+      return (
+        serviceName.includes(searchQuery.toLowerCase()) &&
+        personCity.includes(locationQuery.toLowerCase()) &&
+        (personName.includes(filterQuery.toLowerCase()) || filterQuery === "")
       );
-      setServices(filtered);
-    } else {
-      setServices(originalServices); // If no search query, show all services
-    }
-  }, [searchQuery, originalServices]);
+    });
+  
+    setServices(filtered);
+  }, [searchQuery, locationQuery, filterQuery, originalServices]);
+  
 
   // Handle input change and set the search query
   const handleSearchChange = (e) => {
@@ -241,175 +257,177 @@ const SearchResults = () => {
 
         {/* Services Grid */}
         <div
+  style={{
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+    gap: "20px",
+    marginTop: "40px",
+  }}
+>
+  {services.length > 0 ? (
+    services.map((person, index) => (
+      <div
+        key={index}
+        style={{
+          backgroundColor: "white",
+          borderRadius: "1px",
+          padding: "0px",
+          border: "1px solid black",
+          position: "relative",
+        }}
+      >
+        {/* Rating Badge */}
+        <div
           style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
-            gap: "20px",
-            marginTop: "40px",
+            position: "absolute",
+            top: "12px",
+            left: "12px",
+            color: "black",
+            padding: "2px 8px",
+            borderRadius: "9999px",
+            fontSize: "12px",
+            fontWeight: "500",
           }}
         >
-          {services.length > 0 ? (
-            services.map((service, index) => (
-              <div
-                key={index}
-                style={{
-                  backgroundColor: "white",
-                  borderRadius: "1px",
-                  padding: "0px",
-                  border: "1px solid black",
-                  position: "relative",
-                }}
-              >
-                {/* Rating Badge */}
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "12px",
-                    left: "12px",
-                    color: "black",
-                    padding: "2px 8px",
-                    borderRadius: "9999px",
-                    fontSize: "12px",
-                    fontWeight: "500",
-                  }}
-                >
-                  <span style={{ color: "#FFD700", fontSize: "20px" }}>☆</span> {service.rating}
-                </div>
-
-                {/* Profile Content */}
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    textAlign: "center",
-                  }}
-                >
-                  <img
-                    src={service.personimageUrl}
-                    alt={service.name}
-                    style={{
-                      width: "64px",
-                      height: "64px",
-                      borderRadius: "50%",
-                      objectFit: "cover",
-                      marginBottom: "5px",
-                    }}
-                  />
-                  <h3
-                    style={{
-                      fontSize: "16px",
-                      fontWeight: "500",
-                      marginBottom: "4px",
-                    }}
-                  >
-                    {service.name}
-                  </h3>
-                  <p
-                    style={{
-                      fontSize: "14px",
-                      color: "#4F46E5",
-                      marginBottom: "1px",
-                    }}
-                  >
-                    {service.profession}
-                  </p>
-                  <p
-                    style={{
-                      fontSize: "12px",
-                      color: "black",
-                      fontWeight: "bold",
-                      marginTop: "5px",
-                      marginBottom: "1px",
-                    }}
-                  >
-                    {service.city}
-                  </p>
-
-                  <p
-                    style={{
-                      fontSize: "12px",
-                      color: "#6666ff",
-                      fontWeight: "italic",
-                      padding: "10px 10px",
-                      border: "1px solid #374151",
-                      borderRadius: "40px",
-                      display: "inline-block",
-                      width: "150px",
-                      marginBottom: "10px",
-                    }}
-                  >
-                    {service.service}
-                  </p>
-
-                  <div
-                    style={{
-                      display: "flex",
-                      gap: "0px",
-                      padding: "0px",
-                      border: "1px solid black",
-                      borderRadius: "4px",
-                      width: "100%",
-                      height: "45px",
-                      marginBottom: "1px",
-                    }}
-                  >
-                    {/* Availability Button */}
-                    <button
-                      style={{
-                        flex: 1,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: "4px",
-                        padding: "5px",
-                        fontSize: "12px",
-                        border: "none",
-                        backgroundColor: "transparent",
-                        color: "black",
-                        cursor: "pointer",
-                      }}
-                    >
-                      <Calendar size={16} color="black" />
-                      <span>Availability</span>
-                    </button>
-
-                    {/* Divider */}
-                    <div
-                      style={{
-                        height: "45px",
-                        backgroundColor: "#e5e7eb",
-                        border: "1px solid black",
-                      }}
-                    />
-
-                    {/* Call Now Button */}
-                    <button
-                      style={{
-                        flex: 1,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: "4px",
-                        padding: "5px",
-                        fontSize: "12px",
-                        border: "none",
-                        backgroundColor: "transparent",
-                        color: "black",
-                        cursor: "pointer",
-                      }}
-                    >
-                      <Phone size={16} color="black" />
-                      <span>Call now</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <div>No services found</div>
-          )}
+          <span style={{ color: "#FFD700", fontSize: "20px" }}>☆</span> {person.rating || "N/A"}
         </div>
+
+        {/* Profile Content */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            textAlign: "center",
+          }}
+        >
+          <img
+            src={person.personimageUrl}
+            alt={person.name}
+            style={{
+              width: "64px",
+              height: "64px",
+              borderRadius: "50%",
+              objectFit: "cover",
+              marginBottom: "5px",
+            }}
+          />
+          <h3
+            style={{
+              fontSize: "16px",
+              fontWeight: "500",
+              marginBottom: "4px",
+            }}
+          >
+            {person.name}
+          </h3>
+          <p
+            style={{
+              fontSize: "14px",
+              color: "#4F46E5",
+              marginBottom: "1px",
+            }}
+          >
+            {person.availableServices}
+          </p>
+          <p
+            style={{
+              fontSize: "12px",
+              color: "black",
+              fontWeight: "bold",
+              marginTop: "5px",
+              marginBottom: "1px",
+            }}
+          >
+            {person.city}
+          </p>
+
+          <p
+            style={{
+              fontSize: "12px",
+              color: "#6666ff",
+              fontWeight: "italic",
+              padding: "10px 10px",
+              border: "1px solid #374151",
+              borderRadius: "40px",
+              display: "inline-block",
+              width: "150px",
+              marginBottom: "10px",
+            }}
+          >
+            {person.service}
+          </p>
+
+          <div
+            style={{
+              display: "flex",
+              gap: "0px",
+              padding: "0px",
+              border: "1px solid black",
+              borderRadius: "4px",
+              width: "100%",
+              height: "45px",
+              marginBottom: "1px",
+            }}
+          >
+            {/* Availability Button */}
+            <button
+              onClick={() => navigate(`/vendoravailability/${person.id}`)}
+              style={{
+                flex: 1,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "4px",
+                padding: "5px",
+                fontSize: "12px",
+                border: "none",
+                backgroundColor: "transparent",
+                color: "black",
+                cursor: "pointer",
+              }}
+            >
+              <Calendar size={16} color="black" />
+              <span>Availability</span>
+            </button>
+
+            {/* Divider */}
+            <div
+              style={{
+                height: "45px",
+                backgroundColor: "#e5e7eb",
+                border: "1px solid black",
+              }}
+            />
+
+            {/* Call Now Button */}
+            <button
+              style={{
+                flex: 1,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "4px",
+                padding: "5px",
+                fontSize: "12px",
+                border: "none",
+                backgroundColor: "transparent",
+                color: "black",
+                cursor: "pointer",
+              }}
+            >
+              <Phone size={16} color="black" />
+              <span>Call now</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    ))
+  ) : (
+    <div>No services found</div>
+  )}
+</div>
+
       </div>
       <Footer />
     </>

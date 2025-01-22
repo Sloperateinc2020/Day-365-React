@@ -88,13 +88,13 @@ tr:hover {
   }
   
   .state.completed {
-    background-color: #1eec66;
+    background-color: #1cda2c;
     color: rgba(255, 255, 255, 0.74);
-    text-align: center;
+    text-align: center;padding-bottom: 50px;
   }
   
   .state.pending {
-    background-color: #eea827;
+    background-color: #fd1d1d;
     color: white;
   }
 

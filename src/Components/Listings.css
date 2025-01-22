@@ -8,15 +8,7 @@
   max-width: 1200px; 
   margin: 0 auto; 
   position: relative; 
-  margin-top: 100px;
-}
-
-@media (max-width: 768px) {
-  .outer-container {
-    padding: 2rem; 
-    min-height: 500px; 
-    margin-top: 2rem; 
-  }
+  margin-top: 100px;margin-right: 150px;
 }
 
 .inner-containers {
@@ -86,11 +78,10 @@
   object-fit: cover; 
 }
 
-
 .edit-button {
   margin-top: 0.5rem;
   padding: 0.375rem 1rem;
-  background-color: transparent;
+  background-color: white;
   color: #4f46e5;
   border: 1px solid #4f46e5;
   border-radius: 0.375rem;
@@ -104,24 +95,162 @@
   top: 10px; 
   right: 10px;  
   background-color: #f3f3f8; 
-  padding: 0.75rem 1.5rem; 
-  font-size: 11px; 
-  border-radius: 0.375rem; 
+  padding: 10px; 
+  font-size: 16px;
+  border-radius: 20px; 
   border: none; 
-  cursor: pointer; 
-  margin-top: 50px;
+  cursor: cover;
+  margin-top: 50px;margin-right: 60px;
   color: #4f46e5;
-
 }
-/* Add this to your CSS file to disable the horizontal scrollbar */
+
 body {
-  overflow-x: hidden; /* Prevent horizontal scrolling */
+  overflow-x: hidden;
 }
 
 .listings-title {
   text-align: center; 
-  margin-top: 0; 
-  margin-bottom: 2rem; 
-  text-decoration: underline; 
-  font-weight: 700; 
+  font-size: 25px;
+  font-weight: 600;
+  margin: 20px 0;
+  color: #111827;
+}
+
+.mobile-nav {
+  display: none;
+}
+
+@media (max-width: 800px) {
+  .outer-container {
+    padding: 1px;
+    margin-top: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background-color: #f5f5f5;
+    width: 100%;
+
+  }
+
+  .inner-containers {
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0 1rem;
+    
+  }
+
+  .listing-container {
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    margin-bottom: 0.5rem;
+    padding: 0.75rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .listing-image {
+    width: 60px;
+    height: 60px;
+    margin-left: 0.75rem;
+    border-radius: 2px;
+  }
+
+  .listing-detail {
+    width: auto;
+    max-width: 100%;
+    font-size: 12px;
+    color: #666;
+    margin: 2px 0;
+  }
+
+  .listing-name {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+    color: #000;
+  }
+
+  .register-button {
+    position: fixed;
+    top: 70px;
+    right: 5px;
+    margin: 0;
+    background-color: #f0f0ff;
+    color: #6366f1;
+    box-shadow: none;
+    display: flex;
+    align-items: centre;
+    gap: 4px;
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 4px;
+    z-index: 15;
+    border-color: #2145aa;margin-right: 14px;
+  }
+
+  .listings-title {
+    font-size: 20px;
+    margin: 16px 0;
+    padding: 0;
+    text-align: center;
+  }
+
+  .edit-button {
+    background-color: #ebedf0;
+    color: rgb(108, 38, 236);
+    border: none;
+    padding: 4px 12px;
+    font-size: 12px;
+    margin-top: 4px;
+    border-radius: 4px;
+  }
+
+  .listings-container {
+    padding: 0;
+    /* background-color: #f5f5f5; */
+    margin-top: 70px;
+  }
+
+  .listings-header {
+    padding: 12px 0;
+    /* background-color: white; */
+    margin-bottom: 8px;
+    position: relative;
+
+  }
+
+  .mobile-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    padding: 8px 0;
+    justify-content: space-around;
+    box-shadow: 0 -1px 4px rgba(0,0,0,0.1);
+    z-index: 1000;
+  }
+
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #666;
+    font-size: 10px;
+    gap: 4px;
+  }
+
+  .nav-item.active {
+    color: #2563eb;
+  }
+
+  .nav-item svg {
+    width: 20px;
+    height: 20px;
+  }
 }

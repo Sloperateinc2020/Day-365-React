@@ -2,16 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from "../Footer";
 
-
-
-const LatestServices = () => {
+const LatestServices = ({ hideFooter, limit, hideDescription, isMobile }) => {
   const navigate = useNavigate();
   const [latestServices, setLatestServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showAll, setShowAll] = useState(false);
 
-  const LATESTSERVICE_API_URL = 'https://run.mocky.io/v3/d8593c37-71e6-4378-9d72-e7a04d1a6495';
+  const LATESTSERVICE_API_URL = 'https://run.mocky.io/v3/33751478-3408-4de9-adc3-53388f344914';
 
   useEffect(() => {
     const fetchLatestServices = async () => {
@@ -44,35 +41,43 @@ const LatestServices = () => {
     return <div>{error}</div>;
   }
 
-  const servicesToDisplay = showAll ? latestServices : latestServices.slice(0, 6);
+  const servicesToDisplay = limit ? latestServices.slice(0, limit) : latestServices;
 
   return (
     <div style={{ padding: '40px 20px', backgroundColor: '#fff' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <h2 style={{ 
-          fontSize: '32px', 
+      <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+        <h2 style={{
+          fontSize: isMobile ? '20px' : '30px', // Align left only for mobile
           fontWeight: 'bold',
           marginBottom: '8px',
-          textAlign: 'center',
-          color: '#6666ff'
+          
+          textAlign: isMobile ? 'left' : 'center', // Align left only for mobile
+          color: isMobile ? 'black' : '#6666ff', // Black for mobile, default for others
         }}>
-          Latest <span style={{ color: '#6666ff' }}>Services</span>
+          Latest <span style={{ color: isMobile ? 'black' : '#6666ff' }}>Services</span>
         </h2>
-        <p style={{
-          fontSize: '16px',
-          color: '#666',
-          marginBottom: '40px',
-          textAlign: 'center'
-        }}>
-          Browse through our comprehensive list of services
-        </p>
-        
+
+        {/* Conditionally render the description */}
+        {!hideDescription && (
+          <p style={{
+            fontSize: '16px',
+            color: '#666',
+            marginBottom: '40px',
+            textAlign: 'center'
+          }}>
+            Browse through our comprehensive list of services
+          </p>
+        )}
+
+        {/* Horizontal Scrollable Container */}
         <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '24px',
-          marginBottom: '40px'
-        }}>
+          display: 'flex',
+          overflowX: 'auto',
+          gap: '16px',
+          paddingBottom: '16px',
+          scrollbarWidth: 'none', // For Firefox
+          msOverflowStyle: 'none', // For IE and Edge
+        }} className="no-scrollbar">
           {Array.isArray(servicesToDisplay) && servicesToDisplay.map((service, index) => (
             <div key={index} style={{
               backgroundColor: '#fff',
@@ -82,7 +87,9 @@ const LatestServices = () => {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'flex-start',
-              gap: '12px'
+              gap: '12px',
+              minWidth: '260px',
+              flexShrink: 0,
             }}>
               <div style={{
                 display: 'flex',
@@ -90,8 +97,8 @@ const LatestServices = () => {
                 width: '100%',
                 marginBottom: '8px'
               }}>
-                <img 
-                  src={service.iconUrl} 
+                <img
+                  src={service.iconUrl}
                   alt={service.title}
                   style={{
                     width: '40px',
@@ -164,31 +171,11 @@ const LatestServices = () => {
             </div>
           ))}
         </div>
-
-        {!showAll && latestServices.length > 6 && (
-          <div style={{ textAlign: 'center' }}>
-            <button
-              onClick={() => setShowAll(true)}
-              style={{
-                backgroundColor: '#6666ff',
-                color: 'white',
-                padding: '10px 24px',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: '500'
-              }}
-            >
-              See More
-            </button>
-          </div>
-        )}
       </div>
-      <Footer />
 
+      {/* Footer is placed outside the content container */}
+      {!hideFooter && <Footer />}
     </div>
-    
   );
 };
 

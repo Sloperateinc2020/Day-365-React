@@ -97,13 +97,21 @@ function HomeMobile() {
 
         <section style={{ marginBottom: '2px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-            <h2 style={{ fontSize: '22px', fontWeight: '600' }}>Looking For</h2>
+            <h2 style={{ fontSize: '22px', fontWeight: '600',marginTop:"10px" }}>Looking For</h2>
             <button
-              style={{ fontSize: '14px' }}
-              onClick={() => navigate('/categories')}
-            >
-              More
-            </button>
+  style={{
+    fontSize: '14px',
+    background: 'none',
+    border: 'none',
+    color: 'black',
+    cursor: 'pointer',
+    fontWeight: '500',
+  }}
+  onClick={() => navigate('/categories')}
+>
+  More
+</button>
+
           </div>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>

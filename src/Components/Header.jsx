@@ -45,6 +45,11 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
     navigate('/join-as-vendor');
   };
 
+  // Check if the current route is Payments
+  if (location.pathname === '/payments') {
+    return null; // Do not render the header if on /payments page
+  }
+
   const outerContainerStyle = {
     display: 'flex',
     justifyContent: 'center',

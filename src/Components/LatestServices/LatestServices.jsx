@@ -46,18 +46,16 @@ const LatestServices = ({ hideFooter, limit, hideDescription, isMobile }) => {
   return (
     <div style={{ padding: '40px 20px', backgroundColor: '#fff' }}>
       <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-        <h2 style={{
-          fontSize: isMobile ? '20px' : '30px', // Align left only for mobile
-          fontWeight: 'bold',
-          marginBottom: '8px',
-          
-          textAlign: isMobile ? 'left' : 'center', // Align left only for mobile
-          color: isMobile ? 'black' : '#6666ff', // Black for mobile, default for others
-        }}>
-          Latest <span style={{ color: isMobile ? 'black' : '#6666ff' }}>Services</span>
-        </h2>
-
-        {/* Conditionally render the description */}
+      <h2 style={{
+  fontSize: isMobile ? '20px' : '30px', 
+  fontWeight: 'bold',
+  marginBottom: '8px',
+  textAlign: isMobile ? 'left' : 'center',
+  color: isMobile ? 'black' : '#6666ff', 
+  marginLeft: isMobile ? '-15px' : '0', 
+}}>
+  Latest <span style={{ color: isMobile ? 'black' : '#6666ff' }}>Services</span>
+</h2>
         {!hideDescription && (
           <p style={{
             fontSize: '16px',
@@ -90,6 +88,10 @@ const LatestServices = ({ hideFooter, limit, hideDescription, isMobile }) => {
               gap: '12px',
               minWidth: '260px',
               flexShrink: 0,
+              marginBottom: isMobile ? '-15px' : '0', 
+              // marginLeft: isMobile ? '-15px' : '0', 
+
+
             }}>
               <div style={{
                 display: 'flex',

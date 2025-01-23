@@ -4,6 +4,7 @@ import { createClient } from "@supabase/supabase-js";
 import { Loader2 } from "lucide-react";
 import "./VendorRegistration.css";
 import Footer from "../Footer";
+import config from "../../config";
 
 const VendorRegistration = () => {
   const [formData, setFormData] = useState({
@@ -32,10 +33,11 @@ const VendorRegistration = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [phoneErrorMessage, setPhoneErrorMessage] = useState("");
 
-  const supabaseUrl = "";
-  const supabaseKey = "";
-  const supabase = createClient(supabaseUrl, supabaseKey);
-  const navigate = useNavigate();
+  const supabase = createClient(
+    config.REACT_APP_SUPABASE_URL,
+    config.REACT_APP_SUPABASE_KEY
+  );
+    const navigate = useNavigate();
 
 
   const STORAGE_CONFIG = {

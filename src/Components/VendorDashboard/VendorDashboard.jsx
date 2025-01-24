@@ -4,6 +4,7 @@ import config from '../../config';
 import { Link, useNavigate } from 'react-router-dom'; 
 import { useMediaQuery } from 'react-responsive';
 import VendorDashboardMobile from './VendorDaashboardMobile';
+import { height } from "@fortawesome/free-solid-svg-icons/fa0";
 
 const VendorDashboard = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -263,6 +264,7 @@ const VendorDashboard = () => {
       display: "flex",
       alignItems: "center",
       marginBottom: "12px",
+      gap:'40px'
     },
     icon: {
       marginRight: "12px",
@@ -308,21 +310,38 @@ const VendorDashboard = () => {
       padding: "15px",
       border: "1px solid #ddd",
       borderRadius: "5px",
+      color:'#6B7280',
+      height:'100px',
+      
     },
     balance: {
       fontWeight: "bold",
       color: "#28a745",
       display: "flex",
       alignItems: "center",
+      marginTop:'15px'
+
     },
     symbolIcon: {
       width: "20px",
       height: "20px",
       marginRight: "5px",
+      marginBottom:'7px'
     },
+
     earnings: {
       fontWeight: "bold",
       color: "#ffc107",
+     marginTop:'15px',
+     
+
+    },
+    updatedText: {
+      fontSize: "12px",
+      color: "#6B7280",
+      marginTop: "5px",
+      marginLeft:'120px',
+      fontWeight:'bold',
     },
     mapContainer: {
       marginTop: '0px',
@@ -509,12 +528,16 @@ const VendorDashboard = () => {
                   style={styles.symbolIcon} 
                 />
                 $5,400.99
+                <p style={styles.updatedText}>Updated just now</p>
+
               </p>
             </div>
 
             <div style={styles.paymentBox}>
               <h4>Earnings</h4>
               <p style={styles.earnings}>$1,500.75</p>
+              <p style={styles.updatedText}>Updated just now</p>
+
             </div>
           </div>
         </div>

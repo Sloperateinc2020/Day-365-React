@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-const VendorDashboard = () => {
+const VendorDashboardMobile = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [bookings, setBookings] = useState([]);
+  const [selectedBooking, setSelectedBooking] = useState(null);
   const API_URL = 'https://run.mocky.io/v3/754a59cd-a326-47bd-87c8-cc553896732d';
 
   // Handle screen resizing
@@ -20,7 +21,7 @@ const VendorDashboard = () => {
       try {
         const response = await fetch(API_URL);
         const data = await response.json();
-        setBookings(data.UpcomingBookings || []); // Assuming the API response has an `UpcomingBookings` array
+        setBookings(data.UpcomingBookings || []);
       } catch (error) {
         console.error('Error fetching bookings:', error);
       }
@@ -28,6 +29,97 @@ const VendorDashboard = () => {
 
     fetchBookings();
   }, []);
+
+  const handleClosePopup = () => {
+    setSelectedBooking(null);
+  };
+
+  const styles = {
+    popupOverlay: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 1000,
+    },
+    popupContent: {
+      backgroundColor: "#fff",
+      padding: "20px",
+      borderRadius: "8px",
+      width: "90%",
+      maxWidth: "400px",
+      position: "relative",
+      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    },
+    closeButton: {
+      position: "absolute",
+      top: "10px",
+      right: "10px",
+      background: "none",
+      border: "none",
+      fontSize: "20px",
+      cursor: "pointer",
+    },
+    container: {
+      padding: "16px",
+      backgroundColor: "#fff",
+      color: "#000",
+      borderRadius: "8px",
+    },
+    heading: {
+      fontSize: "20px",
+      fontWeight: "bold",
+      marginBottom: "8px",
+      color: "#333",
+    },
+    subHeading: {
+      fontSize: "14px",
+      marginBottom: "16px",
+      color: "#777",
+    },
+    detailItem: {
+      display: "flex",
+      alignItems: "center",
+      marginBottom: "12px",
+    },
+    icon: {
+      marginRight: "12px",
+      fontSize: "18px",
+      color: "#555",
+    },
+    text: {
+      fontSize: "14px",
+      color: "#333",
+    },
+    label: {
+      display: "block",
+      fontSize: "14px",
+      fontWeight: "bold",
+      marginBottom: "8px",
+      color: "#555",
+    },
+    dropdown: {
+      width: "100%",
+      padding: "8px",
+      fontSize: "14px",
+      border: "1px solid #ccc",
+      borderRadius: "4px",
+    },
+    textarea: {
+      width: "100%",
+      height: "80px",
+      padding: "8px",
+      fontSize: "14px",
+      border: "1px solid #ccc",
+      borderRadius: "4px",
+      resize: "none",
+    },
+  };
 
   if (!isMobile) {
     return null;
@@ -135,8 +227,9 @@ const VendorDashboard = () => {
                   cursor: 'pointer',
                   whiteSpace: 'nowrap',
                 }}
+                onClick={() => setSelectedBooking(booking)}
               >
-                {booking.buttonText}
+                View Details
               </button>
               {booking.notificationDot && (
                 <div
@@ -309,6 +402,81 @@ const VendorDashboard = () => {
         </div>
       </div>
 
+      {/* Popup for Booking Details */}
+      {selectedBooking && (
+        <div style={styles.popupOverlay}>
+          <div style={styles.popupContent}>
+            <button
+              style={styles.closeButton}
+              onClick={handleClosePopup}
+            >
+              &times;
+            </button>
+            <div style={styles.container}>
+              <h2 style={styles.heading}>Booking Details</h2>
+              <p style={styles.subHeading}>Booking information for {selectedBooking.customer}</p>
+              
+              <div style={styles.detailItem}>
+                <span style={styles.icon}>📞</span>
+                <span style={styles.text}>+1 (555) 123-4567</span>
+              </div>
+
+              <div style={styles.detailItem}>
+                <span style={styles.icon}>📧</span>
+                <span style={styles.text}>john.doe@example.com</span>
+              </div>
+
+              <div style={styles.detailItem}>
+                <span style={styles.icon}>📅</span>
+                <span style={styles.text}>{selectedBooking.date}</span>
+              </div>
+
+              <div style={styles.detailItem}>
+                <span style={styles.icon}>📍</span>
+                <span style={styles.text}>123 Main St, Anytown, USA</span>
+              </div>
+
+              <div style={styles.detailItem}>
+                <span style={styles.icon}>⏰</span>
+                <span style={styles.text}>Normal Service</span>
+              </div>
+
+              <div style={styles.detailItem}>
+                <span style={styles.icon}>🔧</span>
+                <span style={styles.text}>{selectedBooking.title}</span>
+              </div>
+
+              <div style={styles.detailItem}>
+                <span style={styles.icon}>💵</span>
+                <span style={styles.text}>Advance Paid: $50 / Total: $200</span>
+              </div>
+
+              <div style={styles.detailItem}>
+                <span style={styles.icon}>⚠️</span>
+                <span style={styles.text}>Leaking pipe under the kitchen sink</span>
+              </div>
+
+              <div style={styles.detailItem}>
+                <label style={styles.label}>Status</label>
+                <select style={styles.dropdown}>
+                  <option value="Scheduled">Scheduled</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </div>
+
+              <div style={styles.detailItem}>
+                <label style={styles.label}>Notes</label>
+                <textarea
+                  style={styles.textarea}
+                  placeholder="Customer mentioned the leak started yesterday"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Location Section */}
       <h2
         style={{
@@ -344,4 +512,4 @@ const VendorDashboard = () => {
   );
 };
 
-export default VendorDashboard;
+export default VendorDashboardMobile;

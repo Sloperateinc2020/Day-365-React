@@ -214,14 +214,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 10px; /* Add margin to move it a bit lower */
+    margin-top: 10px; 
     padding: 10px;
     cursor: pointer;
   }
   
   .cover-text i {
     margin-right: 5px;
-  }
+  } 
   
 .copy-btn {
     background: none;

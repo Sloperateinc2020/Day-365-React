@@ -73,7 +73,12 @@ const SignupPage = () => {
       <div className="mobile-signup-container md:hidden">
         <div className="min-h-screen bg-white flex flex-col justify-center px-6">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-black mb-4">Sign up</h1>
+<h1
+  className="text-3xl font-bold text-black mb-4"
+  style={{ position: 'relative', top: '-20px' }}
+>
+  Sign up
+</h1>
           </div>
 
          <div className="social-buttons">
@@ -140,7 +145,7 @@ const SignupPage = () => {
       onClick={handleLoginRedirect}
       className="signin-link text-blue-500 font-semibold"
     >
-      Sign in
+      Log in
     </button>
   </p>
 </div>

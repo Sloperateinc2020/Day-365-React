@@ -17,7 +17,7 @@ const config = {
     SPECIALOFFERS_API_URL:'https://run.mocky.io/v3/13209d4f-22fc-49a4-a9b0-4ab66fa5d710',
     TOPRATEDPROVIDERS_API_URL:'https://run.mocky.io/v3/9d0ec7ae-0fbe-497e-afd1-afe2f7de052d',
     UPCOMINGBOOKING_API_URL:'https://run.mocky.io/v3/19473cfa-b430-489e-ab68-412730cf2e8e',
-    PREVIOUSBOOKING_API_URL:'https://run.mocky.io/v3/d4b00619-810f-4828-9a7a-c96e24d06353',
+    PREVIOUSBOOKING_API_URL:'https://run.mocky.io/v3/ba0e67fb-8400-4831-be64-69ff19d95fdb',
     UPCOMINGBOOKING_API_URL_mobile_version:'https://run.mocky.io/v3/754a59cd-a326-47bd-87c8-cc553896732d'
 
 };

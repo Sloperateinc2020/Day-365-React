@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import Footer from '../Footer'; 
+import JobRegistrationMobile from './JobRegistrationMobile'; // Import the mobile version
+import { useMediaQuery } from 'react-responsive'; // Optional library for media queries
 
 const RegistrationJob = () => {
+  
+   // Initialize isMobile to detect screen size
+   const isMobile = useMediaQuery({ maxWidth: 768 });
   const [isSubmitted, setIsSubmitted] = useState(false); // Step 1: State to track form submission
   const [formData, setFormData] = useState({
     fullName: '',
@@ -25,9 +30,11 @@ const RegistrationJob = () => {
     termsAndConditions: false,
     backgroundCheck: false,
   });
+  
 
   const [errors, setErrors] = useState({}); // For error handling
 
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -183,8 +190,14 @@ const RegistrationJob = () => {
     cursor: 'pointer',
     marginTop: '24px',
   };
-
+  
   return (
+    <div>
+      {isMobile ? (
+        <JobRegistrationMobile /> // Render mobile component for small screens
+      ) : (
+
+  
     <div style={{ backgroundColor: '#f5f5f5', minHeight: '100vh', padding: '20px' }}>
       <div style={formStyle}>
         <h1 style={titleStyle}>Service Provider Registration</h1>
@@ -545,9 +558,11 @@ const RegistrationJob = () => {
           </div>
         )}
       </div>
-      <Footer />
-    </div>
-  );
+        <Footer />
+      </div>
+    )}
+  </div>
+);
 };
 
 export default RegistrationJob;

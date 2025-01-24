@@ -22,6 +22,7 @@ function Listings() {
     const fetchListings = async () => {
       try {
         const response = await fetch('https://run.mocky.io/v3/07dc8e7d-8209-4e73-ac0d-0a11ab3db028');
+
         const data = await response.json();
         setListings(data.Listings || []);
       } catch (error) {

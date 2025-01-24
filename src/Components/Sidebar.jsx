@@ -88,11 +88,12 @@ const Sidebar = ({ isActive }) => {
           <CalendarDays size={20} style={iconContainerStyle} />
           <span>Booking</span>
         </Link>
-        <Link to="/messages" style={isActive === 'messages' ? activeItemStyle : sidebarItemStyle}>
-          {isActive === 'messages' && !isMobile && <div style={activeDotStyle}></div>}
-          <MessageSquare size={20} style={iconContainerStyle} />
-          <span>Messages</span>
-        </Link>
+        <Link to="/chat" style={isActive === 'messages' ? activeItemStyle : sidebarItemStyle}>
+  {isActive === 'messages' && !isMobile && <div style={activeDotStyle}></div>}
+  <MessageSquare size={20} style={iconContainerStyle} />
+  <span>Messages</span>
+</Link>
+
         <Link to="/payments" style={isActive === 'payments' ? activeItemStyle : sidebarItemStyle}>
           {isActive === 'payments' && !isMobile && <div style={activeDotStyle}></div>}
           <Wallet size={20} style={iconContainerStyle} />

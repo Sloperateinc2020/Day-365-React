@@ -28,13 +28,12 @@ export default function Footer() {
 
   const footerStyles = {
     container: {
-      backgroundColor: isMobile ? '#fff' : '#111',
+      backgroundColor: '#fff',
       padding: '20px',
       paddingTop: '10px',
       marginTop: '4px',
       overflow: 'hidden',
       marginBottom: isMobile ? '50px' : '',
-
     },
     topSection: {
       display: isMobile ? 'grid' : 'flex',
@@ -51,7 +50,7 @@ export default function Footer() {
       gridColumn: isMobile ? '1 / -1' : 'auto',
     },
     logoText: {
-      color: isMobile ? '#111' : '#fff',
+      color: isMobile ? '#111' : '#111',
       fontSize: '24px',
       fontWeight: 'bold',
     },
@@ -65,6 +64,7 @@ export default function Footer() {
       display: isMobile ? 'flex' : 'block',
       flexDirection: isMobile ? 'column' : 'unset',
       justifyContent: isMobile ? 'space-between' : 'unset',
+      marginTop: isMobile ? '20px' : '',
     },
     mobileActionsContainer: {
       display: isMobile ? 'flex' : 'none',
@@ -73,21 +73,21 @@ export default function Footer() {
       marginTop: '15px',
     },
     columnTitle: {
-      color: isMobile ? '#111' : '#fff',
+      color: 'green',  // Green text for both mobile and laptop
       fontWeight: 'bold',
       fontSize: '16px',
       marginBottom: '15px',
       display: 'block',
     },
     columnLink: {
-      color: isMobile ? '#666' : '#ccc',
+      color: isMobile ? '#666' : '#111',
       fontSize: '14px',
       marginBottom: '10px',
       display: 'block',
       textDecoration: 'none',
       transition: 'color 0.3s ease',
       ':hover': {
-        color: isMobile ? '#111' : '#fff',
+        color: isMobile ? '#111' : '#111',
       },
     },
     newsletterSection: {
@@ -101,14 +101,14 @@ export default function Footer() {
       marginBottom: '10px',
     },
     newsletterDescription: {
-      color: isMobile ? '#666' : '#ccc',
+      color: isMobile ? '#666' : '#111',
       fontSize: '14px',
       marginBottom: '20px',
     },
     inputContainer: {
       display: 'flex',
       alignItems: 'center',
-      backgroundColor: isMobile ? '#f5f5f5' : '#333',
+      backgroundColor: isMobile ? '#f5f5f5' : '#f5f5f5',
       borderRadius: '8px',
       padding: '8px 15px',
       flexDirection: isMobile ? 'column' : 'row',
@@ -116,7 +116,7 @@ export default function Footer() {
     },
     input: {
       flex: '1',
-      color: isMobile ? '#111' : '#fff',
+      color: isMobile ? '#111' : '#111',
       fontSize: '16px',
       padding: '8px',
       background: 'none',
@@ -154,10 +154,10 @@ export default function Footer() {
     languageButton: {
       display: 'flex',
       alignItems: 'center',
-      backgroundColor: isMobile ? '#f5f5f5' : '#333',
+      backgroundColor: isMobile ? '#f5f5f5' : '#f5f5f5',
       padding: '8px 15px',
       borderRadius: '6px',
-      color: isMobile ? '#111' : '#fff',
+      color: isMobile ? '#111' : '#111',
       border: 'none',
       cursor: 'pointer',
       fontSize: '14px',
@@ -169,7 +169,7 @@ export default function Footer() {
       position: 'absolute',
       bottom: '100%',
       left: '0',
-      backgroundColor: isMobile ? '#f5f5f5' : '#333',
+      backgroundColor: isMobile ? '#f5f5f5' : '#f5f5f5',
       borderRadius: '6px',
       padding: '10px',
       marginBottom: '5px',
@@ -177,16 +177,16 @@ export default function Footer() {
       zIndex: 1000,
     },
     languageOption: {
-      color: isMobile ? '#111' : '#fff',
+      color: isMobile ? '#111' : '#111',
       padding: '8px 15px',
       cursor: 'pointer',
       borderRadius: '4px',
       ':hover': {
-        backgroundColor: isMobile ? '#e5e5e5' : '#444',
+        backgroundColor: isMobile ? '#e5e5e5' : '#e5e5e5',
       },
     },
     copyright: {
-      color: isMobile ? '#666' : '#888',
+      color: isMobile ? '#666' : '#666',
       fontSize: '14px',
       order: isMobile ? 2 : 0,
       marginTop: isMobile ? '30px' : 0,
@@ -235,7 +235,7 @@ export default function Footer() {
             <Link style={footerStyles.columnLink}>Join Us</Link>
             <Link to="/Articles" style={footerStyles.columnLink}>Articles</Link>
           </div>
-          
+
           {isMobile && (
             <div style={footerStyles.mobileActionsContainer}>
               <div style={footerStyles.languageSelector}>
@@ -258,14 +258,13 @@ export default function Footer() {
                   </div>
                 )}
 
-              <div style={footerStyles.socialIcons}>
-                <FaTwitter size={20} color="#4A90E2" style={footerStyles.socialIcon} />
-                <FaFacebookF size={20} color="#4A90E2" style={footerStyles.socialIcon} />
-                <FaLinkedinIn size={20} color="#4A90E2" style={footerStyles.socialIcon} />
-                <FaYoutube size={20} color="#FF0000" style={footerStyles.socialIcon} />
+                <div style={footerStyles.socialIcons}>
+                  <FaTwitter size={20} color="black" style={footerStyles.socialIcon} />
+                  <FaFacebookF size={20} color="black" style={footerStyles.socialIcon} />
+                  <FaLinkedinIn size={20} color="black" style={footerStyles.socialIcon} />
+                  <FaYoutube size={20} color="#FF0000" style={footerStyles.socialIcon} />
+                </div>
               </div>
-              </div>
-
             </div>
           )}
         </div>
@@ -318,9 +317,9 @@ export default function Footer() {
           </div>
 
           <div style={footerStyles.socialIcons}>
-            <FaTwitter size={20} color="#4A90E2" style={footerStyles.socialIcon} />
-            <FaFacebookF size={20} color="#4A90E2" style={footerStyles.socialIcon} />
-            <FaLinkedinIn size={20} color="#4A90E2" style={footerStyles.socialIcon} />
+            <FaTwitter size={20} color="black" style={footerStyles.socialIcon} />
+            <FaFacebookF size={20} color="black" style={footerStyles.socialIcon} />
+            <FaLinkedinIn size={20} color="black" style={footerStyles.socialIcon} />
             <FaYoutube size={20} color="#FF0000" style={footerStyles.socialIcon} />
           </div>
         </div>

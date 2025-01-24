@@ -145,7 +145,7 @@ const LatestServices = ({ hideFooter, limit, hideDescription, isMobile }) => {
                 color: '#666',
                 gap: '8px'
               }}>
-                <img src={service.location?.districtIconUrl} alt="" style={{ width: '16px', height: '16px' }} />
+                <img src={service.location?.districtIconUrl} alt="" style={{ width: '26px', height: '26px',marginLeft:"-5px" }} />
                 <span>{service.location?.district || 'Unknown District'}</span>
               </div>
 

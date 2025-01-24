@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search } from 'lucide-react';
+import { Search, Mic } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import config from '../config';
 import LatestServices from './LatestServices/LatestServices';
@@ -81,7 +81,7 @@ function HomeMobile() {
             style={{
               width: '100%',
               paddingLeft: '40px',
-              paddingRight: '16px',
+              paddingRight: '40px',
               paddingTop: '10px',
               paddingBottom: '10px',
               backgroundColor: '#ffffff',
@@ -93,25 +93,29 @@ function HomeMobile() {
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
           />
+          <Mic
+            style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', color: '#9ca3af', cursor: 'pointer' }}
+            size={20}
+          />
         </div>
 
         <section style={{ marginBottom: '2px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
             <h2 style={{ fontSize: '22px', fontWeight: '600',marginTop:"10px" }}>Looking For</h2>
             <button
-  style={{
-    fontSize: '14px',
-    background: 'none',
-    border: 'none',
-    color: 'black',
-    cursor: 'pointer',
-    fontWeight: '500',
-  }}
-  onClick={() => navigate('/categories')}
->
-  More
-</button>
-
+              style={{
+                fontSize: '14px',
+                background: 'none',
+                border: 'none',
+                color: 'black',
+                cursor: 'pointer',
+                fontWeight: '500',
+                marginTop:"7px"
+              }}
+              onClick={() => navigate('/categories')}
+            >
+              More
+            </button>
           </div>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
@@ -129,10 +133,10 @@ function HomeMobile() {
                   cursor: 'pointer',
                   width: '22%',
                 }}
-                onClick={() => navigate('/service-details', { state: { service } })} // navigate to the service details page
+                onClick={() => navigate('/service-details', { state: { service } })}
               >
                 <img
-                  src={service.imageUrl} // Use the service.imageUrl here
+                  src={service.imageUrl}
                   alt={service.service}
                   style={{
                     width: '64px',
@@ -142,15 +146,12 @@ function HomeMobile() {
                   }}
                 />
                 <span style={{ fontSize: '12px', textAlign: 'center', fontWeight: '500' }}>
-                  {service.service} {/* Display the service name */}
+                  {service.service}
                 </span>
               </div>
-              
             ))}
           </div>
-
         </section>
-        {/* Render LatestServices and VendorBanner */}
         <LatestServices hideFooter={true} hideDescription={true} isMobile={true} />
         <VendorBanner hideText={true} containerWidth="100%" imageWidth="140px" showBookNowText={true} reducedHeight={true} />
         <TopServices limit={3} hideFooter={true} hideDescription={true} isMobile={true} />

@@ -27,11 +27,14 @@ const VendorAvailability = () => {
       flexDirection: 'column',
       padding: '20px',
       fontFamily: 'system-ui, -apple-system, sans-serif'
+      
     },
     sectionsWrapper: {
       display: 'flex',
       gap: '20px',
-      marginBottom: '20px'
+      marginBottom: '20px',
+      // marginTop: isMobile ? '100%' : '80%',
+
     },
     calendarSection: {
       flex: '1',
@@ -40,7 +43,7 @@ const VendorAvailability = () => {
     header: {
       fontSize: '16px',
       marginBottom: '10px',
-      fontWeight: '600'
+      fontWeight: '600',
     },
     monthSelector: {
       display: 'flex',
@@ -64,6 +67,7 @@ const VendorAvailability = () => {
       fontWeight: '500',
       textAlign: 'center',
       borderBottom: '1px solid #ddd'
+      
     },
     day: {
       padding: '8px',

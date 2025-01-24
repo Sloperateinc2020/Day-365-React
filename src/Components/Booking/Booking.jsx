@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Home, ListOrdered, MessageSquare, Wallet, User, CalendarDays, MapPin } from 'lucide-react';
+import Sidebar from '../Sidebar';  // Import Sidebar component
 import config from '../../config';
 
 function Booking() {
@@ -50,29 +51,6 @@ function Booking() {
       backgroundColor: '#f9fafb',
       position: 'relative',
       paddingBottom: isMobile ? '60px' : '0'
-    },
-    sidebar: {
-      width: '80px',
-      backgroundColor: 'white',
-      padding: '20px 0',
-      display: isMobile ? 'none' : 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      borderRight: '1px solid #e5e7eb',
-      position: 'fixed',
-      height: '100vh'
-    },
-    bottomNav: {
-      display: isMobile ? 'flex' : 'none',
-      position: 'fixed',
-      bottom: 0,
-      left: 0,
-      right: 0,
-      backgroundColor: 'white',
-      borderTop: '1px solid #e5e7eb',
-      justifyContent: 'space-around',
-      padding: '8px 0',
-      zIndex: 1000
     },
     mainContent: {
       flex: 1,
@@ -279,61 +257,7 @@ function Booking() {
 
   return (
     <div style={styles.container}>
-      <nav style={styles.sidebar}>
-        <Link to="/" style={{...styles.navLink, ...styles.navLinkActive}}>
-          <div style={styles.activeDot}></div>
-          <Home size={24} />
-          <span>Home</span>
-        </Link>
-        <Link to="/listings" style={styles.navLink}>
-          <ListOrdered size={24} />
-          <span>Listings</span>
-        </Link>
-        <Link to="/booking" style={styles.navLink}>
-          <CalendarDays size={24} />
-          <span>Booking</span>
-        </Link>
-        <Link to="/messages" style={styles.navLink}>
-          <MessageSquare size={24} />
-          <span>Messages</span>
-        </Link>
-        <Link to="/payments" style={styles.navLink}>
-          <Wallet size={24} />
-          <span>Payments</span>
-        </Link>
-        <Link to="/profile" style={styles.navLink}>
-          <User size={24} />
-          <span>Profile</span>
-        </Link>
-      </nav>
-
-      <nav style={styles.bottomNav}>
-        <Link to="/" style={{...styles.navLink, ...styles.navLinkActive}}>
-          <Home size={20} />
-          <span>Home</span>
-        </Link>
-        <Link to="/listings" style={styles.navLink}>
-          <ListOrdered size={20} />
-          <span>Listings</span>
-        </Link>
-        <Link to="/booking" style={styles.navLink}>
-          <CalendarDays size={20} />
-          <span>Booking</span>
-        </Link>
-        <Link to="/messages" style={styles.navLink}>
-          <MessageSquare size={20} />
-          <span>Messages</span>
-        </Link>
-        <Link to="/payments" style={styles.navLink}>
-          <Wallet size={20} />
-          <span>Payments</span>
-        </Link>
-        <Link to="/profile" style={styles.navLink}>
-          <User size={20} />
-          <span>Profile</span>
-        </Link>
-      </nav>
-
+      <Sidebar isMobile={isMobile} />  {/* Sidebar component */}
       <main style={styles.mainContent}>
         <div style={styles.header}>
           <h1 style={styles.title}>Day 365</h1>
@@ -349,9 +273,9 @@ function Booking() {
           />
           <input
             type="text"
-            placeholder="Search"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search"
             style={styles.searchInput}
           />
           <button style={styles.searchButton}>Search</button>
@@ -359,7 +283,7 @@ function Booking() {
 
         <MobileCards />
 
-        <div style={styles.table}>
+ <div style={styles.table}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead style={styles.thead}>
               <tr>

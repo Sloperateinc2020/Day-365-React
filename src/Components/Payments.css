@@ -138,3 +138,89 @@ td {
   font-size: 14px;
   color: #6B7280;
 }
+/* Existing styles remain unchanged */
+
+/* Mobile-specific styles */
+.mobile-transactions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mobile-transaction-card {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.mobile-transaction-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.mobile-client-name {
+  font-weight: 600;
+  font-size: 16px;
+  color: #1f2937;
+}
+
+.mobile-transaction-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mobile-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.mobile-label {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.mobile-value {
+  color: #1f2937;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .cards {
+    margin: 0 -16px;
+    padding: 0 16px;
+  }
+  
+  .card {
+    margin-bottom: 12px;
+  }
+  
+  .card-text {
+    font-size: 14px;
+  }
+  
+  .amount {
+    font-size: 24px;
+  }
+  
+  .pagination button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+  
+  .page-info {
+    font-size: 14px;
+  }
+  
+  .status {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+}

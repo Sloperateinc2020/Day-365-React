@@ -45,6 +45,11 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
     navigate('/join-as-vendor');
   };
 
+  // Check if the current route is Payments
+  if (location.pathname === '/payments') {
+    return null; // Do not render the header if on /payments page
+  }
+
   const outerContainerStyle = {
     display: 'flex',
     justifyContent: 'center',
@@ -92,6 +97,10 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
     cursor: 'pointer',
     fontSize: isMobile ? 12 : 16, // Smaller font size for mobile
     color: isSelected ? 'blue' : 'black', // Highlight selected menu with blue
+    display: 'flex',
+    flexDirection: isMobile ? 'column' : 'row', // Stack icon and text vertically for mobile, keep horizontal for desktop
+    alignItems: 'center', // Center align both icon and text
+    gap: isMobile ? '4px' : '10px', // Adjust gap for mobile, keep bigger gap for desktop
   });
 
   const vendorButtonStyle = {
@@ -116,25 +125,29 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
             onClick={() => handleMenuClick('Home')}
             style={textWithGapStyle(selectedMenu === 'Home')}
           >
-            <FontAwesomeIcon icon={faHome} /> Home
+            <FontAwesomeIcon icon={faHome} />
+            {isMobile ? 'Home' : 'Home'} {/* Always show text */}
           </button>
           <button
             onClick={() => handleMenuClick('All Services')}
             style={textWithGapStyle(selectedMenu === 'All Services')}
           >
-            <FontAwesomeIcon icon={faListAlt} /> All Services
+            <FontAwesomeIcon icon={faListAlt} />
+            {isMobile ? 'All Services' : 'All Services'} {/* Always show text */}
           </button>
           <button
             onClick={() => handleMenuClick('About')}
             style={textWithGapStyle(selectedMenu === 'About')}
           >
-            <FontAwesomeIcon icon={faInfoCircle} /> About
+            <FontAwesomeIcon icon={faInfoCircle} />
+            {isMobile ? 'About' : 'About'} {/* Always show text */}
           </button>
           <button
             onClick={() => handleMenuClick('Contact')}
             style={textWithGapStyle(selectedMenu === 'Contact')}
           >
-            <FontAwesomeIcon icon={faEnvelope} /> Contact
+            <FontAwesomeIcon icon={faEnvelope} />
+            {isMobile ? 'Contact' : 'Contact'} {/* Always show text */}
           </button>
 
           {/* Display Login/Register only on desktop/laptop */}
@@ -143,14 +156,16 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
               onClick={() => handleMenuClick('Login/Register')}
               style={textWithGapStyle(selectedMenu === 'Login/Register')}
             >
-              <FontAwesomeIcon icon={faUser} /> Login/Register
+              <FontAwesomeIcon icon={faUser} />
+              Login/Register
             </button>
           )}
 
           {/* Hide "Join As A Vendor" button on mobile */}
           {!isMobile && (
             <button style={vendorButtonStyle} onClick={handleVendorClick}>
-              <FontAwesomeIcon icon={faStore} /> Join As A Vendor
+              <FontAwesomeIcon icon={faStore} />
+              Join As A Vendor
             </button>
           )}
         </div>

@@ -1,85 +1,31 @@
 import React, { useState, useEffect } from "react";
 import "./VendorRegistration.css"; // Import the CSS file
 import Footer from "../Footer"; // Import the Footer component
+import VendorRegistrationMobile from "./VendorRegistrationMobile"; // Import the mobile version
 
 const VendorRegistration = () => {
-  const [showOtpSection, setShowOtpSection] = useState(false); 
-  const [otp, setOtp] = useState(["", "", "", ""]); // State for OTP input
-  const [isBackgroundDisabled, setIsBackgroundDisabled] = useState(false); 
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Add or remove scroll lock class based on OTP modal visibility
+  // Detect if the device is mobile based on screen size
   useEffect(() => {
-    if (showOtpSection) {
-      document.body.classList.add('scroll-locked');  // Lock scrolling when OTP is shown
-    } else {
-      document.body.classList.remove('scroll-locked');  // Unlock scrolling when OTP is hidden
-    }
-
-    return () => {
-      document.body.classList.remove('scroll-locked');  // Ensure scroll is unlocked when the component is unmounted
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); // Adjust the threshold as needed
     };
-  }, [showOtpSection]);
 
-  const handleVerifyClick = () => {
-    setShowOtpSection(true);
-    setIsBackgroundDisabled(true); 
-  };
+    handleResize(); // Check on initial render
+    window.addEventListener("resize", handleResize);
 
-  const handleOtpChange = (value, index) => {
-    const updatedOtp = [...otp];
-    updatedOtp[index] = value.slice(0, 1); 
-    setOtp(updatedOtp);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-    if (value && index < 3) {
-      document.getElementById(`otp-${index + 1}`).focus();
-    }
-  };
-
-  const handleConfirmClick = () => {
-    setShowOtpSection(false);
-    setIsBackgroundDisabled(false); 
-  };
+  if (isMobile) {
+    // Render the mobile version if on a mobile device
+    return <VendorRegistrationMobile />;
+  }
 
   return (
     <>
       <div className="vendor-registration-container">
-        {isBackgroundDisabled && <div className="overlay"></div>}
-
-        {/* OTP Section */}
-        {showOtpSection && (
-          <div className="otp-modal">
-            <h2 className="otp-title">Verification Code</h2>
-            <p className="otp-subtitle">
-              We have sent a code to your registered mobile number.
-            </p>
-            <div className="otp-fields">
-              {otp.map((value, index) => (
-                <input
-                  key={index}
-                  id={`otp-${index}`}
-                  type="text"
-                  maxLength="1"
-                  value={value}
-                  onChange={(e) => handleOtpChange(e.target.value, index)}
-                  className="otp-input"
-                />
-              ))}
-            </div>
-            <div className="otp-actions">
-              <button type="button" className="resend-button">
-                Resend
-              </button>
-              <button
-                type="button"
-                className="confirm-button"
-                onClick={handleConfirmClick}
-              >
-                Confirm
-              </button>
-            </div>
-          </div>
-        )}
-
         <h1 className="title">Become a Service Provider</h1>
         <p className="subtitle">
           Join the community of local service professionals who are dedicated to
@@ -175,11 +121,7 @@ const VendorRegistration = () => {
               <input type="text" placeholder="Enter your Aadhaar Number" />
             </div>
             <div className="form-text aadhaar-verify-group">
-              <button
-                type="button"
-                className="verify-button"
-                onClick={handleVerifyClick}
-              >
+              <button type="button" className="verify-button">
                 Verify
               </button>
             </div>
@@ -200,7 +142,7 @@ const VendorRegistration = () => {
           </button>
         </form>
       </div>
-      <Footer /> 
+      <Footer />
     </>
   );
 };

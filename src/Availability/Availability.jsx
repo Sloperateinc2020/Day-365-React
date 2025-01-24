@@ -123,9 +123,7 @@ if (isMobile) {
             </header>
             
             <h2 style={{ marginTop: "-20px" }}>Manage your availability</h2>
-<p style={{ marginTop: "-12px" }}>
-  Choose the days and times you're available. for appointments. You'll receive a notification when someone books an appointment.
-</p>
+
 
                   
 

@@ -23,7 +23,7 @@ function Listings() {
   useEffect(() => {
     const fetchListings = async () => {
       try {
-        const response = await fetch('https://run.mocky.io/v3/4757bff2-a5d3-41ac-b920-c190ef93895a');
+        const response = await fetch('https://run.mocky.io/v3/01517b2c-0b24-4704-899e-d044685d6b33')
         const data = await response.json();
         setListings(data.Listings || []);
       } catch (error) {

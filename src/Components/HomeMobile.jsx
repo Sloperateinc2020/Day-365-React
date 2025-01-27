@@ -8,7 +8,6 @@ import TopServices from './TopServices/TopServices';
 
 function HomeMobile() {
   const [allServices, setAllServices] = useState([]);
-  const [visibleCount, setVisibleCount] = useState(4);
   const [searchValue, setSearchValue] = useState('');
   const navigate = useNavigate();
 
@@ -26,135 +25,211 @@ function HomeMobile() {
     }
   };
 
-  // Filter services based on the search value
   const filteredServices = allServices.filter(service =>
     service.service.toLowerCase().includes(searchValue.toLowerCase())
   );
 
+  // Initialize SpeechRecognition for compatibility with both Chrome and other browsers
+  const startSpeechRecognition = () => {
+    // Check if the browser supports SpeechRecognition or webkitSpeechRecognition
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      alert('Speech Recognition is not supported by your browser');
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'en-US'; // Set the language
+    recognition.interimResults = false; // Get only final results
+    recognition.maxAlternatives = 1; // Only take one result
+
+    recognition.start(); // Start listening
+
+    // When speech is recognized, update searchValue with the transcript
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      console.log('Speech result:', transcript); // Log the result
+      setSearchValue(transcript); // Update the input field with the spoken text
+    };
+
+    recognition.onerror = (event) => {
+      console.error('Speech recognition error', event);
+      alert('Error occurred during speech recognition.');
+    };
+  };
+
   return (
-    <div style={{ backgroundColor: '#f9fafb', minHeight: '100vh', paddingBottom: '80px' }}>
-      <header
-        style={{
-          padding: '16px',
+    <div style={{ minHeight: '100vh', backgroundColor: '#f9fafb' }}>
+      {/* Header */}
+      <header style={{
+        position: 'fixed',
+        top: 0,
+        width: '100%',
+        backgroundColor: 'black',
+        padding: '16px 20px',
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+        zIndex: 10,
+        display: 'flex',
+        flexDirection: 'column',
+      }}>
+        <div style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          position: 'fixed',
-          top: '0',
-          width: '100%',
-          zIndex: '10',
-          backgroundColor: '#fff',
-        }}
-      >
-        <div
-          onClick={() => navigate('/signup')}
-          style={{ fontSize: '14px', fontWeight: '500', cursor: 'pointer' }}
-        >
-          SignIn/ Register
+          marginBottom: '8px'
+        }}>
+          <div
+            onClick={() => navigate('/signup')}
+            style={{
+              fontSize: '14px',
+              fontWeight: 500,
+              cursor: 'pointer',
+              color: "white"
+            }}
+          >
+            SignIn/ Register
+          </div>
+          <button
+            onClick={() => navigate('/join-as-vendor')}
+            style={{
+              backgroundColor: '#8a6ded',
+              color: '#ffffff',
+              padding: '8px 16px',
+              borderRadius: '9999px',
+              fontSize: '12px',
+              fontWeight: 700
+            }}
+          >
+            Join As A Vendor
+          </button>
         </div>
-        <button
-          onClick={() => navigate('/join-as-vendor')}
-          style={{
-            backgroundColor: '#8a6ded',
-            color: 'white',
-            padding: '5px 10px',
-            borderRadius: 25,
-            border: 'none',
-            cursor: 'pointer',
-            fontWeight: 'bold',
-            fontSize: '12px',
-          }}
-        >
-          Join As A Vendor
-        </button>
-      </header>
-
-      <main style={{ paddingTop: '64px', paddingLeft: '16px', paddingRight: '16px' }}>
-        <div style={{ position: 'relative', marginBottom: '2px' }}>
+        {/* Search Bar */}
+        <div style={{ position: 'relative', marginTop: '8px' }}>
           <Search
-            style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#9ca3af' }}
+            style={{
+              position: 'absolute',
+              left: '10px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              color: '#9ca3af'
+            }}
             size={20}
           />
           <input
             type="text"
-            placeholder="Search"
+            placeholder="What are you looking for?"
             style={{
               width: '100%',
-              paddingLeft: '40px',
-              paddingRight: '40px',
-              paddingTop: '10px',
-              paddingBottom: '10px',
-              backgroundColor: '#ffffff',
+              padding: '10px 40px',
               borderRadius: '9999px',
               border: '1px solid #e5e7eb',
-              outline: 'none',
-              boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.1)',
+              backgroundColor: '#ffffff',
+              boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
+              fontSize: '16px'
             }}
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
           />
           <Mic
-            style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', color: '#9ca3af', cursor: 'pointer' }}
+            style={{
+              position: 'absolute',
+              right: '10px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              color: '#9ca3af',
+              cursor: 'pointer'
+            }}
             size={20}
+            onClick={startSpeechRecognition} // Start speech recognition when mic is clicked
           />
         </div>
+      </header>
 
-        <section style={{ marginBottom: '2px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-            <h2 style={{ fontSize: '22px', fontWeight: '600',marginTop:"10px" }}>Looking For</h2>
-            <button
-              style={{
-                fontSize: '14px',
-                background: 'none',
-                border: 'none',
-                color: 'black',
-                cursor: 'pointer',
-                fontWeight: '500',
-                marginTop:"7px"
-              }}
-              onClick={() => navigate('/categories')}
-            >
-              More
-            </button>
+      <main style={{ paddingTop: '120px', paddingLeft: '16px', paddingRight: '16px' }}>
+        {/* Services Section */}
+        <section style={{ marginBottom: '3px' }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '16px',
+            marginTop: "10px"
+          }}>
+            <h2 style={{
+              fontSize: '20px',
+              fontWeight: 600
+            }}>Explore All Services</h2>
           </div>
 
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-            {filteredServices.slice(0, visibleCount).map((service, index) => (
-              <div
-                key={index}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  backgroundColor: '#ffffff',
-                  padding: '12px',
-                  borderRadius: '8px',
-                  boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.1)',
-                  cursor: 'pointer',
-                  width: '22%',
-                }}
-                onClick={() => navigate('/service-details', { state: { service } })}
-              >
-                <img
-                  src={service.imageUrl}
-                  alt={service.service}
+          {/* Services Grid */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: '16px',
+            backgroundColor: '#f9fafb',
+            padding: '16px',
+            borderRadius: '8px',
+            marginTop: "-20px",
+          }}>
+            {filteredServices.length > 0 ? (
+              filteredServices.map((service, index) => (
+                <div
+                  key={index}
                   style={{
-                    width: '64px',
-                    height: '64px',
-                    borderRadius: '50%',
-                    objectFit: 'cover',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
                   }}
-                />
-                <span style={{ fontSize: '12px', textAlign: 'center', fontWeight: '500' }}>
-                  {service.service}
-                </span>
-              </div>
-            ))}
+                  onClick={() => navigate('/service-details', { state: { service } })}
+                >
+                  <div style={{
+                    width: '90px', // Increase background width
+                    height: '80px',
+                    borderRadius: '8px',
+                    overflow: 'hidden',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: '#f3f4f6',
+                  }}>
+                    <img
+                      src={service.imageUrl}
+                      alt={service.service}
+                      style={{
+                        width: '70px', // Fixed image width
+                        height: '80px', // Fixed image height
+                        objectFit: 'contain',
+                      }}
+                    />
+                  </div>
+                  <p style={{
+                    fontSize: '12px',
+                    textAlign: 'center',
+                    fontWeight: 500,
+                    color: '#4b5563',
+                    marginTop: '8px'
+                  }}>
+                    {service.service}
+                  </p>
+                </div>
+              ))
+            ) : (
+              <p style={{ textAlign: 'center', color: '#999' }}>
+                No services found matching "{searchValue}"
+              </p>
+            )}
           </div>
         </section>
-        <LatestServices hideFooter={true} hideDescription={true} isMobile={true} />
-        <VendorBanner hideText={true} containerWidth="100%" imageWidth="140px" showBookNowText={true} reducedHeight={true} />
-        <TopServices limit={3} hideFooter={true} hideDescription={true} isMobile={true} />
+        <TopServices
+          limit={3}
+          hideFooter={true}
+          hideDescription={true}
+          isMobile={true}
+        />
       </main>
     </div>
   );

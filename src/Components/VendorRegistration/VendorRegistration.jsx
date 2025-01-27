@@ -5,6 +5,8 @@ import { Loader2 } from "lucide-react";
 import "./VendorRegistration.css";
 import Footer from "../Footer";
 import config from "../../config";
+import VendorRegistrationMobile from "./VendorRegistrationMobile"; // Import the mobile version
+
 
 const VendorRegistration = () => {
   const [formData, setFormData] = useState({
@@ -32,6 +34,7 @@ const VendorRegistration = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [phoneErrorMessage, setPhoneErrorMessage] = useState("");
+  const [isMobile, setIsMobile] = useState(false);
 
 
   const supabase = createClient(
@@ -204,7 +207,21 @@ const VendorRegistration = () => {
       document.body.classList.remove("scroll-locked");
     };
   }, [showOtpSection]);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); // Adjust the threshold as needed
+    };
 
+    handleResize(); // Check on initial render
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  if (isMobile) {
+    // Render the mobile version if on a mobile device
+    return <VendorRegistrationMobile />;
+  }
   return (
     <>
       <div className="vendor-registration-container">

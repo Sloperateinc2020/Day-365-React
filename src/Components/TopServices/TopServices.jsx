@@ -94,6 +94,8 @@ const TopServices = ({ limit, hideFooter, hideDescription, isMobile }) => {
             justifyContent: 'center',
             alignItems: 'center',
             padding: isMobile ? '5px' : '10px',
+            marginBottom:isMobile ? '50px' : '',
+
           }}
         >
           {servicesToDisplay.map((service, index) => (

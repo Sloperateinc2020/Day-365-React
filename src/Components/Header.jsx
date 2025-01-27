@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faListAlt, faInfoCircle, faEnvelope, faUser, faStore } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faListAlt, faInfoCircle, faEnvelope, faUser, faStore, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 export default function Header({ selectedMenu, setSelectedMenu }) {
   const navigate = useNavigate();
@@ -38,11 +38,17 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
       navigate('/about');
     } else if (menu === 'Login/Register') {
       navigate('/signup');
+    } else if (menu === 'Beauty') {
+      navigate('/beauty');
     }
   };
 
   const handleVendorClick = () => {
     navigate('/join-as-vendor');
+  };
+
+  const handleCartClick = () => {
+    navigate('/cart');
   };
 
   // Check if the current route is Payments
@@ -136,6 +142,13 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
             {isMobile ? 'All Services' : 'All Services'} {/* Always show text */}
           </button>
           <button
+            onClick={() => handleMenuClick('Beauty')}
+            style={textWithGapStyle(selectedMenu === 'Beauty')}
+          >
+            <FontAwesomeIcon icon={faStore} />
+            {isMobile ? 'Beauty' : 'Beauty'} {/* Always show text */}
+          </button>
+          <button
             onClick={() => handleMenuClick('About')}
             style={textWithGapStyle(selectedMenu === 'About')}
           >
@@ -168,6 +181,12 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
               Join As A Vendor
             </button>
           )}
+
+          {/* Cart icon - Displayed on all screen sizes */}
+          <button onClick={handleCartClick} style={textWithGapStyle(false)}>
+            <FontAwesomeIcon icon={faShoppingCart} />
+            {isMobile ? 'Cart' : 'Cart'}
+          </button>
         </div>
       </div>
     </div>

@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import config from '../../config';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+
+const API_BASE_URL = '/api';
 
 const SignUpDetails = () => {
   const [showOTPDialog, setShowOTPDialog] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
-    mobile: '',
+    phone: '',
     password: ''
   });
-  const [otp, setOTP] = useState(['', '', '', '', '']);
-  const [timer, setTimer] = useState(15);
-  const inputRefs = Array(5).fill(0).map(() => React.createRef());
-
-  // Simulate sending OTP
-  const sendOTP = (mobile) => {
-    const generatedOTP = Math.floor(10000 + Math.random() * 90000).toString(); // Generate a 5-digit OTP
-    console.log(`OTP sent to ${mobile}: ${generatedOTP}`);
-    setOTP(generatedOTP.split('')); // Set the OTP in the state (split to individual digits)
-  };
+  const [otp, setOTP] = useState(['', '', '', '', '', '']); // Changed to 6 OTP boxes
+  const [timer, setTimer] = useState(20);
+  const [error, setError] = useState('');
+  const inputRefs = Array(6).fill(0).map(() => React.createRef()); // Changed to 6 refs
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     let interval;
@@ -40,17 +40,27 @@ const SignUpDetails = () => {
       ...formData,
       [e.target.name]: e.target.value
     });
+    setError('');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Check if all the fields are filled
-    if (formData.fullName && formData.email && formData.mobile && formData.password) {
-      // Simulate sending OTP for the mobile number entered
-      sendOTP(formData.mobile);
-      setShowOTPDialog(true); // Show OTP dialog after OTP is sent
-    } else {
-      alert('Please fill in all the details before submitting!');
+    setError('');
+
+    try {
+      // Register the user
+      const response = await axios.post(`${config.API_BASE_URL}/users/register`, {
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        password: formData.password
+      });
+
+      if (response.data) {
+        setShowOTPDialog(true);
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || 'Registration failed. Please try again.');
     }
   };
 
@@ -61,7 +71,7 @@ const SignUpDetails = () => {
     newOTP[index] = value;
     setOTP(newOTP);
 
-    if (value && index < 4) {
+    if (value && index < 5) { // Changed to 5 for 6 boxes
       inputRefs[index + 1].current?.focus();
     }
   };
@@ -72,27 +82,57 @@ const SignUpDetails = () => {
     }
   };
 
-  const handleVerify = () => {
+  const handleVerify = async () => {
     if (otp.every(digit => digit !== '')) {
-      // Handle verification success
-      console.log('Verification successful!', formData);
-      setShowOTPDialog(false);
-      setOTP(['', '', '', '', '']);
-      setTimer(15);
+      try {
+        const otpString = otp.join('');
+        console.log('Email:', formData.email, 'OTP:', otpString); // Log email and otp here
+        await axios.post(`${config.API_BASE_URL}/users/verify-otp`, {
+          email: formData.email,
+          otp: otpString
+        });
+
+        // If verification successful, proceed with login
+        const loginResponse = await axios.post(`${config.API_BASE_URL}/mobile-users/login`, {
+          phone: formData.phone,
+          password: formData.password
+        });
+
+        if (loginResponse.data) {
+          // Handle successful login (e.g., store token, redirect)
+          setShowOTPDialog(false);
+          setOTP(['', '', '', '', '', '']); // Reset to 6 empty boxes
+          setTimer(15);
+
+          // Redirect to the sign-in page
+          navigate('/signin'); // Use navigate to redirect
+        }
+      } catch (err) {
+        setError(err.response?.data?.message || 'Invalid OTP. Please try again.');
+      }
     }
   };
 
-  const handleResend = () => {
-    setTimer(15);
-    setOTP(['', '', '', '', '']);
-    inputRefs[0].current?.focus();
-    sendOTP(formData.mobile); // Resend OTP when requested
+  const handleResend = async () => {
+    try {
+      await axios.post(`${config.API_BASE_URL}/mobile-users/resend-otp`, {
+        phone: formData.phone
+      });
+
+      setTimer(15);
+      setOTP(['', '', '', '', '', '']); // Reset to 6 empty boxes
+      inputRefs[0].current?.focus();
+      setError('');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to resend OTP. Please try again.');
+    }
   };
 
   const handleCancel = () => {
     setShowOTPDialog(false);
-    setOTP(['', '', '', '', '']);
+    setOTP(['', '', '', '', '', '']); // Reset to 6 empty boxes
     setTimer(15);
+    setError('');
   };
 
   return (
@@ -116,6 +156,19 @@ const SignUpDetails = () => {
           color: '#6B7280'
         }}>Enter your details to SignUp to your account.</p>
       </div>
+
+      {error && (
+        <div style={{
+          backgroundColor: '#FEE2E2',
+          color: '#DC2626',
+          padding: '12px',
+          borderRadius: '8px',
+          marginBottom: '16px',
+          textAlign: 'center'
+        }}>
+          {error}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} style={{
         display: 'flex',
@@ -146,6 +199,7 @@ const SignUpDetails = () => {
               outline: 'none',
               backgroundColor: 'transparent'
             }}
+            required
           />
         </div>
 
@@ -173,6 +227,7 @@ const SignUpDetails = () => {
               outline: 'none',
               backgroundColor: 'transparent'
             }}
+            required
           />
         </div>
 
@@ -186,8 +241,8 @@ const SignUpDetails = () => {
           }}>Mobile Number</label>
           <input
             type="tel"
-            name="mobile"
-            value={formData.mobile}
+            name="phone"
+            value={formData.phone}
             onChange={handleInputChange}
             placeholder="Enter your Mobile number"
             style={{
@@ -200,6 +255,7 @@ const SignUpDetails = () => {
               outline: 'none',
               backgroundColor: 'transparent'
             }}
+            required
           />
         </div>
 
@@ -227,6 +283,7 @@ const SignUpDetails = () => {
               outline: 'none',
               backgroundColor: 'transparent'
             }}
+            required
           />
         </div>
 
@@ -270,7 +327,6 @@ const SignUpDetails = () => {
             maxWidth: '400px',
             position: 'relative'
           }}>
-            {/* Cancel Button */}
             <button 
               onClick={handleCancel}
               style={{
@@ -281,10 +337,10 @@ const SignUpDetails = () => {
                 border: 'none',
                 cursor: 'pointer',
                 fontSize: '24px',
-                color: 'black' // Set the color to black
+                color: 'black'
               }}
             >
-              &#10005; {/* This is the Unicode for "X" */}
+              &#10005;
             </button>
 
             <h2 style={{
@@ -302,8 +358,21 @@ const SignUpDetails = () => {
               color: '#6B7280',
               marginBottom: '24px'
             }}>
-              Enter OTP
+              Enter OTP sent to your mobile
             </p>
+
+            {error && (
+              <div style={{
+                backgroundColor: '#FEE2E2',
+                color: '#DC2626',
+                padding: '12px',
+                borderRadius: '8px',
+                marginBottom: '16px',
+                textAlign: 'center'
+              }}>
+                {error}
+              </div>
+            )}
 
             <div style={{
               display: 'flex',

@@ -10,8 +10,8 @@ function SignIn() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [error, setError] = useState(""); // State to store error message
   const navigate = useNavigate(); // React Router hook for navigation
-
 
   useEffect(() => {
     const handleResize = () => {
@@ -22,249 +22,259 @@ function SignIn() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const handleSignIn = (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
-    console.log("Sign-in attempted with:", { email, password });
+    setError(""); // Clear any previous error messages
+      // Redirect to the vendor dashboard page
+      navigate("/vendordashboard"); // Use navigate to redirect
   };
 
-// Mobile version
-if (isMobile) {
-  return (
-    <div className="mobile-signup-container md:hidden" style={{ overflowX: 'hidden', position: 'relative' }}>
-    <div
-      className="min-h-screen bg-white flex flex-col justify-center px-6"
-      style={{
-        minHeight: "100px", // Full height of viewport
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        padding: "60px", // Space around the container
-        backgroundColor: "#f9f9f9",
-        overflow: "hidden", // Prevent scrolling
-        boxSizing: "border-box", // Include padding in element's total width/height
-        marginRight:'-90px',
-        marginLeft:'-90px',
-        marginTop:'-95px',
-        
-
-      }}
-    >
-      <div
-        style={{
-          width: "100%", // Full width on mobile
-          maxWidth: "530px", // Max width for content
-          background: "white",
-          borderRadius: "10px",
-          padding: "20px",
-        }}
-      >
-        <h1
-          style={{
-            fontSize: "35px",
-            marginBottom: "20px",
-            textAlign: "center",
-          }}
-        >
-          Sign in
-        </h1>
-
-        {/* Social Buttons */}
+  
+  // Mobile version
+  if (isMobile) {
+    return (
+      <div className="mobile-signup-container md:hidden" style={{ overflowX: 'hidden', position: 'relative' }}>
         <div
+          className="min-h-screen bg-white flex flex-col justify-center px-6"
           style={{
+            minHeight: "100px",
             display: "flex",
             justifyContent: "center",
-            gap: "20px",
-            marginBottom: "30px",
+            alignItems: "center",
+            padding: "60px",
+            backgroundColor: "#f9f9f9",
+            overflow: "hidden",
+            boxSizing: "border-box",
+            marginRight: '-90px',
+            marginLeft: '-90px',
+            marginTop: '-95px',
           }}
         >
-          <button
-            style={{
-              backgroundColor: "#DB4437",
-              border: "none",
-              borderRadius: "50%",
-              width: "50px",
-              height: "50px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              cursor: "pointer",
-            }}
-          >
-            <FaGoogle style={{ color: "white", fontSize: "20px" }} />
-          </button>
-          <button
-            style={{
-              backgroundColor: "#1877F2",
-              border: "none",
-              borderRadius: "50%",
-              width: "50px",
-              height: "50px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              cursor: "pointer",
-            }}
-          >
-            <FaFacebook style={{ color: "white", fontSize: "20px" }} />
-          </button>
-          <button
-            style={{
-              backgroundColor: "#000000",
-              border: "none",
-              borderRadius: "50%",
-              width: "50px",
-              height: "50px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              cursor: "pointer",
-            }}
-          >
-            <FaApple style={{ color: "white", fontSize: "20px" }} />
-          </button>
-        </div>
-
-        <div
-          style={{
-            textAlign: "center",
-            marginBottom: "15px",
-            fontSize: "14px",
-            color: "#888",
-          }}
-        >
-          OR
-        </div>
-
-        {/* Sign-In Form */}
-        <form onSubmit={handleSignIn}>
-          <div style={{ marginBottom: "15px" }}>
-            <label
-              style={{
-                display: "block",
-                marginBottom: "5px",
-                fontWeight: "bold",
-              }}
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email or mobile"
-              style={{
-                width: "100%",
-                padding: "10px",
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-              }}
-            />
-          </div>
-
-          <div style={{ marginBottom: "15px", position: "relative" }}>
-            <label
-              style={{
-                display: "block",
-                marginBottom: "5px",
-                fontWeight: "bold",
-              }}
-            >
-              Password
-            </label>
-            <input
-              type={showPassword ? "text" : "password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              style={{
-                width: "100%",
-                padding: "10px",
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-              }}
-            />
-            <span
-              onClick={() => setShowPassword(!showPassword)}
-              style={{
-                position: "absolute",
-                top: "70%",
-                right: "10px",
-                transform: "translateY(-50%)",
-                cursor: "pointer",
-              }}
-            >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </span>
-          </div>
-
           <div
             style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginBottom: "20px",
+              width: "500px", // Full width on mobile
+              maxWidth: "530px", // Max width for content
+              background: "white",
+              borderRadius: "10px",
+              padding: "20px",
             }}
           >
-            <label style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-              <input type="checkbox" /> Remember me
-            </label>
-          </div>
-
-          <button
-            type="submit"
-            style={{
-              width: "100%",
-              padding: "12px",
-              backgroundColor: "#6A5ACD",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
-              fontSize: "16px",
-              cursor: "pointer",
-            }}
-          >
-            Sign in
-          </button>
-
-          <a
-            href="#"
-            style={{
-              color: "#6A5ACD",
-              textDecoration: "none",
-              display: "block",
-              textAlign: "center",
-              marginTop: "10px",
-            }}
-          >
-            Forgot password?
-          </a>
-
-          <div
-            style={{
-              textAlign: "center",
-              marginTop: "50px",
-              fontSize: "14px",
-            }}
-          >
-            Don't have an account?{" "}
-            <a
-              href="#"
-              style={{ color: "#6A5ACD", textDecoration: "none" }}
-              onClick={() => navigateToSignUp()}
+            <h1
+              style={{
+                fontSize: "35px",
+                marginBottom: "20px",
+                textAlign: "center",
+              }}
             >
-              Sign up
-            </a>
+              Sign in
+            </h1>
+
+            {/* Social Buttons */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "20px",
+                marginBottom: "30px",
+              }}
+            >
+              <button
+                style={{
+                  backgroundColor: "#DB4437",
+                  border: "none",
+                  borderRadius: "50%",
+                  width: "50px",
+                  height: "50px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                }}
+              >
+                <FaGoogle style={{ color: "white", fontSize: "20px" }} />
+              </button>
+              <button
+                style={{
+                  backgroundColor: "#1877F2",
+                  border: "none",
+                  borderRadius: "50%",
+                  width: "50px",
+                  height: "50px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                }}
+              >
+                <FaFacebook style={{ color: "white", fontSize: "20px" }} />
+              </button>
+              <button
+                style={{
+                  backgroundColor: "#000000",
+                  border: "none",
+                  borderRadius: "50%",
+                  width: "50px",
+                  height: "50px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                }}
+              >
+                <FaApple style={{ color: "white", fontSize: "20px" }} />
+              </button>
+            </div>
+
+            <div
+              style={{
+                textAlign: "center",
+                marginBottom: "15px",
+                fontSize: "14px",
+                color: "#888",
+              }}
+            >
+              OR
+            </div>
+
+            {/* Sign-In Form */}
+            <form onSubmit={handleSignIn}>
+              <div style={{ marginBottom: "15px" }}>
+                <label
+                  style={{
+                    display: "block",
+                    marginBottom: "5px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Email
+                </label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email or mobile"
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    border: "1px solid #ccc",
+                    borderRadius: "5px",
+                  }}
+                />
+              </div>
+
+              <div style={{ marginBottom: "15px", position: "relative" }}>
+                <label
+                  style={{
+                    display: "block",
+                    marginBottom: "5px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Password
+                </label>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    border: "1px solid #ccc",
+                    borderRadius: "5px",
+                  }}
+                />
+                <span
+                  onClick={() => setShowPassword(!showPassword)}
+                  style={{
+                    position: "absolute",
+                    top: "70%",
+                    right: "10px",
+                    transform: "translateY(-50%)",
+                    cursor: "pointer",
+                  }}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginBottom: "20px",
+                }}
+              >
+                <label style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                  <input type="checkbox" /> Remember me
+                </label>
+              </div>
+
+              <button
+                type="submit"
+                style={{
+                  width: "100%",
+                  padding: "12px",
+                  backgroundColor: "#6A5ACD",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "5px",
+                  fontSize: "16px",
+                  cursor: "pointer",
+                }}
+              >
+                Sign in
+              </button>
+
+              <a
+                href="#"
+                style={{
+                  color: "#6A5ACD",
+                  textDecoration: "none",
+                  display: "block",
+                  textAlign: "center",
+                  marginTop: "10px",
+                }}
+              >
+                Forgot password?
+              </a>
+
+              <div
+                style={{
+                  textAlign: "center",
+                  marginTop: "50px",
+                  fontSize: "14px",
+                }}
+              >
+                Don't have an account?{" "}
+                <a
+                  href="#"
+                  style={{ color: "#6A5ACD", textDecoration: "none" }}
+                  onClick={() => navigate("/signup")}
+                >
+                  Sign up
+                </a>
+              </div>
+            </form>
+
+            {error && (
+              <div
+                style={{
+                  color: "red", // Set the text color to red
+                  fontSize: "14px",
+                  textAlign: "center",
+                  marginTop: "10px",
+                }}
+              >
+                {error}
+              </div>
+            )}
           </div>
-        </form>
+        </div>
       </div>
-    </div>
-    </div>
-  );
-}
-
-function navigateToSignUp() {
-  window.location.href = "/signup"; // Adjust the path to your signup page
-}
+    );
+  }
 
   // Desktop version
   return (
@@ -403,7 +413,6 @@ function navigateToSignUp() {
                   backgroundColor: "#f9f9f9",
                 }}
               />
-             
             </div>
 
             <a
@@ -499,7 +508,7 @@ function navigateToSignUp() {
                 borderRadius: "20px",
                 backgroundColor: "#fff",
                 cursor: "pointer",
-              }} 
+              }}
             >
               <FaFacebook /> Facebook
             </button>

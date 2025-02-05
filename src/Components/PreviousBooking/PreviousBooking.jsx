@@ -9,6 +9,7 @@ const PreviousBookings = () => {
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  
   useEffect(() => {
     const fetchBookings = async () => {
       try {

@@ -1,12 +1,12 @@
-import React, { useState } from 'react'; // Import useState at the top
-import './SignupPage.css'; // Combining styles from both files
+import React, { useState } from 'react'; 
+import './SignupPage.css'; 
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Footer from '../Components/Footer';
 import { useNavigate } from 'react-router-dom';
 
 
 
-const SignupPage = () => {
+const SignupPage = () => { 
   const navigate = useNavigate();
   
 
@@ -120,10 +120,7 @@ const SignupPage = () => {
       className="form-input"
       placeholder="Enter your password"
     />
-    <i
-      className={`fas ${showPassword ? 'fa-eye-slash' : 'fa-eye'} password-toggle`}
-      onClick={() => setShowPassword(!showPassword)}
-    ></i>
+   
   </div>
 </div>
 
@@ -144,7 +141,7 @@ const SignupPage = () => {
     <button
       onClick={handleLoginRedirect}
       className="signin-link text-blue-500 font-semibold"
-    >
+    > 
       Log in
     </button>
   </p>
@@ -152,7 +149,7 @@ const SignupPage = () => {
         </div>
       </div>
 
-      <Footer />
+      <Footer /> 
     </>
   );
 };

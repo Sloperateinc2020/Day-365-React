@@ -24,7 +24,7 @@ function SignIn() {
   const handleSignIn = async (e) => {
     e.preventDefault();
     setError("");
-
+  
     try {
       const response = await fetch("http://localhost:8080/api/users/login", {
         method: "POST",
@@ -33,33 +33,29 @@ function SignIn() {
         },
         body: JSON.stringify({ email, password }),
       });
-
+  
       if (response.ok) {
-        // Check if the response is JSON
-        const contentType = response.headers.get("content-type");
-        if (contentType && contentType.includes("application/json")) {
-          const data = await response.json();
-          // Handle any additional data if needed
-          console.log("Login response:", data);
+        const data = await response.text(); 
+  
+        console.log("Login response:", data);
+  
+        if (data === "Vendor login successful") {
+          navigate("/vendorDashboard");
+        } else if (data === "Customer login successful") {
+          navigate("/");
+        } else {
+          setError("Unknown login type.");
         }
-        
-        // If login is successful, redirect to the vendor dashboard
-        navigate("/vendordashboard");
       } else {
-        // Try to parse error response as JSON
-        try {
-          const errorData = await response.json();
-          setError(errorData.message || "Invalid email or password");
-        } catch {
-          // If error response is not JSON, use status text
-          setError(response.statusText || "Invalid email or password");
-        }
+        const errorData = await response.text();
+        setError(errorData || "Invalid email or password");
       }
     } catch (error) {
       console.error("Error during login:", error);
       setError("An error occurred. Please try again.");
     }
   };
+  
 
   // Mobile version
   if (isMobile) {

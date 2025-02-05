@@ -1,43 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './BankDetails.css';
-import Footer from '../Footer'; // Import the Footer component
+import Footer from '../Footer'; 
+import BankDetailsMobile from './BankDetailsMobile'; // Import the mobile version
 
 const BankDetails = () => {
-  const [activeTab, setActiveTab] = useState('Bank Details');
-  const [linkText, setLinkText] = useState('https://app.ahiregro...'); // Link text state
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); // Check initial screen width
   const navigate = useNavigate();
 
-  const handleTabClick = (tab) => {
-    setActiveTab(tab);
-    if (tab === 'Documents') {
-      navigate('/documents'); 
-    } else if (tab === 'Account Settings') {
-      navigate('/accountsettings'); // Navigate to AccountSettings page when Account Settings is clicked
-    }
-  };
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(linkText); // Copy the link text to clipboard
-    setLinkText('Copied'); // Temporarily change link text to "Copied"
-    
-    // Revert back to the original link text after a delay
-    setTimeout(() => {
-      setLinkText('https://app.ahiregro...');
-    }, 2000); // 2-second delay
-  };
   useEffect(() => {
-    // Add scroll-locked class to body to prevent horizontal scrolling
-    document.body.classList.add('scroll-locked');
-    
-    return () => {
-      // Remove scroll-locked class when component unmounts
-      document.body.classList.remove('scroll-locked');
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); // Update state when resizing
     };
+
+    window.addEventListener('resize', handleResize); // Listen for resize events
+    return () => window.removeEventListener('resize', handleResize); // Cleanup
   }, []);
+
+  // Render mobile version if screen is small
+  if (isMobile) {
+    return <BankDetailsMobile />;
+  }
+
   return (
     <>
-    <div className="cover-text">
+      <div className="cover-text">
         <i className="fas fa-camera" style={{ marginRight: '8px', fontSize: '20px' }}></i>
         change cover
       </div>
@@ -67,8 +54,8 @@ const BankDetails = () => {
           <div className="profile-actions">
             <button className="view-profile-btn">View Public Profile</button>
             <div className="profile-link">
-              <span>{linkText}</span>
-              <button className="copy-btn" onClick={handleCopy}>📋</button>
+              <span>https://app.ahiregro...</span>
+              <button className="copy-btn">📋</button>
             </div>
           </div>
         </div>
@@ -76,70 +63,62 @@ const BankDetails = () => {
         <div className="profile-content">
           <div className="tabs">
             <button 
-              className={activeTab === 'Account Settings' ? 'active' : ''}
-              onClick={() => handleTabClick('Account Settings')}
+              className="active"
+              onClick={() => navigate('/accountsettings')}
             >
               Account Settings
             </button>
-            <button 
-              className={activeTab === 'Documents' ? 'active' : ''}
-              onClick={() => handleTabClick('Documents')}
-            >
+            <button onClick={() => navigate('/documents')}>
               Documents
             </button>
-            <button 
-              className={activeTab === 'Bank Details' ? 'active' : ''}
-              onClick={() => setActiveTab('Bank Details')}
-            >
+            <button className="active">
               Bank Details
             </button>
           </div>
 
-          {activeTab === 'Bank Details' && (
-            <div className="bank-details-wrapper">
-              <form className="bank-form">
-                <div className="form-data left-column">
-                  <label>First Name</label>
-                  <input type="text" placeholder="" />
-                </div>
-                <div className="form-data right-column">
-                  <label>Last Name</label>
-                  <input type="text" placeholder="" />
-                </div>
-                <div className="form-data left-column">
-                  <label>Account Number</label>
-                  <input type="text" placeholder=" " />
-                </div>
-                <div className="form-data right-column">
-                  <label>Confirm Account Number</label>
-                  <input type="text" placeholder="" />
-                </div>
-                <div className="form-data left-column">
-                  <label>IFSC</label>
-                  <input type="text" placeholder="" />
-                </div>
-                <div className="form-data right-column">
-                  <label>Branch</label>
-                  <input type="text" placeholder="" />
-                </div>
-                <div className="form-data left-column">
-                  <label>Mobile</label>
-                  <input type="text" placeholder="" />
-                </div>
-                <div className="form-data right-column">
-                  <label>Email</label>
-                  <input type="email" placeholder="" />
-                </div>
-              </form>
-
-              <div className="update-button-container">
-                <button type="submit" className="update-button">Update</button>
+          <div className="bank-details-wrapper">
+            <form className="bank-form">
+              <div className="form-data left-column">
+                <label>First Name</label>
+                <input type="text" />
               </div>
+              <div className="form-data right-column">
+                <label>Last Name</label>
+                <input type="text" />
+              </div>
+              <div className="form-data left-column">
+                <label>Account Number</label>
+                <input type="text" />
+              </div>
+              <div className="form-data right-column">
+                <label>Confirm Account Number</label>
+                <input type="text" />
+              </div>
+              <div className="form-data left-column">
+                <label>IFSC</label>
+                <input type="text" />
+              </div>
+              <div className="form-data right-column">
+                <label>Branch</label>
+                <input type="text" />
+              </div>
+              <div className="form-data left-column">
+                <label>Mobile</label>
+                <input type="text" />
+              </div>
+              <div className="form-data right-column">
+                <label>Email</label>
+                <input type="email" />
+              </div>
+            </form>
+
+            <div className="update-button-container">
+              <button type="submit" className="update-button">Update</button>
             </div>
-          )}
+          </div>
         </div>
       </div>
-      <Footer /> {/* Place Footer outside the main container */}
+      <Footer />
     </>
   );
 };

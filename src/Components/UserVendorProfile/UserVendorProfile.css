@@ -2,18 +2,18 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  overflow-y: auto; 
+  overflow-y: auto;
 }
 
 .profile-container {
   display: flex;
-  padding: 20px;
+  padding: 10px;
 }
 
 .profile-sidebar {
   width: 250px;
   padding-right: 20px;
-  margin-top: 120px; 
+  margin-top: 120px;
 }
 
 .profile-image {
@@ -50,11 +50,10 @@ body {
 
 .profile-content {
   flex-grow: 1;
-  height: auto;  
+  height: auto;
   margin-top: 120px;
 }
 
-/* Tabs styling */
 .tabs button {
   padding: 10px 20px;
   margin: 10px 0;
@@ -70,16 +69,16 @@ body {
 .account-form {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px; 
-  overflow: visible; 
+  gap: 20px;
+  overflow: visible;
 }
 
 .account-form .form-data.full-width {
-  margin-top: -15px; 
+  margin-top: -15px;
 }
 
 .account-form .form-data input {
-  width: 100%; 
+  width: 100%;
   padding: 10px;
   border: 1px solid #f4f2f2;
   border-radius: 4px;
@@ -94,7 +93,7 @@ body {
 
 .form-data.left-column,
 .form-data.right-column {
-  width: 48%; 
+  width: 48%;
 }
 
 .form-data.full-width {
@@ -102,42 +101,40 @@ body {
 }
 
 .account-settings-wrapper {
-  height: auto; 
+  height: auto;
 }
 
 .form-data.left-column input {
-  padding: 12px; 
+  padding: 12px;
   border: 1px solid #0c0c0c;
   border-radius: 5px;
   box-sizing: border-box;
 }
 
 .form-data.left-column label {
-  color: #333; /* Darker color for left column labels */
-  font-size: 14px; /* Adjust label font size */
+  color: #333;
+  font-size: 14px;
   font-weight: bold;
   display: block;
-  margin-bottom: 6px; /* Add a bit more space below labels */
+  margin-bottom: 6px;
 }
 
-/* Right Column Input and Label Adjustments */
 .form-data.right-column input {
-  padding: 12px; /* Slightly larger padding */
+  padding: 12px;
   border: 1px solid #0a0b0a;
   border-radius: 5px;
   box-sizing: border-box;
-  margin-left: 50px;
+  margin-left: 0px;
 }
 
 .form-data.right-column label {
-  color: #333; 
-  font-size: 14px; 
+  color: #333;
+  font-size: 14px;
   font-weight: bold;
   display: block;
-  margin-left: 50px; 
+  margin-left: 50px;
 }
 
-/* Button container */
 .update-button-container {
   margin-top: 20px;
 }
@@ -149,12 +146,12 @@ body {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-left: 20px;
+  margin-left: 60px;
   height: 40px;
 }
 
 .stat-item {
-  cursor: pointer; 
+  cursor: pointer;
 }
 
 .update-button:hover {
@@ -162,29 +159,78 @@ body {
 }
 
 .profile-content {
-  padding-bottom: 50px; 
+  padding-bottom: 50px;
 }
 
 body.scroll-locked {
-  overflow: auto;  
+  overflow: auto;
 }
+
 .cover-text {
   position: absolute;
-  top: 90px; 
-  right: 20px; 
-  color: white; 
-  padding: 10px 20px; 
-  border: 1px solid white; 
-  border-radius: 5px; 
-  font-size: 18px; 
-  z-index: 100; 
+  top: 100px;
+  right: 20px;
+  margin-left: 50px;
+  color: white;
+  padding: 10px 20px;
+  border: 1px solid white;
+  border-radius: 5px;
+  font-size: 18px;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
 }
 
-
+/* Mobile Responsive Styles */
 @media (max-width: 768px) {
   .cover-text {
-    font-size: 12px; 
-    top: 10px; 
-    right: 10px; 
+    font-size: 14px;
+    top: 18px;
+    right: 20px;
+    padding: 8px 16px;
+  }
+
+  .profile-container {
+    flex-direction: column;
+    padding: 0px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+  }
+
+  .profile-sidebar {
+    width: 100%;
+    margin-top: 60px;
+    padding-right: 0;
+    text-align: center;
+  }
+
+  .profile-image {
+    margin-left: 0;
+  }
+
+  .profile-content {
+    margin-top: 20px;
+  }
+
+  .form-data.left-column,
+  .form-data.right-column {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .form-data.right-column input,
+  .form-data.right-column label {
+    margin-left: 0;
+  }
+
+  .update-button {
+    padding: 5px 10px;
+    background-color: #0e5ed4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 55px;
+    height: 40px;
   }
 }

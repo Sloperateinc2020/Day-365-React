@@ -50,6 +50,7 @@ const EditVendorProfile = () => {
       services: { ...serviceData.services, [name]: checked },
     });
   };
+
   const handlePaymentCheckboxChange = (e) => {
     const { name, checked } = e.target;
     setServiceData({
@@ -57,10 +58,12 @@ const EditVendorProfile = () => {
       paymentMethods: { ...serviceData.paymentMethods, [name]: checked },
     });
   };
+
   const handlePriceChange = (e) => {
     const value = e.target.value;
     setServiceData({ ...serviceData, pricePerService: value });
   };  
+
   const validateForm = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   
@@ -82,7 +85,6 @@ const EditVendorProfile = () => {
   
     return null; // Form is valid
   };
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -133,12 +135,12 @@ const EditVendorProfile = () => {
 
   return (
     <>
-      <div style={{ maxWidth: '500px', margin: '100px auto', fontFamily: 'Arial, sans-serif' }}>
-      <h2 style={{ textAlign: 'left', marginTop: '30px' }}>Edit Plumber Profile</h2>
-
+      <div style={{ maxWidth: '500px', margin: '20px auto', fontFamily: 'Arial, sans-serif', padding: '20px' }}>
+        <h2 style={{ textAlign: 'left', marginTop: '18px' }}>Edit Plumber Profile</h2>
         <p style={{ textAlign: 'left', color: 'gray' }}>Update your profile and service information</p>
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          {/* Profile Fields */}
           <div>
             <label htmlFor="fullName" style={{ display: 'block', marginBottom: '5px' }}>Full Name</label>
             <input
@@ -205,6 +207,7 @@ const EditVendorProfile = () => {
             />
           </div>
 
+          {/* Service Fields */}
           <div>
             <label htmlFor="hourlyRate" style={{ display: 'block', marginBottom: '5px' }}>Hourly Rate ($)</label>
             <input
@@ -250,6 +253,7 @@ const EditVendorProfile = () => {
             />
           </div>
 
+          {/* Payment Methods */}
           <div>
             <label style={{ display: 'block', marginBottom: '5px' }}>Payment Methods Accepted</label>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
@@ -295,6 +299,8 @@ const EditVendorProfile = () => {
               </label>
             </div>
           </div>
+
+          {/* Availability */}
           <div>
             <label htmlFor="availability" style={{ display: 'block', marginBottom: '5px' }}>Availability</label>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -326,6 +332,8 @@ const EditVendorProfile = () => {
               <span>{serviceData.availability ? 'Currently Available for Work' : 'Not Available'}</span>
             </div>
           </div>
+
+          {/* Services */}
           <div>
             <label style={{ display: 'block', marginBottom: '5px' }}>Services</label>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
@@ -372,26 +380,26 @@ const EditVendorProfile = () => {
             </div>
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
             style={{
-              backgroundColor: '#007bff', // Blue shade
+              backgroundColor: '#007bff',
               color: '#fff',
               padding: '10px',
               borderRadius: '4px',
               border: 'none',
               cursor: 'pointer',
               textAlign: 'center',
-              fontWeight: 'bold', // Bold text
-              boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)', // Subtle shadow for depth
-              transition: 'background-color 0.3s ease', // Smooth color transition
+              fontWeight: 'bold',
+              boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+              transition: 'background-color 0.3s ease',
             }}
-            onMouseEnter={(e) => (e.target.style.backgroundColor = '#0056b3')} // Darker blue on hover
-            onMouseLeave={(e) => (e.target.style.backgroundColor = '#007bff')} // Original blue on mouse leave
+            onMouseEnter={(e) => (e.target.style.backgroundColor = '#0056b3')}
+            onMouseLeave={(e) => (e.target.style.backgroundColor = '#007bff')}
           >
             Save Changes
           </button>
-
         </form>
       </div>
 
@@ -400,4 +408,4 @@ const EditVendorProfile = () => {
   );
 };
 
-export default  EditVendorProfile;
+export default EditVendorProfile;

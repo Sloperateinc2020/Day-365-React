@@ -9,7 +9,7 @@ const RegistrationJob = () => {
       setIsMobile(window.innerWidth <= 768); 
     };
 
-    handleResize(); // Set initial state
+    handleResize(); 
     window.addEventListener('resize', handleResize);
 
     return () => {
@@ -94,8 +94,9 @@ const RegistrationJob = () => {
     );
   }
 
-  return (
-    <div style={{ backgroundColor: '#f5f5f5', minHeight: '100vh', padding: '1px',width:'500px' }}>
+  return ( 
+    <div style={{ backgroundColor: '#f5f5f5', minHeight: '100vh', padding: '0px',width:'100%', overflowX: 'hidden', // Prevent horizontal scrolling
+    }}>
       <style>
         {`
           @media (max-width: 768px) {
@@ -103,21 +104,29 @@ const RegistrationJob = () => {
               display: flex;
               flex-direction: column;
               gap: 16px;
+               body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+          }
+             div {
+            width: 400px;
+          }
             }
           }
         `}
       </style>
       <div
         style={{
-          maxWidth: '1000px',
+          maxWidth: '500px',
           margin: '0 auto',
-          padding: '50px',
+          padding: '20px',
           backgroundColor: '#fff',
           borderRadius: '8px',
           boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
         }}
       >
-        <h1 style={{ fontSize: '20px', fontWeight: '600', color: '#333', marginBottom: '4px' }}>
+        <h1 style={{ fontSize: '25px', fontWeight: '500', color: '#333', marginBottom: '10px' }}>
           Service Provider Registration
         </h1>
         <p style={{ fontSize: '14px', color: '#666', marginBottom: '24px' }}>
@@ -194,8 +203,8 @@ const RegistrationJob = () => {
           
 
           {/* Contact Information */}
-          <div style={{ marginBottom: '-13px' }}>
-            <h2 style={{ fontSize: '18px', fontWeight: 'bold', color: '#333', marginBottom: '16px' }}>
+          <div style={{ marginTop: '-35px' }}>
+            <h2 style={{ fontSize: '18px', fontWeight: 'bold', color: '#333', marginBottom: '10px' }}>
               Contact Information
             </h2>
             <div style={{ marginBottom: '16px' }}>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Home, ListOrdered, MessageSquare, Wallet, User, CalendarDays, MapPin } from 'lucide-react';
-import Sidebar from '../Sidebar';  // Import Sidebar component
+import Sidebar from '../Sidebar';  
 import config from '../../config';
 
 function Booking() {

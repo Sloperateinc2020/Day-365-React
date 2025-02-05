@@ -15,6 +15,7 @@ const ChatApp = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showOptions, setShowOptions] = useState(false); // Toggle for the active chat options
   const [showSidebarOptions, setShowSidebarOptions] = useState(null); // Toggle for the sidebar options
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Toggle for mobile sidebar
 
   // Handle sending a message
   const handleSendMessage = () => {
@@ -44,6 +45,7 @@ const ChatApp = () => {
   const handleChatSwitch = (userName) => {
     setActiveChat(userName);
     setShowSidebarOptions(null); // Close the sidebar options when switching chats
+    setIsSidebarOpen(false); // Close the sidebar on mobile after selecting a chat
   };
 
   // Filter contacts based on the search query
@@ -69,7 +71,13 @@ const ChatApp = () => {
 
   return (
     <div className="chat-container">
-      <div className="sidebar">
+      {/* Mobile Sidebar Toggle Button */}
+      <button className="mobile-sidebar-toggle" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+        ☰
+      </button>
+
+      {/* Sidebar */}
+      <div className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
         {/* Search Box */}
         <input
           type="text"
@@ -111,6 +119,7 @@ const ChatApp = () => {
         ))}
       </div>
 
+      {/* Chat Window */}
       <div className="chat-window">
         {/* Active Profile in the Top-Right of the Chat Window */}
         <div className="active-profile-top">

@@ -1,267 +1,316 @@
 /* Main Chat Container */
 .chat-container {
-    display: flex;
-    flex-direction: row;
-    height: calc(100vh - 60px);
-    margin-top: 60px;
-    font-family: Arial, sans-serif;
-    overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  height: calc(100vh - 60px);
+  margin-top: 60px;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+/* Mobile Sidebar Toggle Button */
+.mobile-sidebar-toggle {
+  display: none; /* Hidden by default on desktop */
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 25%;
+  background: #f8f9fa;
+  border-right: 1px solid #ddd;
+  overflow-y: auto;
+  padding: 10px;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+/* Chat Window Styles */
+.chat-window {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: #fff;
+  position: relative;
+  height: calc(100vh - 60px);
+  padding-bottom: 60px; /* Space for the message input box */
+}
+
+/* Contact Styles (Sidebar items) */
+.contact {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  position: relative; /* For positioning the three dots */
+}
+
+.contact:hover,
+.contact.active {
+  background: #e9ecef;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-name {
+  font-weight: bold;
+  color: #000;
+}
+
+.last-seen {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* Three Dots (Options Menu) */
+.options {
+  cursor: pointer;
+  font-size: 1.5rem;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  writing-mode: vertical-rl; /* Display the dots vertically */
+  transform: rotate(180deg); /* Rotate dots so they align properly */
+  display: flex;
+  flex-direction: column;
+}
+
+.options span {
+  display: block;
+  line-height: 1.2;
+}
+
+/* Dropdown Menu for Contact Options */
+.dropdown {
+  position: absolute;
+  top: 25px; /* Adjusted for proper spacing */
+  right: 15px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 150px;
+  z-index: 10;
+}
+
+.dropdown-option {
+  padding: 10px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.dropdown-option:hover {
+  background: #f8f9fa;
+}
+
+/* Messages Section Styles */
+.messages {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  background: #f8f9fa;
+  height: calc(100% - 60px);
+}
+
+/* Individual Message Styles */
+.message {
+  max-width: 70%;
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  word-wrap: break-word;
+}
+
+.message.received {
+  background: #e9ecef;
+  align-self: flex-start;
+}
+
+.message.sent {
+  background: #007bff;
+  color: white;
+  align-self: flex-end;
+}
+
+/* Message Input Styles */
+.message-input {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 75%;
+  display: flex;
+  padding: 10px 20px;
+  border-top: 1px solid #ddd;
+  background: white;
+  z-index: 5;
+}
+
+.message-input input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  outline: none;
+  margin-right: 10px;
+}
+
+.message-input button {
+  padding: 10px 20px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.message-input button:hover {
+  background: #0056b3;
+}
+
+/* Search Box Styles (for the Sidebar) */
+.search-box {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+/* Active Profile Styles (Top of the chat window, right side) */
+.active-profile-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+}
+
+.active-profile-top .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.active-profile-top .contact-info {
+  display: flex;
+  flex-direction: column;
+  margin-right: auto;
+}
+
+.active-profile-top .contact-name {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.active-profile-top .last-seen {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* Three Dots Menu (for the Active Chat) */
+.active-profile-top .options {
+  cursor: pointer;
+  font-size: 1.5rem;
+  margin-left: 10px;
+  writing-mode: vertical-rl; /* Display the dots vertically */
+  transform: rotate(180deg); /* Rotate dots so they align properly */
+  display: flex;
+  flex-direction: column;
+}
+
+.active-profile-top .options span {
+  display: block;
+  line-height: 1.2;
+}
+
+.active-profile-top .dropdown {
+  position: absolute;
+  top: 60px;
+  right: 15px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 150px;
+  z-index: 10;
+}
+
+.active-profile-top .dropdown-option {
+  padding: 10px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.active-profile-top .dropdown-option:hover {
+  background: #f8f9fa;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .chat-container {
+    flex-direction: column;
   }
-  
-  /* Sidebar Styles */
+
+  .mobile-sidebar-toggle {
+    display: block; /* Show the toggle button on mobile */
+  }
+
   .sidebar {
-    width: 25%;
-    background: #f8f9fa;
-    border-right: 1px solid #ddd;
-    overflow-y: auto;
-    padding: 10px;
-    position: relative;
-  }
-  
-  /* Chat Window Styles */
-  .chat-window {
-    width: 75%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    background: #fff;
-    position: relative;
-    height: calc(100vh - 60px);
-    padding-bottom: 60px; /* Space for the message input box */
-  }
-  
-  /* Contact Styles (Sidebar items) */
-  .contact {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    cursor: pointer;
-    transition: background 0.2s ease;
-    position: relative; /* For positioning the three dots */
-  }
-  
-  .contact:hover,
-  .contact.active {
-    background: #e9ecef;
-  }
-  
-  .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  
-  .contact-info {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .contact-name {
-    font-weight: bold;
-    color: #000;
-  }
-  
-  .last-seen {
-    font-size: 0.85rem;
-    color: #666;
-  }
-  
-  /* Three Dots (Options Menu) */
-  .options {
-    cursor: pointer;
-    font-size: 1.5rem;
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    writing-mode: vertical-rl; /* Display the dots vertically */
-    transform: rotate(180deg); /* Rotate dots so they align properly */
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .options span {
-    display: block;
-    line-height: 1.2;
-  }
-  
-  /* Dropdown Menu for Contact Options */
-  .dropdown {
-    position: absolute;
-    top: 25px; /* Adjusted for proper spacing */
-    right: 15px;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 150px;
-    z-index: 10;
-  }
-  
-  .dropdown-option {
-    padding: 10px;
     width: 100%;
-    text-align: left;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    font-size: 0.9rem;
-  }
-  
-  .dropdown-option:hover {
-    background: #f8f9fa;
-  }
-  
-  /* Messages Section Styles */
-  .messages {
-    flex-grow: 1;
-    padding: 20px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    background: #f8f9fa;
-    height: calc(100% - 60px);
-  }
-  
-  /* Individual Message Styles */
-  .message {
-    max-width: 70%;
-    margin-bottom: 10px;
-    padding: 10px 15px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    word-wrap: break-word;
-  }
-  
-  .message.received {
-    background: #e9ecef;
-    align-self: flex-start;
-  }
-  
-  .message.sent {
-    background: #007bff;
-    color: white;
-    align-self: flex-end;
-  }
-  
-  /* Message Input Styles */
-  .message-input {
+    transform: translateX(-100%);
     position: fixed;
-    bottom: 0;
-    right: 0;
-    width: 75%;
-    display: flex;
-    padding: 10px 20px;
-    border-top: 1px solid #ddd;
-    background: white;
-    z-index: 5;
-  }
-  
-  .message-input input {
-    flex-grow: 1;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    outline: none;
-    margin-right: 10px;
-  }
-  
-  .message-input button {
-    padding: 10px 20px;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background 0.2s ease;
-  }
-  
-  .message-input button:hover {
-    background: #0056b3;
-  }
-  
-  /* Search Box Styles (for the Sidebar) */
-  .search-box {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    font-size: 0.9rem;
-  }
-  
-  /* Active Profile Styles (Top of the chat window, right side) */
-  .active-profile-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px;
-    background: #f8f9fa;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .active-profile-top .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  
-  .active-profile-top .contact-info {
-    display: flex;
-    flex-direction: column;
-    margin-right: auto;
-  }
-  
-  .active-profile-top .contact-name {
-    font-weight: bold;
-    font-size: 1.1rem;
-  }
-  
-  .active-profile-top .last-seen {
-    font-size: 0.85rem;
-    color: #666;
-  }
-  
-  /* Three Dots Menu (for the Active Chat) */
-  .active-profile-top .options {
-    cursor: pointer;
-    font-size: 1.5rem;
-    margin-left: 10px;
-    writing-mode: vertical-rl; /* Display the dots vertically */
-    transform: rotate(180deg); /* Rotate dots so they align properly */
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .active-profile-top .options span {
-    display: block;
-    line-height: 1.2;
-  }
-  
-  .active-profile-top .dropdown {
-    position: absolute;
     top: 60px;
-    right: 15px;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 150px;
-    z-index: 10;
+    bottom: 0;
+    z-index: 100;
   }
-  
-  .active-profile-top .dropdown-option {
-    padding: 10px;
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .chat-window {
     width: 100%;
-    text-align: left;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    font-size: 0.9rem;
+    height: calc(100vh - 120px);
+    margin-top: 60px;
   }
-  
-  .active-profile-top .dropdown-option:hover {
-    background: #f8f9fa;
+
+  .message-input {
+    width: 100%;
   }
-  
+}

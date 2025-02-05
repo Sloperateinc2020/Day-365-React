@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './UserVendorProfile.css';
 import Footer from '../Footer';
@@ -8,6 +8,7 @@ const AccountSettings = () => {
   const [linkText, setLinkText] = useState('https://app.ahiregro...');
   const [selectedCity, setSelectedCity] = useState('');
   const [isEditable, setIsEditable] = useState(false); // State to track whether the form is editable
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); // State to track mobile view
   const navigate = useNavigate();
 
   const cities = [
@@ -35,6 +36,16 @@ const AccountSettings = () => {
     "Singapore",
     "UAE"
   ];
+
+  // Effect to handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -169,9 +180,8 @@ const AccountSettings = () => {
                     disabled={!isEditable} // Disable input if not editable
                   />
                 </div>
-                <div style={{ marginBottom: '20px', marginLeft: '80px' }}></div> 
                 <div className="form-data right-column">
-                  <label style={{ marginLeft: '3px' }}>Country</label>
+                  <label>Country</label>
                   <select 
                     defaultValue="" 
                     disabled={!isEditable} // Disable select if not editable
@@ -206,7 +216,8 @@ const AccountSettings = () => {
         </div>
       </div>
 
-      <Footer /> 
+      {/* Conditionally render Footer based on screen width */}
+      {!isMobile && <Footer />}
     </>
   );
 };

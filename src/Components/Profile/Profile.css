@@ -1,3 +1,4 @@
+/* Desktop Styles */
 .profile-container {
   display: flex;
   gap: 1.5rem;
@@ -6,296 +7,396 @@
   min-height: 100vh;
   position: relative;
   margin-top: 70px;
-  overflow-y: auto; 
-  overflow-x: hidden; 
-  overscroll-behavior: contain; 
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
 }
 
 body.scroll-locked {
   overflow-y: auto;
   overflow-x: hidden;
-  overscroll-behavior: none; 
+  overscroll-behavior: none;
 }
 
-  
-  .profile-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 200px;
-    background-color: #4051B5;
-    z-index: 0;
-  }
-  
-  .profile-sidebar {
-    flex: 0 0 250px;
-    background: white;
-    padding: 1.5rem;
-    border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    height: fit-content;
-    position: relative;
-    z-index: 1;
-  }
-  
-  .profile-content {
-    flex: 1;
-    background: white;
-    border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    position: relative;
-    z-index: 1;
-  }
-  
-  .profile-image {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1rem;
-  }
-  
-  .avatar-placeholder {
-    width: 80px;
-    height: 80px;
-    background-color: #9E9E9E;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .profile-info {
-    text-align: center;
-    margin-bottom: 1.5rem;
-  }
-  
-  .profile-info h3 {
-    margin: 0;
-    color: #333;
-    font-size: 1.1rem;
-    font-weight: 500;
-  }
-  
-  .profile-info p {
-    color: #666;
-    margin: 0.25rem 0;
-    font-size: 0.9rem;
-  }
-  
-  .profile-stats {
-    margin-bottom: 1.5rem;
-  }
-  
-  .stat-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid #EEEEEE;
-    font-size: 0.9rem;
-  }
-  
-  .stat-item span:first-child {
-    color: #666;
-  }
-  
-  .stat-number {
-    font-weight: 500;
-    color: #333;
-  }
-  
-  .stat-number.green {
-    color: #4CAF50;
-  }
-  
-  .profile-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-  
-  .view-profile-btn {
-    padding: 0.5rem;
-    background: none;
-    border: 1px solid #E0E0E0;
-    border-radius: 4px;
-    cursor: pointer;
-    color: #666;
-    font-size: 0.9rem;
-  }
-  
-  .profile-link {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.5rem;
-    background: #F5F5F5;
-    border-radius: 4px;
-    font-size: 0.85rem;
-    color: #666;
-  }
-  
-  .copy-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-  }
-  
-  .tabs {
-    display: flex;
-    padding: 0 1rem;
-    border-bottom: 1px solid #EEEEEE;
-  }
-  
-  .tabs button {
-    padding: 1rem;
-    background: none;
-    border: none;
-    font-size: 0.9rem;
-    position: relative;
-  }
-  
-  .tabs button.active {
-    color: #19191b;
-    font-weight: 700;
-  }
-  
-  .tabs button.active::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: #4051B5;
-  }
-  .cover-text {
-  font-size: 16px;
-  color: white;
+.profile-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background-color: #4051B5;
+  z-index: 0;
+}
+
+.profile-sidebar {
+  flex: 0 0 250px;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+  position: relative;
+  z-index: 1;
+}
+
+.profile-content {
+  flex: 1;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
+}
+
+.profile-image {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.avatar-placeholder {
+  width: 80px;
+  height: 80px;
+  background-color: #9E9E9E;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: -20px; /* Add margin to move it a bit lower */
-  padding: 10px;
-  cursor: pointer;
 }
 
-.cover-text i {
-  margin-right: 5px;
+.profile-info {
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
-  .documents-section {
-    padding: 1.5rem;
-  }
-  
-  .documents-section h2 {
-    color: white;
-    margin: -1.5rem -1.5rem 1.5rem -1.5rem;
-    padding: 1rem 1.5rem;
-    background: #00BFA5;
-    font-weight: 500;
-    font-size: 1.1rem;
-  }
-  
-  .documents-table {
-    table-layout: fixed;
-    width: 100%; 
-  }
-  
-  .documents-table th,
-  .documents-table td {
-    overflow: hidden; 
-    white-space: nowrap; 
-    text-overflow: ellipsis; 
-  }
-  
-  
-  .documents-table th {
-    color: #757575;
-    font-weight: normal;
-  }
-  
-  .documents-table td {
-    color: #333;
-  }
-  
-  .documents-table input[type="checkbox"] {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 18px;
-    height: 18px;
-    border: 2px solid #ddd;
-    border-radius: 3px;
-    outline: none;
-    cursor: pointer;
-    position: relative;
-  }
-  
-  .documents-table input[type="checkbox"]:checked {
-    background-color: #4051B5;
-    border-color: #4051B5;
-  }
-  
-  .documents-table input[type="checkbox"]:checked::after {
-    content: '✓';
-    position: absolute;
-    color: white;
-    font-size: 12px;
-    left: 3px;
-    top: 0px;
-    width: 100px;
-  }
-  
-  .edit-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    font-size: 1rem;
-  }
-  
-  .document-actions {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-    justify-content: space-between;
-    padding: 0 1rem;
-  }
-  
-  .upload-btn {
-    padding: 0.5rem 2rem;
-    background-color: #4051B5;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.9rem;
-  }
-  .cover-text {
+
+.profile-info h3 {
+  margin: 0;
+  color: #333;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.profile-info p {
+  color: #666;
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+}
+
+.profile-stats {
+  margin-bottom: 1.5rem;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #EEEEEE;
+  font-size: 0.9rem;
+}
+
+.stat-item span:first-child {
+  color: #666;
+}
+
+.stat-number {
+  font-weight: 500;
+  color: #333;
+}
+
+.stat-number.green {
+  color: #4CAF50;
+}
+
+.profile-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.view-profile-btn {
+  padding: 0.5rem;
+  background: none;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.profile-link {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem;
+  background: #F5F5F5;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.copy-btn {
+  background: none;
+  border: none;
   cursor: pointer;
-  color: #007bff;
-  font-size: 16px;
+  padding: 0;
 }
 
-.cover-text i {
-  margin-right: 8px;
-  font-size: 20px;
+.tabs {
+  display: flex;
+  padding: 0 1rem;
+  border-bottom: 1px solid #EEEEEE;
 }
 
-.cover-text:hover {
-  text-decoration: underline;
+.tabs button {
+  padding: 1rem;
+  background: none;
+  border: none;
+  font-size: 0.9rem;
+  position: relative;
 }
 
-  .delete-btn {
-    padding: 0.5rem 2rem;
-    background-color: #F44336;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    margin-left: auto;
-  }
-  
+.tabs button.active {
+  color: #19191b;
+  font-weight: 700;
+}
+
+.tabs button.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #4051B5;
+}
+
+.documents-section {
+  padding: 1.5rem;
+}
+
+.documents-section h2 {
+  color: white;
+  margin: -1.5rem -1.5rem 1.5rem -1.5rem;
+  padding: 1rem 1.5rem;
+  background: #00BFA5;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.documents-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.documents-table th,
+.documents-table td {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.documents-table th {
+  color: #757575;
+  font-weight: normal;
+}
+
+.documents-table td {
+  color: #333;
+}
+
+.documents-table input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ddd;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.documents-table input[type="checkbox"]:checked {
+  background-color: #4051B5;
+  border-color: #4051B5;
+}
+
+.documents-table input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  color: white;
+  font-size: 12px;
+  left: 3px;
+  top: 0px;
+  width: 100px;
+}
+
+.edit-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 20px;
+  font-size: 1rem;
+}
+
+.document-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+.upload-btn {
+  padding: 0.5rem 2rem;
+  background-color: #4051B5;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.delete-btn {
+  padding: 0.5rem 2rem;
+  background-color: #F44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-left: auto;
+}
+
+/* Mobile Styles */
+.profile-container.isMobile {
+  flex-direction: column;
+  padding: 1rem;
+  margin-top: 50px;
+  margin-left: -5px;
+}
+
+.profile-container.isMobile .profile-sidebar {
+  flex: 1;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.profile-container.isMobile .profile-content {
+  width: 100%;
+}
+
+.profile-container.isMobile .tabs {
+  flex-direction: column;
+}
+
+.profile-container.isMobile .tabs button {
+  width: 100%;
+  text-align: left;
+  padding: 0.75rem;
+}
+
+.profile-container.isMobile .tabs button.active::after {
+  height: 0;
+}
+
+.profile-container.isMobile .documents-section h2 {
+  margin: -1rem -1rem 1rem -1rem;
+  padding: 0.75rem 1rem;
+}
+
+.profile-container.isMobile .documents-table {
+  display: block;
+  overflow-x: auto;
+}
+
+.profile-container.isMobile .document-actions {
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.profile-container.isMobile .upload-btn,
+.profile-container.isMobile .delete-btn {
+  width: 100%;
+  text-align: left;
+}
+
+.profile-container.isMobile .profile-actions {
+  gap: 0.5rem;
+}
+
+.profile-container.isMobile .profile-link {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.profile-container.isMobile .copy-btn {
+  align-self: flex-end;
+}
+
+.profile-container.isMobile .profile-stats .stat-item {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.profile-container.isMobile .profile-info h3 {
+  font-size: 1rem;
+}
+
+.profile-container.isMobile .profile-info p {
+  font-size: 0.85rem;
+}
+
+.profile-container.isMobile .avatar-placeholder {
+  width: 60px;
+  height: 60px;
+}
+
+/* Uploaded Documents Box for Mobile */
+.profile-container.isMobile .uploaded-documents-box {
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 50rem;
+  margin-top: 1rem;
+}
+
+.profile-container.isMobile .uploaded-documents-box h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.profile-container.isMobile .uploaded-documents-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.profile-container.isMobile .uploaded-documents-box ul li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #EEEEEE;
+}
+
+.profile-container.isMobile .uploaded-documents-box ul li:last-child {
+  border-bottom: none;
+}
+
+.profile-container.isMobile .uploaded-documents-box ul li span {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.profile-container.isMobile .uploaded-documents-box ul li button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #4051B5;
+  font-size: 0.9rem;
+}

@@ -71,7 +71,7 @@ const Blog = () => {
         .blog-container {
           padding: 20px;
           max-width: 1300px;
-          margin: 0 auto;
+          margin top : 20px;
         }
 
         /* Header Styles */
@@ -79,7 +79,7 @@ const Blog = () => {
           display: flex;
           flex-direction: column;
           gap: 20px;
-          margin-bottom: 30px;
+          margin-bottom: 5px;
         }
 
         .title {
@@ -238,7 +238,7 @@ const Blog = () => {
           }
 
           .post-footer {
-            margin-top: 12px;
+            margin-top: 10px;
           }
 
           .category-tag {

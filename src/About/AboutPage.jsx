@@ -98,7 +98,7 @@ const AboutPage = () => {
       padding: '0 16px',
       display: 'flex',
       flexDirection: isMobile ? 'column' : 'row',
-      gap: '24px'
+      gap: '16px'
     },
     featuresRow: {
       display: 'flex',
@@ -108,7 +108,7 @@ const AboutPage = () => {
     feature: {
       flex: 1,
       backgroundColor: '#fff',
-      padding: '24px',
+      padding: '19px',
       borderRadius: '8px',
       boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
       display: 'flex',

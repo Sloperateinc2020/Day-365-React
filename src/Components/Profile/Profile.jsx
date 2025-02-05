@@ -1,39 +1,51 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import './Profile.css';
 import Footer from '../Footer'; // Import Footer component
+import ProfileMobile from './ProfileMobile'; // Import the mobile version
 
-const Profile = () => {
+function Profile() {
   const [documents, setDocuments] = useState([
     { id: 1, name: 'Aadhar', checked: true, content: 'Content', size: '5kb' },
     { id: 2, name: 'PAN', checked: false, content: 'Content', size: '10kb' },
     { id: 3, name: 'Driving Licence', checked: false, content: 'Content', size: '10kb' },
     { id: 4, name: 'Certifications', checked: false, content: 'Content', size: '25kb' }
   ]);
-
   const [activeTab, setActiveTab] = useState('Documents');
   const [linkText, setLinkText] = useState('https://app.ahiregro...');
-  const navigate = useNavigate(); 
+  const [isMobile, setIsMobile] = useState(false); // Track mobile view
+  const navigate = useNavigate();
+
+  // Check if the device is mobile
+  const checkIfMobile = () => {
+    setIsMobile(window.innerWidth <= 768); // Adjust the threshold as needed
+  };
+
+  useEffect(() => {
+    checkIfMobile(); // Check initially
+    window.addEventListener('resize', checkIfMobile); // Check on window resize
+
+    return () => {
+      window.removeEventListener('resize', checkIfMobile); // Clean up the event listener
+    };
+  }, []);
 
   const handleCheckbox = (id) => {
-    setDocuments(documents.map(doc => 
-      doc.id === id ? { ...doc, checked: !doc.checked } : doc
-    ));
+    setDocuments(documents.map(doc => doc.id === id ? { ...doc, checked: !doc.checked } : doc));
   };
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
     if (tab === 'Account Settings') {
-      navigate('/accountsettings'); 
+      navigate('/accountsettings');
     } else if (tab === 'Bank Details') {
-      navigate('/bankdetails'); 
+      navigate('/bankdetails');
     }
   };
 
   const handleCopy = () => {
     navigator.clipboard.writeText('https://app.ahiregro...');
-    setLinkText('Copied'); 
-    
+    setLinkText('Copied');
     setTimeout(() => {
       setLinkText('https://app.ahiregro...');
     }, 2000);
@@ -41,14 +53,21 @@ const Profile = () => {
 
   useEffect(() => {
     document.body.classList.add('scroll-locked');
-    
+
     return () => {
       document.body.classList.remove('scroll-locked');
     };
   }, []);
 
+  if (isMobile) {
+    // Render ProfileMobile for mobile screens
+    return <ProfileMobile />;
+  }
+
+  // Render Profile for desktop
   return (
     <>
+      {/* Desktop Profile - Hidden on mobile screens */}
       <div className="profile-container">
         <div className="profile-sidebar">
           <div className="profile-image">
@@ -83,19 +102,19 @@ const Profile = () => {
 
         <div className="profile-content">
           <div className="tabs">
-            <button 
+            <button
               className={activeTab === 'Account Settings' ? 'active' : ''}
               onClick={() => handleTabClick('Account Settings')}
             >
               Account Settings
             </button>
-            <button 
+            <button
               className={activeTab === 'Documents' ? 'active' : ''}
               onClick={() => setActiveTab('Documents')}
             >
               Documents
             </button>
-            <button 
+            <button
               className={activeTab === 'Bank Details' ? 'active' : ''}
               onClick={() => handleTabClick('Bank Details')}
             >
@@ -123,8 +142,7 @@ const Profile = () => {
                         <input
                           type="checkbox"
                           checked={doc.checked}
-                          onChange={() => handleCheckbox(doc.id)}
-                        />
+                          onChange={() => handleCheckbox(doc.id)} />
                       </td>
                       <td>{doc.name}</td>
                       <td>{doc.content}</td>
@@ -144,9 +162,11 @@ const Profile = () => {
           </div>
         </div>
       </div>
+
+      {/* The Footer */}
       <Footer />
     </>
   );
-};
+}
 
 export default Profile;

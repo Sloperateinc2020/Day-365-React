@@ -6,9 +6,9 @@ const config = {
     // LATESTSERVICE_API_URL: 'https://run.mocky.io/v3/8d88062e-45c5-4df3-97bc-3ece2305bffc',
     // TOPSERVICE_API_URL:'https://run.mocky.io/v3/a560955a-c4bb-4f79-8a4f-c9ee5020b1aa',
 
-    SERVICE_API_URL: 'https://run.mocky.io/v3/2921d560-142b-44bf-8237-8338ad38b8fd',
-    LATESTSERVICE_API_URL: 'https://run.mocky.io/v3/12b510f8-f22f-4478-a6ca-75ca79160b3d',
-    TOPSERVICE_API_URL:'https://run.mocky.io/v3/435cf173-53a2-4ab6-aa5b-ef45824cdcae',
+    SERVICE_API_URL: 'https://run.mocky.io/v3/d80519d3-8998-4876-9485-63852af08b56',
+    LATESTSERVICE_API_URL: 'https://run.mocky.io/v3/66e7f1ed-35f0-438a-90cd-8f65ac3aa11f',
+    TOPSERVICE_API_URL:'https://run.mocky.io/v3/db83de6f-fd1a-4abb-8310-c043da75141c',
     BOOKING_API_URL:'https://run.mocky.io/v3/7c52b0e8-5141-4b72-a3e2-923c873320ce',
    
     VENDORLISTINGS_API_URL:'https://run.mocky.io/v3/07dc8e7d-8209-4e73-ac0d-0a11ab3db028',

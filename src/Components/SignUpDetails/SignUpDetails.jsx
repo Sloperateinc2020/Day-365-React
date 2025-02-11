@@ -115,12 +115,12 @@ const SignUpDetails = () => {
 
   const handleResend = async () => {
     try {
-      await axios.post(`${config.API_BASE_URL}/mobile-users/resend-otp`, {
-        phone: formData.phone
+      await axios.post(`${config.API_BASE_URL}/users/resend-otp`, {
+        email: formData.email
       });
 
       setTimer(15);
-      setOTP(['', '', '', '', '', '']); // Reset to 6 empty boxes
+      setOTP(['', '', '', '', '', '']); 
       inputRefs[0].current?.focus();
       setError('');
     } catch (err) {
@@ -448,7 +448,7 @@ const SignUpDetails = () => {
           </div>
         </div>
       )}
-    </div>
+    </div> 
   );
 };
 

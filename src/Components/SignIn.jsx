@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { FaGoogle, FaFacebook, FaApple, FaEye, FaEyeSlash } from "react-icons/fa";
 import { IoLogoOctocat } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-
 import Footer from "./Footer";
 
 function SignIn() {
@@ -10,8 +9,8 @@ function SignIn() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  const [error, setError] = useState(""); // State to store error message
-  const navigate = useNavigate(); // React Router hook for navigation
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -24,12 +23,44 @@ function SignIn() {
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-    setError(""); // Clear any previous error messages
-      // Redirect to the vendor dashboard page
-      navigate("/vendordashboard"); // Use navigate to redirect
+    setError("");
+
+    try {
+      const response = await fetch("http://localhost:8080/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.ok) {
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          const data = await response.json();
+          console.log("Login response:", data);
+        }
+        
+        // Set login status in localStorage and dispatch event
+        localStorage.setItem('isLoggedIn', 'true');
+        window.dispatchEvent(new Event('login'));
+        
+        // Navigate to home page
+        navigate("/home");
+      } else {
+        try {
+          const errorData = await response.json();
+          setError(errorData.message || "Invalid email or password");
+        } catch {
+          setError(response.statusText || "Invalid email or password");
+        }
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      setError("An error occurred. Please try again.");
+    }
   };
 
-  
   // Mobile version
   if (isMobile) {
     return (
@@ -52,8 +83,8 @@ function SignIn() {
         >
           <div
             style={{
-              width: "500px", // Full width on mobile
-              maxWidth: "530px", // Max width for content
+              width: "500px",
+              maxWidth: "530px",
               background: "white",
               borderRadius: "10px",
               padding: "20px",
@@ -236,6 +267,7 @@ function SignIn() {
                   textAlign: "center",
                   marginTop: "10px",
                 }}
+                onClick={() => navigate("/forgotpassword")}
               >
                 Forgot password?
               </a>
@@ -261,7 +293,7 @@ function SignIn() {
             {error && (
               <div
                 style={{
-                  color: "red", // Set the text color to red
+                  color: "red",
                   fontSize: "14px",
                   textAlign: "center",
                   marginTop: "10px",
@@ -327,6 +359,7 @@ function SignIn() {
             fontSize: "14px",
             textDecoration: "none",
           }}
+          onClick={() => navigate("/signup")}
         >
           Don't have an account?{' '}
           <span style={{ color: "#6A5ACD" }}>Register Now</span>
@@ -413,6 +446,19 @@ function SignIn() {
                   backgroundColor: "#f9f9f9",
                 }}
               />
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: "absolute",
+                  right: "15px",
+                  top: "60%",
+                  transform: "translateY(-50%)",
+                  cursor: "pointer",
+                  color: "#666",
+                }}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
             </div>
 
             <a
@@ -423,6 +469,7 @@ function SignIn() {
                 fontSize: "14px",
                 textDecoration: "none",
               }}
+              onClick={() => navigate("/forgotpassword")}
             >
               Forgot Password?
             </a>
@@ -513,6 +560,19 @@ function SignIn() {
               <FaFacebook /> Facebook
             </button>
           </div>
+
+          {error && (
+            <div
+              style={{
+                color: "red",
+                fontSize: "14px",
+                textAlign: "center",
+                marginTop: "20px",
+              }}
+            >
+              {error}
+            </div>
+          )}
         </div>
       </div>
 

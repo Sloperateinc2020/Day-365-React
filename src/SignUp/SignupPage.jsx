@@ -11,7 +11,7 @@ const SignupPage = () => {
   
 
   const handleEmailMobileSignup = () => {
-    navigate('/signupdetails');
+    navigate('/signupdetails'); 
   };
 
   const handleLoginRedirect = () => {

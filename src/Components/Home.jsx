@@ -52,16 +52,6 @@ function Home() {
     }
   };
 
-  // const fetchLatestServices = async () => {
-  //   try {
-  //     const response = await fetch(config.LATESTSERVICE_API_URL);
-  //     const data = await response.json();
-  //     setLatestServices(data.latestServices);
-  //   } catch (error) {
-  //     console.error('Error fetching latest services:', error);
-  //   }
-  // };
-
   const fetchTopServices = async () => {
     try {
       const response = await fetch(config.TOPSERVICE_API_URL);

@@ -17,7 +17,16 @@ const AccountSettings = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    phone: "",
+    email: "",
+    city: "",
+    state: "",
+    postcode: "",
+    country: "",
+  });
   const handleTabClick = (tab) => {
     setActiveTab(tab);
     if (tab === 'Documents') {
@@ -26,7 +35,9 @@ const AccountSettings = () => {
       navigate('/bankdetails');
     }
   };
-
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
   const handleCopy = () => {
     navigator.clipboard.writeText('https://app.ahiregro...');
     setLinkText('Copied');
@@ -108,44 +119,60 @@ const AccountSettings = () => {
 
             {activeTab === 'Account Settings' && (
               <div className="account-settings-wrapper">
-                <form className="account-form">
-                  <div className="form-data left-column">
-                    <label>First Name</label>
-                    <input type="text" placeholder="Enter first name" />
-                  </div>
-                  <div className="form-data right-column">
-                    <label>Last Name</label>
-                    <input type="text" placeholder="Enter last name" />
-                  </div>
-                  <div className="form-data left-column">
-                    <label>Phone Number</label>
-                    <input type="text" placeholder="Enter phone number" />
-                  </div>
-                  <div className="form-data right-column">
-                    <label>Email address</label>
-                    <input type="email" placeholder="Enter email address" />
-                  </div>
-                  <div className="form-data left-column">
-                    <label>City</label>
-                    <input type="text" placeholder="Enter city" />
-                  </div>
-                  <div className="form-data right-column">
-                    <label>State</label>
-                    <input type="text" placeholder="Enter state" />
-                  </div>
-                  <div className="form-data left-column">
-                    <label>Postcode</label>
-                    <input type="text" placeholder="Enter postcode" />
-                  </div>
-                  <div className="form-data right-column">
-                    <label>Country</label>
-                    <input type="text" placeholder="Enter country" />
-                  </div>
-                </form>
-
-                <div className="update-button-container">
+                 <form>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+            {[
+              { label: "First Name", name: "firstName", type: "text", isRightColumn: false },
+              { label: "Last Name", name: "lastName", type: "text", isRightColumn: true },
+              { label: "Phone Number", name: "phone", type: "text", isRightColumn: false },
+              { label: "Email Address", name: "email", type: "email", isRightColumn: true },
+              { label: "City", name: "city", type: "text", isRightColumn: false },
+              { label: "State", name: "state", type: "text", isRightColumn: true },
+              { label: "Postcode", name: "postcode", type: "text", isRightColumn: false },
+              { label: "Country", name: "country", type: "text", isRightColumn: true },
+            ].map((field, index) => (
+              <div
+                key={index}
+                style={{
+                  flex: "1 1 calc(50% - 5px)",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  marginLeft: field.isRightColumn ? "-390px" : "0px", // Move right-column labels left
+                }}
+              >
+                <label
+                  style={{
+                    display: "block",
+                    fontWeight: "bold",
+                    marginBottom: "5px",
+                    textAlign: "left",
+                    width: "100%",
+                  }}
+                >
+                  {field.label}
+                </label>
+                <input
+                  type={field.type}
+                  name={field.name}
+                  placeholder={`Enter ${field.label.toLowerCase()}`}
+                  value={formData[field.name]}
+                  onChange={handleChange}
+                  style={{
+                    width: "40%",
+                    padding: "10px",
+                    borderRadius: "5px",
+                    border: "1px solid #ccc",
+                    boxSizing: "border-box",
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+        </form>
+             <div className="update-button-container">
                   <button type="submit" className="update-button">Update</button>
-                </div>
+             </div>
               </div>
             )}
           </div>

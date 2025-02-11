@@ -58,7 +58,7 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
     } else if (menu === 'Login/Register') {
       navigate('/signup');
     } else if (menu === 'Beauty') {
-      navigate('/beauty');
+      navigate('/beautyServices');
     }
   };
 

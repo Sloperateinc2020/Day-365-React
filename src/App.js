@@ -34,6 +34,8 @@ import Articles from './Components/Articles';
 import ServiceDetails from './Components/ServiceDetails/ServiceDetails';
 import Forgotpassword from './Components/Forgotpassword';
 import Userdropdown from './Components/Userdropdown';
+import BeautyServices from './Components/Beauty/BeautyServices';
+import VideoDetails from './Components/VideoDetails/VideoDetails';
 
 
 
@@ -108,8 +110,9 @@ const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
         <Route path="/signupdetails" element={<SignUpDetails />} /> 
         <Route path="/chat" element={<ChatApp />} />
         <Route path="/vendoravailability" element={<VendorAvailability />} />
+        <Route path="/beautyServices" element={<BeautyServices />} />
         <Route path="/articles" element={<Articles />} />
-
+        <Route path="/video-details" element={<VideoDetails />} />
         <Route path="/service-details" element={<ServiceDetails />} />
         <Route path="/forgotpassword" element={<Forgotpassword />} />
         <Route path="/userdropdown" element={<Userdropdown />} />

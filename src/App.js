@@ -8,7 +8,6 @@ import SignIn from './Components/SignIn';
 import SignupPage from './SignUp/SignupPage';
 import Booking from './Components/Booking/Booking';
 import Blog from './Components/Blog/Blog';
-import Cart from './Components/Cart';
 import Listings from './Components/Listings';
 import Availability from './Availability/Availability';
 import Profile from './Components/Profile/Profile'; // Ensure this is the correct path
@@ -32,9 +31,13 @@ import ChatApp from './Components/ChatApp/ChatApp';
 import VendorAvailability from './Components/VendorAvailability/VendorAvailability';
 import LatestServices from './Components/LatestServices/LatestServices';
 import Articles from './Components/Articles';
-import BeautyServices from './Components/Beauty/BeautyServices';
 import ServiceDetails from './Components/ServiceDetails/ServiceDetails';
+import Forgotpassword from './Components/Forgotpassword';
+import Userdropdown from './Components/Userdropdown';
+import BeautyServices from './Components/Beauty/BeautyServices';
 import VideoDetails from './Components/VideoDetails/VideoDetails';
+
+
 
 
 
@@ -97,7 +100,6 @@ const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
         <Route path="/services" element={<Services />} />
         <Route path="/search-result" element={<SearchResult />} />
         <Route path="/Blog" element={<Blog />} />
-        <Route path="/Cart" element={<Cart />} />
         <Route path="/availability" element={<Availability />} />
         <Route path="/vendordashboard" element={<VendorDashboard />} />
         <Route path="/confirmbooking" element={<ConfirmBooking />} />
@@ -112,6 +114,10 @@ const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
         <Route path="/articles" element={<Articles />} />
         <Route path="/video-details" element={<VideoDetails />} />
         <Route path="/service-details" element={<ServiceDetails />} />
+        <Route path="/forgotpassword" element={<Forgotpassword />} />
+        <Route path="/userdropdown" element={<Userdropdown />} />
+
+
 
         
         {/* LatestServices route */}

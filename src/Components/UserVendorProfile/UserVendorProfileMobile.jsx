@@ -1,28 +1,38 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Footer from "../Footer";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
+import Footer from '../Footer'; // Make sure this path is correct
 
-const AccountSettingsMobile = () => {
-  const navigate = useNavigate();
+const UserVendorProfileMobile = () => {
+  const [isEditable, setIsEditable] = useState(false);
+  const navigate = useNavigate(); // Initialize navigate
 
+  const handleEditProfileClick = () => {
+    setIsEditable(!isEditable);
+  };
+
+  // Initialize formData state with empty strings or appropriate initial values
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    phone: "",
-    email: "",
-    city: "",
-    state: "",
-    postcode: "",
-    country: "",
+    firstName: '',
+    lastName: '',
+    phone: '',
+    email: '',
+    city: '',
+    state: '',
+    postcode: '',
+    country: '',
   });
 
+  // Function to handle changes to form inputs
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
   };
 
   return (
     <div style={{ position: "relative", padding: "20px", fontFamily: "Arial, sans-serif", marginTop: "50px" }}>
-      
       {/* Cover Background */}
       <div style={{
         position: "absolute",
@@ -58,26 +68,22 @@ const AccountSettingsMobile = () => {
       </button>
 
       {/* Profile Container */}
-      <div
-        style={{
-          backgroundColor: "#fff",
-          padding: "20px",
-          borderRadius: "20px",
-          boxShadow: "0px 0px 10px rgba(0,0,0,0.1)",
-          textAlign: "center",
-          marginBottom: "0px",
-        }}
-      >
+      <div style={{
+        backgroundColor: "#fff",
+        padding: "20px",
+        borderRadius: "20px",
+        boxShadow: "0px 0px 10px rgba(0,0,0,0.1)",
+        textAlign: "center",
+        marginBottom: "20px",
+      }}>
         {/* Profile Picture */}
-        <div
-          style={{
-            width: "80px",
-            height: "80px",
-            backgroundColor: "#ccc",
-            borderRadius: "50%",
-            margin: "0 auto 10px",
-          }}
-        ></div>
+        <div style={{
+          width: "80px",
+          height: "80px",
+          backgroundColor: "#ccc",
+          borderRadius: "50%",
+          margin: "0 auto 10px",
+        }}></div>
 
         <h3 style={{ margin: "0 0 5px" }}>Thirupathi Raju Vattem</h3>
         <p style={{ margin: "0", color: "gray" }}>Haryak Inc.</p>
@@ -118,7 +124,7 @@ const AccountSettingsMobile = () => {
         {/* Profile Link */}
         <input
           type="text"
-          value="https://app.ahiregro..."
+          value="https://app.ahiregro.com"
           readOnly
           style={{
             marginTop: "10px",
@@ -132,55 +138,30 @@ const AccountSettingsMobile = () => {
       </div>
 
       {/* Navigation Tabs */}
-      <div style={{ display: "flex", justifyContent: "center", marginTop: "20px", gap: "5px" }}>
+      <div style={{ display: "flex", justifyContent: "center", marginTop: "20px", gap: "10px" }}>
         <button
           style={{
-            padding: "5px",
+            padding: "10px 20px",
             border: "1px solid #007bff",
-            background: "#007bff",
-            color: "#fff",
+            backgroundColor: "#fff",
+            color: "#007bff",
             cursor: "pointer",
             borderRadius: "5px",
           }}
+          onClick={() => navigate("/account-settings")}
         >
           Account Settings
-        </button>
-        <button
-          style={{
-            padding: "10px",
-            border: "1px solid #ccc",
-            background: "#fff",
-            cursor: "pointer",
-            borderRadius: "10px",marginLeft: 10
-          }}
-          onClick={() => navigate("/documents")}
-        >
-          Documents
-        </button>
-        <button
-          style={{
-            padding: "10px",
-            border: "1px solid #ccc",
-            background: "#fff",
-            cursor: "pointer",
-            borderRadius: "5px",marginLeft: 10
-          }}
-          onClick={() => navigate("/bankdetails")}
-        >
-          Bank Details
         </button>
       </div>
 
       {/* Form Section */}
-      <div
-        style={{
-          background: "#fff",
-          padding: "20px",
-          marginTop: "20px",
-          borderRadius: "30px",
-          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-        }}
-      >
+      <div style={{
+        background: "#fff",
+        padding: "20px",
+        marginTop: "20px",
+        borderRadius: "30px",
+        boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+      }}>
         <form>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
             {[
@@ -213,21 +194,25 @@ const AccountSettingsMobile = () => {
               </div>
             ))}
           </div>
+          <div style={{ marginTop: '20px', textAlign: 'center' }}>
+            <button
+              type="button"
+              onClick={handleEditProfileClick}
+              style={{
+                backgroundColor: isEditable ? '#28a745' : '#007bff',
+                color: 'white',
+                padding: '12px',
+                border: 'none',
+                width: '30%',
+                borderRadius: '5px',
+                cursor: 'pointer',
+                marginLeft: -210
+              }}
+            >
+              {isEditable ? 'Save Changes' : 'Edit Profile'}
+            </button>
+          </div>
         </form>
-
-        <button
-          style={{
-            marginTop: "10px",
-            padding: "5px 10px",
-            border: "none",
-            backgroundColor: "#3f51b5",
-            color: "white",
-            borderRadius: "5px",
-            width: "20%",
-          }}
-        >
-          Update
-        </button>
       </div>
 
       <Footer />
@@ -235,4 +220,4 @@ const AccountSettingsMobile = () => {
   );
 };
 
-export default AccountSettingsMobile;
+export default UserVendorProfileMobile;

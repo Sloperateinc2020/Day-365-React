@@ -181,18 +181,26 @@ body.scroll-locked {
   cursor: pointer;
 }
 
+.view-profile-button {
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.view-profile-button:hover {
+  background-color: #357ae8;
+}
+
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
-  .cover-text {
-    font-size: 14px;
-    top: 18px;
-    right: 20px;
-    padding: 8px 16px;
-  }
-
   .profile-container {
     flex-direction: column;
-    padding: 0px;
+    padding: 30px;
     margin-top: 20px;
     margin-bottom: 30px;
   }
@@ -205,11 +213,11 @@ body.scroll-locked {
   }
 
   .profile-image {
-    margin-left: 0;
+    margin-left: 200px;
   }
 
   .profile-content {
-    margin-top: 20px;
+    margin-top: 20px;margin-left: 50px;
   }
 
   .form-data.left-column,

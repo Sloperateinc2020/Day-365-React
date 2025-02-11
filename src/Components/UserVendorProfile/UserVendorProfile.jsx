@@ -2,42 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './UserVendorProfile.css';
 import Footer from '../Footer';
+import UserVendorProfileMobile from './UserVendorProfileMobile'; // Importing mobile version
 
 const AccountSettings = () => {
   const [activeTab, setActiveTab] = useState('Account Settings');
-  const [linkText, setLinkText] = useState('https://app.ahiregro...');
-  const [selectedCity, setSelectedCity] = useState('');
-  const [isEditable, setIsEditable] = useState(false); // State to track whether the form is editable
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); // State to track mobile view
+  const [isEditable, setIsEditable] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const navigate = useNavigate();
 
-  const cities = [
-    "Chiakaluripet",
-    "Hyderabad",
-    "Mumbai",
-    "Delhi",
-    "Bangalore",
-    "Chennai",
-    "Kolkata",
-    "Pune",
-    "Ahmedabad",
-    "Jaipur"
-  ];
-
-  const countries = [
-    "India",
-    "United States",
-    "United Kingdom",
-    "Canada",
-    "Australia",
-    "Germany",
-    "France",
-    "Japan",
-    "Singapore",
-    "UAE"
-  ];
-
-  // Effect to handle window resize
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -47,177 +19,112 @@ const AccountSettings = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const handleTabClick = (tab) => {
-    setActiveTab(tab);
-    if (tab === 'Documents') {
-      navigate('/documents');
-    } else if (tab === 'Bank Details') {
-      navigate('/bankdetails');
-    }
-  };
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText('https://app.ahiregro...');
-    setLinkText('Copied');
-    setTimeout(() => {
-      setLinkText('https://app.ahiregro...');
-    }, 2000);
-  };
-
-  const handlePreviousBookingsClick = () => {
-    navigate('/previousbooking');
-  };
-
-  // Handle city selection change
-  const handleCityChange = (event) => {
-    setSelectedCity(event.target.value); // Update the selected city
-  };
-
-  // Toggle the edit state
   const handleEditProfileClick = () => {
-    setIsEditable(!isEditable); // Toggle editability
+    setIsEditable(!isEditable);
   };
 
   return (
     <>
-      <div className="cover-text">
-        <i className="fas fa-camera" style={{ marginRight: '8px', fontSize: '20px' }}></i>
-        change cover
-      </div>
+      {/* Mobile Version */}
+      {isMobile ? (
+        <UserVendorProfileMobile />
+      ) : (
+        <>
+          <div className="cover-text">
+            <i className="fas fa-camera" style={{ marginRight: '8px', fontSize: '20px' }}></i>
+            Change Cover
+          </div>
 
-      <div className="profile-container">
-        <div className="profile-sidebar">
-          <div className="profile-image">
-            <div className="avatar-placeholder"></div>
-          </div>
-          <div className="profile-info">
-            <h3>Thirupathi Raju Vattem</h3>
-            <p>Haryak Inc.</p>
-          </div>
-          <div className="profile-stats">
-            <div className="stat-item" style={{ borderLeft: 'black', borderRight: 'black', padding: '10px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-              <span>Explore Services</span>
-              <span className="stat-number green"></span>
+          <div className="profile-container">
+            <div className="profile-sidebar">
+              <div className="profile-image">
+                <div className="avatar-placeholder"></div>
+              </div>
+              <div className="profile-info">
+                <h3>Thirupathi Raju Vattem</h3>
+                <p>Haryak Inc.</p>
+              </div>
+              <div className="profile-stats">
+                <div className="stat-item">
+                  <span>Opportunities Applied</span>
+                  <span className="stat-number">2</span>
+                </div>
+                <div className="stat-item">
+                  <span>Completed Bookings</span>
+                  <span className="stat-number">26</span>
+                </div>
+                <div className="stat-item">
+                  <span>Upcoming Bookings</span>
+                  <span className="stat-number">6</span>
+                </div>
+              </div>
+              <button className="view-profile-button">View Public Profile</button>
             </div>
-            <div className="stat-item" style={{ borderLeft: 'black', borderRight: 'black', padding: '10px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }} onClick={handlePreviousBookingsClick}>
-              <span>Previous Bookings</span>
-              <span className="stat-number">2</span>
+
+            <div className="profile-content">
+              <div className="tabs">
+                <button
+                  className={activeTab === 'Account Settings' ? 'active' : ''}
+                  onClick={() => setActiveTab('Account Settings')}
+                >
+                  Account Settings
+                </button>
+              </div>
+
+              {activeTab === 'Account Settings' && (
+                <div className="account-settings-wrapper">
+                  <form className="account-form">
+                    <div className="form-data left-column">
+                      <label>First Name</label>
+                      <input type="text" placeholder="Enter first name" disabled={!isEditable} />
+                    </div>
+                    <div className="form-data right-column">
+                      <label>Last Name</label>
+                      <input type="text" placeholder="Enter last name" disabled={!isEditable} />
+                    </div>
+                    <div className="form-data left-column">
+                      <label>Account Number</label>
+                      <input type="text" placeholder="Enter account number" disabled={!isEditable} />
+                    </div>
+                    <div className="form-data right-column">
+                      <label>Confirm Account Number</label>
+                      <input type="text" placeholder="Confirm account number" disabled={!isEditable} />
+                    </div>
+                    <div className="form-data left-column">
+                      <label>IFSC</label>
+                      <input type="text" placeholder="Enter IFSC" disabled={!isEditable} />
+                    </div>
+                    <div className="form-data right-column">
+                      <label>Branch</label>
+                      <input type="text" placeholder="Enter branch" disabled={!isEditable} />
+                    </div>
+                    <div className="form-data left-column">
+                      <label>Mobile</label>
+                      <input type="text" placeholder="Enter mobile" disabled={!isEditable} />
+                    </div>
+                    <div className="form-data right-column">
+                      <label>Email</label>
+                      <input type="email" placeholder="Enter email" disabled={!isEditable} />
+                    </div>
+                  </form>
+                </div>
+              )}
+
+              <div className="update-button-container">
+                <button
+                  type="button"
+                  className="update-button"
+                  onClick={handleEditProfileClick}
+                >
+                  {isEditable ? 'Save Changes' : 'Edit Profile'}
+                </button>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="profile-content">
-          <div className="tabs">
-            <button 
-              className={activeTab === 'Account Settings' ? 'active' : ''}
-              onClick={() => handleTabClick('Account Settings')}
-            >
-              Account Settings
-            </button>
-          </div>
-
-          {activeTab === 'Account Settings' && (
-            <div className="account-settings-wrapper">
-              <form className="account-form">
-                <div className="form-data left-column">
-                  <label>First Name</label>
-                  <input 
-                    type="text" 
-                    placeholder="Enter first name" 
-                    disabled={!isEditable} // Disable input if not editable
-                  />
-                </div>
-                <div className="form-data right-column">
-                  <label>Last Name</label>
-                  <input 
-                    type="text" 
-                    placeholder="Enter last name" 
-                    disabled={!isEditable} // Disable input if not editable
-                  />
-                </div>
-                <div className="form-data left-column">
-                  <label>Phone Number</label>
-                  <input 
-                    type="text" 
-                    placeholder="Enter phone number" 
-                    disabled={!isEditable} // Disable input if not editable
-                  />
-                </div>
-                <div className="form-data right-column">
-                  <label>Email address</label>
-                  <input 
-                    type="email" 
-                    placeholder="Enter email address" 
-                    disabled={!isEditable} // Disable input if not editable
-                  />
-                </div>
-                <div className="form-data left-column">
-                  <label>City</label>
-                  <select 
-                    value={selectedCity} 
-                    onChange={handleCityChange} 
-                    disabled={!isEditable} // Disable select if not editable
-                  >
-                    <option value="" disabled>Select city</option>
-                    {cities.map((city) => (
-                      <option key={city} value={city}>{city}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-data right-column">
-                  <label>State</label>
-                  <input 
-                    type="text" 
-                    placeholder="Enter state" 
-                    disabled={!isEditable} // Disable input if not editable
-                  />
-                </div>
-                <div className="form-data left-column">
-                  <label>Address</label>
-                  <input 
-                    type="text" 
-                    placeholder="Enter Address" 
-                    disabled={!isEditable} // Disable input if not editable
-                  />
-                </div>
-                <div className="form-data right-column">
-                  <label>Country</label>
-                  <select 
-                    defaultValue="" 
-                    disabled={!isEditable} // Disable select if not editable
-                  >
-                    <option value="" disabled>Select country</option>
-                    {countries.map((country) => (
-                      <option key={country} value={country}>{country}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-data left-column">
-                  <label>Pincode</label>
-                  <input 
-                    type="text" 
-                    placeholder="Enter pincode" 
-                    disabled={!isEditable} // Disable input if not editable
-                  />
-                </div>
-              </form>
-            </div>
-          )}
-
-          <div className="update-button-container">
-            <button 
-              type="button" 
-              className="update-button"
-              onClick={handleEditProfileClick} // Toggle edit mode
-            >
-              {isEditable ? 'Save Changes' : 'Edit Profile'} {/* Change button text based on edit mode */}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Conditionally render Footer based on screen width */}
-      {!isMobile && <Footer />}
+          {!isMobile && <Footer />}
+        </>
+      )}
     </>
   );
 };

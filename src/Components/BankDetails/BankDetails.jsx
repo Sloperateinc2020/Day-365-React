@@ -77,40 +77,38 @@ const BankDetails = () => {
           </div>
 
           <div className="bank-details-wrapper">
-            <form className="bank-form">
-              <div className="form-data left-column">
-                <label>First Name</label>
-                <input type="text" />
-              </div>
-              <div className="form-data right-column">
-                <label>Last Name</label>
-                <input type="text" />
-              </div>
-              <div className="form-data left-column">
-                <label>Account Number</label>
-                <input type="text" />
-              </div>
-              <div className="form-data right-column">
-                <label>Confirm Account Number</label>
-                <input type="text" />
-              </div>
-              <div className="form-data left-column">
-                <label>IFSC</label>
-                <input type="text" />
-              </div>
-              <div className="form-data right-column">
-                <label>Branch</label>
-                <input type="text" />
-              </div>
-              <div className="form-data left-column">
-                <label>Mobile</label>
-                <input type="text" />
-              </div>
-              <div className="form-data right-column">
-                <label>Email</label>
-                <input type="email" />
-              </div>
-            </form>
+          <form style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+  {/* Left Column */}
+  <div style={{ flex: '1 1 45%', display: 'flex', flexDirection: 'column', marginRight: '2rem' }}>
+    <label style={{ fontWeight: 'bold', marginBottom: '0.3rem', textAlign: 'Left' }}>First Name</label>
+    <input type="text" style={{ padding: '0.5rem', width:"250px", border: '1px solid #ccc', borderRadius: '4px' }} />
+
+    <label style={{ fontWeight: 'bold', marginTop: '1rem', textAlign: 'Left' }}>Account Number</label>
+    <input type="text" style={{ padding: '0.5rem', border: '1px solid #ccc', borderRadius: '4px', width:"250px" }} />
+
+    <label style={{ fontWeight: 'bold', marginTop: '1rem', textAlign: 'Left' }}>IFSC</label>
+    <input type="text" style={{ padding: '0.5rem', border: '1px solid #ccc', borderRadius: '4px', width:"250px" }} />
+
+    <label style={{ fontWeight: 'bold', marginTop: '1rem', textAlign: 'Left' }}>Mobile</label>
+    <input type="text" style={{ padding: '0.5rem', border: '1px solid #ccc', borderRadius: '4px', width:"250px" }} />
+  </div>
+
+  {/* Right Column - Move Slightly Left */}
+  <div style={{ flex: '1 1 45%', display: 'flex', flexDirection: 'column', marginLeft: '-450px' }}>
+    <label style={{ fontWeight: 'bold', marginBottom: '0.3rem', textAlign: 'left' }}>Last Name</label>
+    <input type="text" style={{ padding: '0.5rem', border: '1px solid #ccc', borderRadius: '4px', width:"250px" }} />
+
+    <label style={{ fontWeight: 'bold', marginTop: '1rem', textAlign: 'left' }}>Confirm Account Number</label>
+    <input type="text" style={{ padding: '0.5rem', border: '1px solid #ccc', borderRadius: '4px', width:"250px" }} />
+
+    <label style={{ fontWeight: 'bold', marginTop: '1rem', textAlign: 'left' }}>Branch</label>
+    <input type="text" style={{ padding: '0.5rem', border: '1px solid #ccc', borderRadius: '4px', width:"250px" }} />
+
+    <label style={{ fontWeight: 'bold', marginTop: '1rem', textAlign: 'left' }}>Email</label>
+    <input type="email" style={{ padding: '0.5rem', border: '1px solid #ccc', borderRadius: '4px', width:"250px" }} />
+  </div>
+</form>
+
 
             <div className="update-button-container">
               <button type="submit" className="update-button">Update</button>

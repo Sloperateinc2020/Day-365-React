@@ -2,15 +2,35 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './UserVendorProfile.css';
 import Footer from '../Footer';
-import UserVendorProfileMobile from './UserVendorProfileMobile'; // Importing mobile version
+import UserVendorProfileMobile from './UserVendorProfileMobile';
 
 const AccountSettings = () => {
   const [activeTab, setActiveTab] = useState('Account Settings');
   const [isEditable, setIsEditable] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [userData, setUserData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    accountNumber: '',
+    ifsc: '',
+    branch: ''
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Load user data from localStorage
+    const storedUserData = localStorage.getItem('userData');
+    if (storedUserData) {
+      const parsedData = JSON.parse(storedUserData);
+      setUserData(prevData => ({
+        ...prevData,
+        ...parsedData,
+        firstName: parsedData.fullName.split(' ')[0] || '',
+        lastName: parsedData.fullName.split(' ').slice(1).join(' ') || ''
+      }));
+    }
+
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
@@ -20,12 +40,27 @@ const AccountSettings = () => {
   }, []);
 
   const handleEditProfileClick = () => {
+    if (isEditable) {
+      // Save the changes to localStorage
+      const updatedUserData = {
+        ...userData,
+        fullName: `${userData.firstName} ${userData.lastName}`.trim()
+      };
+      localStorage.setItem('userData', JSON.stringify(updatedUserData));
+    }
     setIsEditable(!isEditable);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUserData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   return (
     <>
-      {/* Mobile Version */}
       {isMobile ? (
         <UserVendorProfileMobile />
       ) : (
@@ -41,7 +76,7 @@ const AccountSettings = () => {
                 <div className="avatar-placeholder"></div>
               </div>
               <div className="profile-info">
-                <h3>Thirupathi Raju Vattem</h3>
+                <h3>{userData.fullName}</h3>
                 <p>Haryak Inc.</p>
               </div>
               <div className="profile-stats">
@@ -76,35 +111,88 @@ const AccountSettings = () => {
                   <form className="account-form">
                     <div className="form-data left-column">
                       <label>First Name</label>
-                      <input type="text" placeholder="Enter first name" disabled={!isEditable} />
+                      <input
+                        type="text"
+                        name="firstName"
+                        value={userData.firstName}
+                        onChange={handleInputChange}
+                        placeholder="Enter first name"
+                        disabled={!isEditable}
+                      />
                     </div>
                     <div className="form-data right-column">
                       <label>Last Name</label>
-                      <input type="text" placeholder="Enter last name" disabled={!isEditable} />
+                      <input
+                        type="text"
+                        name="lastName"
+                        value={userData.lastName}
+                        onChange={handleInputChange}
+                        placeholder="Enter last name"
+                        disabled={!isEditable}
+                      />
                     </div>
                     <div className="form-data left-column">
                       <label>Account Number</label>
-                      <input type="text" placeholder="Enter account number" disabled={!isEditable} />
+                      <input
+                        type="text"
+                        name="accountNumber"
+                        value={userData.accountNumber}
+                        onChange={handleInputChange}
+                        placeholder="Enter account number"
+                        disabled={!isEditable}
+                      />
                     </div>
                     <div className="form-data right-column">
                       <label>Confirm Account Number</label>
-                      <input type="text" placeholder="Confirm account number" disabled={!isEditable} />
+                      <input
+                        type="text"
+                        placeholder="Confirm account number"
+                        disabled={!isEditable}
+                      />
                     </div>
                     <div className="form-data left-column">
                       <label>IFSC</label>
-                      <input type="text" placeholder="Enter IFSC" disabled={!isEditable} />
+                      <input
+                        type="text"
+                        name="ifsc"
+                        value={userData.ifsc}
+                        onChange={handleInputChange}
+                        placeholder="Enter IFSC"
+                        disabled={!isEditable}
+                      />
                     </div>
                     <div className="form-data right-column">
                       <label>Branch</label>
-                      <input type="text" placeholder="Enter branch" disabled={!isEditable} />
+                      <input
+                        type="text"
+                        name="branch"
+                        value={userData.branch}
+                        onChange={handleInputChange}
+                        placeholder="Enter branch"
+                        disabled={!isEditable}
+                      />
                     </div>
                     <div className="form-data left-column">
                       <label>Mobile</label>
-                      <input type="text" placeholder="Enter mobile" disabled={!isEditable} />
+                      <input
+                        type="text"
+                        name="phone"
+                        value={userData.phone}
+                        onChange={handleInputChange}
+                        placeholder="Enter mobile"
+                        disabled={!isEditable}
+                      />
                     </div>
                     <div className="form-data right-column">
                       <label>Email</label>
-                      <input type="email" placeholder="Enter email" disabled={!isEditable} />
+                      <input
+                        type="email"
+                        name="email"
+                        value={userData.email}
+                        onChange={handleInputChange}
+                        placeholder="Enter email"
+                        disabled={!isEditable}
+                      />
                     </div>
                   </form>
                 </div>

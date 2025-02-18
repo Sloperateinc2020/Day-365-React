@@ -43,6 +43,18 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
     };
   }, []);
 
+  // Add click outside handler to close dropdown
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isDropdownOpen && !event.target.closest('.profile-section')) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isDropdownOpen]);
+
   const handleMenuClick = (menu) => {
     setSelectedMenu(menu);
     setDropdownOpen(false);
@@ -67,10 +79,9 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
     setDropdownOpen(false);
   };
 
-  const handleProfileClick = () => {
-    if (location.pathname !== '/uservendorprofile') {
-      setDropdownOpen(!isDropdownOpen);
-    }
+  const handleProfileClick = (e) => {
+    e.stopPropagation(); // Prevent event bubbling
+    setDropdownOpen(!isDropdownOpen);
   };
 
   const handleLogout = () => {
@@ -78,6 +89,7 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
     localStorage.removeItem('isLoggedIn');
     window.dispatchEvent(new Event('logout'));
     setDropdownOpen(false);
+    navigate('/home'); // Navigate to home after logout
   };
 
   if (location.pathname === '/payments') {
@@ -106,7 +118,7 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
     maxWidth: 1500,
     height: 60,
     boxSizing: 'border-box',
-    justifyContent: isMobile ? 'space-around' : 'flex-start',
+    justifyContent: isMobile ? 'space-around' : 'space-between',
   };
 
   const logoTextStyle = {
@@ -139,9 +151,22 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
 
   const profileIconStyle = {
     cursor: 'pointer',
-    marginLeft: 'auto', // Changed to auto to push it to the right
-    fontSize: '20px',
+    marginLeft: 'auto',
+    fontSize: '33px',
     color: '#8a6ded',
+    marginBottom: '-20px'  // Adjusted marginBottom for more space at the bottom
+};
+
+
+  const vendorButtonStyle = {
+    backgroundColor: '#8a6ded',
+    color: 'white',
+    border: 'none',
+    padding: '10px 10px',
+    cursor: 'pointer',
+    borderRadius: '25px',
+    fontSize: '12px',
+    marginLeft: '380px',
   };
 
   const dropdownMenuStyle = {
@@ -159,10 +184,12 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
   };
 
   const dropdownItemStyle = {
-    padding: '8px 16px',
+    padding: '12px 20px',
     cursor: 'pointer',
     color: 'black',
     borderBottom: '1px solid #eee',
+    transition: 'background-color 0.2s',
+    whiteSpace: 'nowrap',
     '&:hover': {
       backgroundColor: '#f5f5f5',
     },
@@ -211,52 +238,67 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
           </button>
 
           {!isMobile && !isLoggedIn && (
-            <button
-              onClick={() => handleMenuClick('Login/Register')}
-              style={textWithGapStyle(selectedMenu === 'Login/Register')}
-            >
-              <FontAwesomeIcon icon={faUser} />
-              Login/Register
-            </button>
+            <>
+              <button
+                onClick={() => handleMenuClick('Login/Register')}
+                style={textWithGapStyle(selectedMenu === 'Login/Register')}
+              >
+                <FontAwesomeIcon icon={faUser} />
+                Login/Register
+              </button>
+              <button
+                onClick={handleVendorClick}
+                style={vendorButtonStyle}
+              >
+                Join As Vendor
+              </button>
+            </>
           )}
 
           {isLoggedIn && !isMobile && (
-            <FontAwesomeIcon
-              icon={faUserCircle}
-              style={profileIconStyle}
-              onClick={handleProfileClick}
-            />
+            <div className="profile-section" style={{ marginLeft: 'auto', position: 'relative' }}>
+              <FontAwesomeIcon
+                icon={faUserCircle}
+                style={profileIconStyle}
+                onClick={handleProfileClick}
+              />
+              {isDropdownOpen && (
+                <div style={dropdownMenuStyle}>
+                  <div
+                    style={{...dropdownItemStyle, backgroundColor: location.pathname === '/uservendorprofile' ? '#f0f0f0' : 'white'}}
+                    onClick={() => {
+                      navigate('/uservendorprofile');
+                      setDropdownOpen(false);
+                    }}
+                  >
+                    Profile
+                  </div>
+                  <div
+                    style={dropdownItemStyle}
+                    onClick={handleVendorClick}
+                  >
+                    Join as a Vendor
+                  </div>
+                  <div
+                    style={dropdownItemStyle}
+                    onClick={() => {
+                      alert('Upgrade Plan Clicked');
+                      setDropdownOpen(false);
+                    }}
+                  >
+                    Upgrade Plan
+                  </div>
+                  <div
+                    style={dropdownItemStyle}
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </div>
+                </div>
+              )}
+            </div> 
           )}
         </div>
-
-        {!isMobile && !(location.pathname === '/uservendorprofile') && isDropdownOpen && (
-          <div style={dropdownMenuStyle}>
-            <div
-              style={dropdownItemStyle}
-              onClick={() => navigate('/uservendorprofile')}
-            >
-              Profile
-            </div>
-            <div
-              style={dropdownItemStyle}
-              onClick={handleVendorClick}
-            >
-              Join as a Vendor
-            </div>
-            <div
-              style={dropdownItemStyle}
-              onClick={() => alert('Upgrade Plan Clicked')}
-            >
-              Upgrade Plan
-            </div>
-            <div
-              style={dropdownItemStyle}
-              onClick={handleLogout}
-            >
-              Logout
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

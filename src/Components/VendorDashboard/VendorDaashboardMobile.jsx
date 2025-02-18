@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Bell, Home, ListOrdered, MessageSquare, Wallet, User, CalendarDays } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const VendorDashboardMobile = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -32,6 +34,41 @@ const VendorDashboardMobile = () => {
 
   const handleClosePopup = () => {
     setSelectedBooking(null);
+  };
+
+  const sidebarStyle = {
+    width: '100%',
+    backgroundColor: 'white',
+    borderTop: '1px solid #eee',
+    height: '60px',
+    position: 'fixed',
+    left: 0,
+    bottom: 0,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    padding: '10px 0',
+    zIndex: 1000,
+  };
+
+  const sidebarItemStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    color: '#666',
+    fontSize: '11px',
+    cursor: 'pointer',
+    textDecoration: 'none',
+  };
+
+  const activeItemStyle = {
+    ...sidebarItemStyle,
+    color: '#2563eb',
+  };
+
+  const iconContainerStyle = {
+    marginBottom: '4px',
   };
 
   const styles = {
@@ -76,11 +113,13 @@ const VendorDashboardMobile = () => {
       fontWeight: "bold",
       marginBottom: "8px",
       color: "#333",
+      textAlign: "center", // Centered heading
     },
     subHeading: {
       fontSize: "14px",
       marginBottom: "16px",
       color: "#777",
+      textAlign: "center", // Centered subheading
     },
     detailItem: {
       display: "flex",
@@ -133,6 +172,7 @@ const VendorDashboardMobile = () => {
         backgroundColor: '#F9FAFB',
         maxWidth: '100%',
         margin: '0 auto',
+        paddingBottom: '80px', // Add padding to avoid content being hidden behind the bottom sidebar
       }}
     >
       {/* Upcoming Bookings Section */}
@@ -142,7 +182,7 @@ const VendorDashboardMobile = () => {
           fontWeight: '600',
           marginBottom: '35px',
           color: '#111827',
-          marginLeft: '90px',
+          textAlign: 'center', // Centered heading
         }}
       >
         Upcoming Bookings
@@ -267,7 +307,7 @@ const VendorDashboardMobile = () => {
           fontWeight: '600',
           margin: '32px 0 20px',
           color: '#111827',
-          textAlign: 'center',
+          textAlign: 'center', // Centered heading
         }}
       >
         Payments
@@ -298,6 +338,7 @@ const VendorDashboardMobile = () => {
               fontSize: '22px',
               fontWeight: 'bold',
               marginBottom: '8px',
+              textAlign: 'center', // Centered heading
             }}
           >
             Wallet Balance
@@ -358,6 +399,7 @@ const VendorDashboardMobile = () => {
               fontSize: '20px',
               fontWeight: 'bold',
               marginBottom: '8px',
+              textAlign: 'center', // Centered heading
             }}
           >
             Today Earnings
@@ -484,7 +526,7 @@ const VendorDashboardMobile = () => {
           fontWeight: '600',
           marginBottom: '20px',
           color: '#111827',
-          marginLeft: '70px',
+          textAlign: 'center', // Centered heading
         }}
       >
         Location and Availability
@@ -507,6 +549,34 @@ const VendorDashboardMobile = () => {
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
         ></iframe>
+      </div>
+
+      {/* Bottom Sidebar */}
+      <div style={sidebarStyle}>
+        <Link to="/vendordashboard" style={activeItemStyle}>
+          <span style={iconContainerStyle}><Home size={20} /></span>
+          <span>Home</span>
+        </Link>
+        <Link to="/listings" style={sidebarItemStyle}>
+          <span style={iconContainerStyle}><ListOrdered size={20} /></span>
+          <span>Listings</span>
+        </Link>
+        <Link to="/booking" style={sidebarItemStyle}>
+          <span style={iconContainerStyle}><CalendarDays size={20} /></span>
+          <span>Booking</span>
+        </Link>
+        <Link to="/messages" style={sidebarItemStyle}>
+          <span style={iconContainerStyle}><MessageSquare size={20} /></span>
+          <span>Messages</span>
+        </Link>
+        <Link to="/payments" style={sidebarItemStyle}>
+          <span style={iconContainerStyle}><Wallet size={20} /></span>
+          <span>Payments</span>
+        </Link>
+        <Link to="/profile" style={sidebarItemStyle}>
+          <span style={iconContainerStyle}><User size={20} /></span>
+          <span>Profile</span>
+        </Link>
       </div>
     </div>
   );

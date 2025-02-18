@@ -4,7 +4,6 @@ import { FaChevronLeft, FaEdit, FaCalendarAlt } from "react-icons/fa";
 import Footer from "../Footer";
 import { IoCheckmarkCircle } from "react-icons/io5";
 
-
 const ConfirmBooking = () => {
   const location = useLocation();
   const { date, time } = location.state || {};
@@ -834,7 +833,7 @@ const handleServiceSelection = (service) => {
       <Footer />
 
     </div>
-  );
+  ); 
 };
 
-export default ConfirmBooking; 
+export default ConfirmBooking;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './VendorAvailability.css';
 import { Star, MapPin, Check, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -6,9 +6,58 @@ import { Star, MapPin, Check, ChevronLeft, ChevronRight } from 'lucide-react';
 const VendorAvailability = () => {
   const navigate = useNavigate();
 
+  const months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+
+  // Initializing state for current month and year
+  const [currentMonthIndex, setCurrentMonthIndex] = useState(9); // October (index 9)
+  const [currentYear, setCurrentYear] = useState(2025);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
+
   const handleBookNow = () => {
-    // Add logic to handle selected date and time if needed
-    navigate('/confirmbooking');
+    navigate('/confirmbooking', {
+      state: {
+        selectedDate,
+        startTime,
+        endTime
+      }
+    });
+  };
+
+  const handleStartTimeChange = (e) => {
+    setStartTime(e.target.value);
+  };
+
+  const handleEndTimeChange = (e) => {
+    setEndTime(e.target.value);
+  };
+
+  const handleDateSelect = (day) => {
+    setSelectedDate(new Date(currentYear, currentMonthIndex, day));
+  };
+
+  const changeMonth = (direction) => {
+    setCurrentMonthIndex((prevMonthIndex) => {
+      let newMonthIndex = prevMonthIndex + direction;
+      let newYear = currentYear; // Track the year explicitly
+
+      if (newMonthIndex < 0) {
+        newMonthIndex = 11; // Go to December
+        newYear = currentYear - 1; // Decrease the year
+      } else if (newMonthIndex > 11) {
+        newMonthIndex = 0; // Go to January
+        newYear = currentYear + 1; // Increase the year
+      }
+
+      // Update the year when the month crosses over
+      setCurrentYear(newYear);
+
+      return newMonthIndex; // Return the updated month index
+    });
   };
 
   return (
@@ -93,11 +142,13 @@ const VendorAvailability = () => {
           <h3 className="section-title centered-title">Availability</h3>
           <div className="calendar">
             <div className="calendar-header">
-              <button className="calendar-nav">
+              <button className="calendar-nav" onClick={() => changeMonth(-1)}>
                 <ChevronLeft size={20} />
               </button>
-              <span className="calendar-month">October</span>
-              <button className="calendar-nav">
+              <span className="calendar-month">
+                {months[currentMonthIndex]} {currentYear}
+              </span>
+              <button className="calendar-nav" onClick={() => changeMonth(1)}>
                 <ChevronRight size={20} />
               </button>
             </div>
@@ -115,7 +166,8 @@ const VendorAvailability = () => {
                 {Array.from({ length: 31 }, (_, i) => (
                   <div
                     key={i + 1}
-                    className={`day ${i + 1 === 15 ? 'selected' : ''}`}
+                    className={`day ${selectedDate && selectedDate.getDate() === i + 1 ? 'selected' : ''}`}
+                    onClick={() => handleDateSelect(i + 1)}
                   >
                     {i + 1}
                   </div>
@@ -133,7 +185,12 @@ const VendorAvailability = () => {
             <div className="time-input">
               <label>Start Time</label>
               <div className="time-input-group">
-                <input type="text" placeholder="HH:MM" />
+                <input
+                  type="text"
+                  placeholder="HH:MM"
+                  value={startTime}
+                  onChange={handleStartTimeChange}
+                />
                 <select>
                   <option value="AM">AM</option>
                   <option value="PM">PM</option>
@@ -145,7 +202,12 @@ const VendorAvailability = () => {
             <div className="time-input">
               <label>End Time</label>
               <div className="time-input-group">
-                <input type="text" placeholder="HH:MM" />
+                <input
+                  type="text"
+                  placeholder="HH:MM"
+                  value={endTime}
+                  onChange={handleEndTimeChange}
+                />
                 <select>
                   <option value="AM">AM</option>
                   <option value="PM">PM</option>

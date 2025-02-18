@@ -3,6 +3,8 @@ import './SignupPage.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Footer from '../Components/Footer';
 import { useNavigate } from 'react-router-dom';
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
 
 const SignupPage = () => { 
   const navigate = useNavigate();
@@ -15,12 +17,23 @@ const SignupPage = () => {
     navigate('/signin');
   };
   
-  const [showPassword, setShowPassword] = useState(false); // Initialize state for password visibility
+  const handleGoogleSuccess = (credentialResponse) => {
+    const decoded = jwtDecode(credentialResponse.credential);
+    console.log(decoded);
+    // Here you can handle the user data from Google
+    // Typically you would:
+    // 1. Send this to your backend
+    // 2. Create/update user in your database
+    // 3. Navigate to the next page or dashboard
+    navigate('/dashboard');
+  };
+
+  const handleGoogleError = () => {
+    console.error('Google Sign In was unsuccessful.');
+  };
 
   return (
     <>
-     
-
       {/* Desktop/Laptop Version */}
       <div className="hidden md:block signup-container1">
         <div className="signup-content-wrapper">
@@ -40,7 +53,7 @@ const SignupPage = () => {
               className="mobile-heading"
               style={{
                 fontSize: "35px",
-                marginBottom: "-35px", // Adjust spacing as needed
+                marginBottom: "-35px",
                 textAlign: "center",
               }}
             >
@@ -53,9 +66,18 @@ const SignupPage = () => {
             <button className="signup-btn1 email-btn1" onClick={handleEmailMobileSignup}>
               <i className="fas fa-envelope"></i> Sign Up with Email or Mobile
             </button>
-            <button className="signup-btn1 google-btn1">
-              <i className="fab fa-google"></i> Sign up with Google
-            </button>
+            
+            <div className="google-btn-wrapper">
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={handleGoogleError}
+                theme="filled_blue"
+                shape="rectangular"
+                size="large"
+                text="continue_with"
+              />
+            </div>
+
             <button className="signup-btn1 facebook-btn1">
               <i className="fab fa-facebook-f"></i> Sign up with Facebook
             </button>

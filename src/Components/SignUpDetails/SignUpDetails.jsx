@@ -46,7 +46,7 @@ const SignUpDetails = () => {
     setError('');
 
     try {
-      const response = await axios.post(`${config.API_BASE_URL}/users/register`, {
+      const response = await axios.post(`${config.API_BASE_URL}/api/users/register`, {
         fullName: formData.fullName,
         email: formData.email, 
         phone: formData.phone,
@@ -92,12 +92,12 @@ const SignUpDetails = () => {
     if (otp.every(digit => digit !== '')) {
       try {
         const otpString = otp.join('');
-        await axios.post(`${config.API_BASE_URL}/users/verify-otp`, {
+        await axios.post(`${config.API_BASE_URL}/api/users/verify-otp`, {
           email: formData.email,
           otp: otpString
         });
 
-        const loginResponse = await axios.post(`${config.API_BASE_URL}/mobile-users/login`, {
+        const loginResponse = await axios.post(`${config.API_BASE_URL}/api/mobile-users/login`, {
           phone: formData.phone,
           password: formData.password
         });
@@ -126,7 +126,7 @@ const SignUpDetails = () => {
 
   const handleResend = async () => {
     try {
-      await axios.post(`${config.API_BASE_URL}/users/resend-otp`, {
+      await axios.post(`${config.API_BASE_URL}/api/users/resend-otp`, {
         email: formData.email
       });
 

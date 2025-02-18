@@ -73,7 +73,7 @@ export default function Footer() {
       marginTop: '15px',
     },
     columnTitle: {
-      color: 'green',  // Green text for both mobile and laptop
+      color: 'green',
       fontWeight: 'bold',
       fontSize: '16px',
       marginBottom: '15px',
@@ -85,9 +85,16 @@ export default function Footer() {
       marginBottom: '10px',
       display: 'block',
       textDecoration: 'none',
-      transition: 'color 0.3s ease',
-      ':hover': {
-        color: isMobile ? '#111' : '#111',
+      transition: 'all 0.3s ease',
+      position: 'relative',
+      cursor: 'pointer',
+      width: 'fit-content',
+    },
+    columnLinkHover: {
+      '&:hover': {
+        color: 'green',
+        textDecoration: 'underline',
+        textUnderlineOffset: '4px',
       },
     },
     newsletterSection: {
@@ -134,9 +141,6 @@ export default function Footer() {
       cursor: 'pointer',
       transition: 'background-color 0.3s ease',
       width: isMobile ? '100%' : 'auto',
-      ':hover': {
-        backgroundColor: '#5555ee',
-      },
     },
     bottomSection: {
       display: isMobile ? 'none' : 'flex',
@@ -181,9 +185,6 @@ export default function Footer() {
       padding: '8px 15px',
       cursor: 'pointer',
       borderRadius: '4px',
-      ':hover': {
-        backgroundColor: isMobile ? '#e5e5e5' : '#e5e5e5',
-      },
     },
     copyright: {
       color: isMobile ? '#666' : '#666',
@@ -201,10 +202,29 @@ export default function Footer() {
     socialIcon: {
       cursor: 'pointer',
       transition: 'transform 0.3s ease',
-      ':hover': {
-        transform: 'translateY(-2px)',
-      },
     },
+  };
+
+  const LinkWithHover = ({ to, children }) => {
+    const [isHovered, setIsHovered] = useState(false);
+    
+    const linkStyle = {
+      ...footerStyles.columnLink,
+      color: isHovered ? 'green' : (isMobile ? '#666' : '#111'),
+      textDecoration: isHovered ? 'underline' : 'none',
+      textUnderlineOffset: '4px',
+    };
+
+    return (
+      <Link 
+        to={to || '#'} 
+        style={linkStyle}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        {children}
+      </Link>
+    );
   };
 
   return (
@@ -216,24 +236,24 @@ export default function Footer() {
 
         <div style={footerStyles.column}>
           <span style={footerStyles.columnTitle}>Product</span>
-          <Link to="/allservices" style={footerStyles.columnLink}>All Services</Link>
-          <Link style={footerStyles.columnLink}>Companies</Link>
-          <Link style={footerStyles.columnLink}>Candidates</Link>
+          <LinkWithHover to="/allservices">All Services</LinkWithHover>
+          <LinkWithHover>Companies</LinkWithHover>
+          <LinkWithHover>Candidates</LinkWithHover>
         </div>
 
         <div style={footerStyles.column}>
           <span style={footerStyles.columnTitle}>Resources</span>
-          <Link to="/Blog" style={footerStyles.columnLink}>Blog</Link>
-          <Link style={footerStyles.columnLink}>User Guides</Link>
-          <Link style={footerStyles.columnLink}>Webinars</Link>
+          <LinkWithHover to="/Blog">Blog</LinkWithHover>
+          <LinkWithHover>User Guides</LinkWithHover>
+          <LinkWithHover>Webinars</LinkWithHover>
         </div>
 
         <div style={footerStyles.companyColumn}>
           <div>
             <span style={footerStyles.columnTitle}>Company</span>
-            <Link to="/about" style={footerStyles.columnLink}>About</Link>
-            <Link style={footerStyles.columnLink}>Join Us</Link>
-            <Link to="/Articles" style={footerStyles.columnLink}>Articles</Link>
+            <LinkWithHover to="/about">About</LinkWithHover>
+            <LinkWithHover>Join Us</LinkWithHover>
+            <LinkWithHover to="/Articles">Articles</LinkWithHover>
           </div>
 
           {isMobile && (

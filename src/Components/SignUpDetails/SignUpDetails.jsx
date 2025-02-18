@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import config from '../../config';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-
-const API_BASE_URL = '/api';
+import { useNavigate } from 'react-router-dom';
 
 const SignUpDetails = () => {
   const [showOTPDialog, setShowOTPDialog] = useState(false);
@@ -13,11 +11,11 @@ const SignUpDetails = () => {
     phone: '',
     password: ''
   });
-  const [otp, setOTP] = useState(['', '', '', '', '', '']); // Changed to 6 OTP boxes
+  const [otp, setOTP] = useState(['', '', '', '', '', '']);
   const [timer, setTimer] = useState(20);
   const [error, setError] = useState('');
-  const inputRefs = Array(6).fill(0).map(() => React.createRef()); // Changed to 6 refs
-  const navigate = useNavigate(); // Initialize useNavigate
+  const inputRefs = Array(6).fill(0).map(() => React.createRef());
+  const navigate = useNavigate();
 
   useEffect(() => {
     let interval;
@@ -48,15 +46,23 @@ const SignUpDetails = () => {
     setError('');
 
     try {
-      // Register the user
       const response = await axios.post(`${config.API_BASE_URL}/users/register`, {
         fullName: formData.fullName,
-        email: formData.email,
+        email: formData.email, 
         phone: formData.phone,
         password: formData.password
       });
 
       if (response.data) {
+        // Store user data in localStorage before showing OTP dialog
+        localStorage.setItem('userData', JSON.stringify({
+          fullName: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          accountNumber: '',
+          ifsc: '',
+          branch: ''
+        }));
         setShowOTPDialog(true);
       }
     } catch (err) {
@@ -71,7 +77,7 @@ const SignUpDetails = () => {
     newOTP[index] = value;
     setOTP(newOTP);
 
-    if (value && index < 5) { // Changed to 5 for 6 boxes
+    if (value && index < 5) {
       inputRefs[index + 1].current?.focus();
     }
   };
@@ -86,26 +92,31 @@ const SignUpDetails = () => {
     if (otp.every(digit => digit !== '')) {
       try {
         const otpString = otp.join('');
-        console.log('Email:', formData.email, 'OTP:', otpString); // Log email and otp here
         await axios.post(`${config.API_BASE_URL}/users/verify-otp`, {
           email: formData.email,
           otp: otpString
         });
 
-        // If verification successful, proceed with login
         const loginResponse = await axios.post(`${config.API_BASE_URL}/mobile-users/login`, {
           phone: formData.phone,
           password: formData.password
         });
 
         if (loginResponse.data) {
-          // Handle successful login (e.g., store token, redirect)
-          setShowOTPDialog(false);
-          setOTP(['', '', '', '', '', '']); // Reset to 6 empty boxes
-          setTimer(15);
+          // Store the token
+          localStorage.setItem('token', loginResponse.data.token);
+          
+          // Store additional user data if provided in the response
+          if (loginResponse.data.user) {
+            const userData = {
+              ...JSON.parse(localStorage.getItem('userData') || '{}'),
+              ...loginResponse.data.user
+            };
+            localStorage.setItem('userData', JSON.stringify(userData));
+          }
 
-          // Redirect to the sign-in page
-          navigate('/signin'); // Use navigate to redirect
+          // Navigate to profile page instead of signin
+          navigate('/signin');
         }
       } catch (err) {
         setError(err.response?.data?.message || 'Invalid OTP. Please try again.');
@@ -120,7 +131,7 @@ const SignUpDetails = () => {
       });
 
       setTimer(15);
-      setOTP(['', '', '', '', '', '']); 
+      setOTP(['', '', '', '', '', '']);
       inputRefs[0].current?.focus();
       setError('');
     } catch (err) {
@@ -130,7 +141,7 @@ const SignUpDetails = () => {
 
   const handleCancel = () => {
     setShowOTPDialog(false);
-    setOTP(['', '', '', '', '', '']); // Reset to 6 empty boxes
+    setOTP(['', '', '', '', '', '']);
     setTimer(15);
     setError('');
   };
@@ -448,7 +459,7 @@ const SignUpDetails = () => {
           </div>
         </div>
       )}
-    </div> 
+    </div>
   );
 };
 

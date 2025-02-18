@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Mic, Star, Play, Clock } from 'lucide-react';
+import { Search, Mic, Star, Play, Clock, UserCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import config from '../config';
 
 function HomeMobile() {
   const [allServices, setAllServices] = useState([]);
   const [searchValue, setSearchValue] = useState('');
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return localStorage.getItem('isLoggedIn') === 'true';
+  });
   const navigate = useNavigate();
 
   // Featured service videos data
@@ -13,13 +17,13 @@ function HomeMobile() {
     {
       id: 1,
       title: "Painting Service",
-      thumbnail: "/videos/vd1-thumbnail.jpg", // Add a thumbnail for the video
-      videoUrl: "/videos/vd.1.mp4", // Local video path
+      thumbnail: "/videos/vd1-thumbnail.jpg",
+      videoUrl: "/videos/vd.1.mp4",
       category: "Painting",
       description: "Expert wall painting services."
     },
     {
-      id: 1,
+      id: 2,
       title: "Painting Service",
       thumbnail: "/videos/vd2-thumbnail.jpg", 
       videoUrl: "/videos/vd.2.mp4", 
@@ -27,7 +31,7 @@ function HomeMobile() {
       description: "Expert wall painting services."
     },
     {
-      id: 1,
+      id: 3,
       title: "Painting Service",
       thumbnail: "/videos/v3-thumbnail.jpg", 
       videoUrl: "/videos/vd.3.mp4", 
@@ -35,7 +39,7 @@ function HomeMobile() {
       description: "Expert wall painting services."
     },
     {
-      id: 1,
+      id: 4,
       title: "Painting Service",
       thumbnail: "/videos/v4-thumbnail.jpg", 
       videoUrl: "/videos/vd.4.mp4", 
@@ -43,11 +47,37 @@ function HomeMobile() {
       description: "Expert wall painting services."
     }
   ];
-  
 
   useEffect(() => {
     fetchServices();
+
+    // Add login status event listeners
+    const handleLoginStatus = () => {
+      setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
+    };
+
+    window.addEventListener('storage', handleLoginStatus);
+    window.addEventListener('login', handleLoginStatus);
+    window.addEventListener('logout', handleLoginStatus);
+
+    return () => {
+      window.removeEventListener('storage', handleLoginStatus);
+      window.removeEventListener('login', handleLoginStatus);
+      window.removeEventListener('logout', handleLoginStatus);
+    };
   }, []);
+
+  // Add click outside handler to close dropdown
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isDropdownOpen && !event.target.closest('.profile-section')) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isDropdownOpen]);
 
   const fetchServices = async () => {
     try {
@@ -57,6 +87,19 @@ function HomeMobile() {
     } catch (error) {
       console.error('Error fetching services:', error);
     }
+  };
+
+  const handleProfileClick = (e) => {
+    e.stopPropagation();
+    setDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.removeItem('isLoggedIn');
+    window.dispatchEvent(new Event('logout'));
+    setDropdownOpen(false);
+    navigate('/home');
   };
 
   const filteredServices = allServices.filter(service =>
@@ -156,7 +199,6 @@ function HomeMobile() {
       }}
       onClick={() => navigate('/video-details', { state: { videos: serviceVideos, startIndex: video.id - 1 } })}
     >
-      {/* Video Element */}
       <video
         autoPlay
         muted
@@ -173,7 +215,6 @@ function HomeMobile() {
         Your browser does not support the video tag.
       </video>
   
-      {/* 🔹 Watermark "Urban Maverick" */}
       <div
         style={{
           position: 'absolute',
@@ -187,7 +228,7 @@ function HomeMobile() {
           fontWeight: '500',
           textAlign: 'center',
           opacity: '0.8',
-          pointerEvents: 'none', // Prevent interactions
+          pointerEvents: 'none',
         }}
       >
         © Urban Maverick
@@ -195,10 +236,8 @@ function HomeMobile() {
     </div>
   );
   
-  
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#f9fafb' }}>
-      {/* Header */}
       <header style={{
         position: 'fixed',
         top: 0,
@@ -216,38 +255,116 @@ function HomeMobile() {
           alignItems: 'center',
           marginBottom: '12px'
         }}>
-          <div
-            onClick={() => navigate('/signup')}
-            style={{
-              fontSize: '14px',
-              fontWeight: 600,
-              cursor: 'pointer',
-              color: "white",
-              display: 'flex',
-              alignItems: 'center',
-              gap: '4px'
-            }}
-          >
-            <span>SignIn</span>
-            <span style={{ color: '#e0e7ff' }}>|</span>
-            <span>Register</span>
-          </div>
-          <button
-            onClick={() => navigate('/join-as-vendor')}
-            style={{
-              backgroundColor: 'black',
-              color: '#ffffff',
-              padding: '8px 16px',
-              borderRadius: '9999px',
-              fontSize: '13px',
-              fontWeight: 600,
-              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-              border: '1px solid rgba(255, 255, 255, 0.1)'
-            }}
-          >
-            Join As A Vendor
-          </button>
+          {!isLoggedIn ? (
+            <>
+              <div
+                onClick={() => navigate('/signup')}
+                style={{
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  color: "white",
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px'
+                }}
+              >
+                <span>SignIn</span>
+                <span style={{ color: '#e0e7ff' }}>|</span>
+                <span>Register</span>
+              </div>
+              <button
+                onClick={() => navigate('/join-as-vendor')}
+                style={{
+                  backgroundColor: 'black',
+                  color: '#ffffff',
+                  padding: '8px 16px',
+                  borderRadius: '9999px',
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)'
+                }}
+              >
+                Join As A Vendor
+              </button>
+            </>
+          ) : (
+            <div className="profile-section" style={{ marginLeft: 'auto', position: 'relative' }}>
+              <UserCircle
+                size={33}
+                style={{
+                  cursor: 'pointer',
+                  color: '#ffffff',
+                }}
+                onClick={handleProfileClick}
+              />
+              {isDropdownOpen && (
+                <div style={{
+                  position: 'absolute',
+                  right: 0,
+                  top: '40px',
+                  backgroundColor: 'white',
+                  border: '1px solid #ccc',
+                  borderRadius: '4px',
+                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                  zIndex: 1001,
+                  minWidth: '150px',
+                }}>
+                  <div
+                    style={{
+                      padding: '12px 16px',
+                      cursor: 'pointer',
+                      borderBottom: '1px solid #eee',
+                    }}
+                    onClick={() => {
+                      navigate('/uservendorprofile');
+                      setDropdownOpen(false);
+                    }}
+                  >
+                    Profile
+                  </div>
+                  <div
+                    style={{
+                      padding: '12px 16px',
+                      cursor: 'pointer',
+                      borderBottom: '1px solid #eee',
+                    }}
+                    onClick={() => {
+                      navigate('/join-as-vendor');
+                      setDropdownOpen(false);
+                    }}
+                  >
+                    Join as Vendor
+                  </div>
+                  <div
+                    style={{
+                      padding: '12px 16px',
+                      cursor: 'pointer',
+                      borderBottom: '1px solid #eee',
+                    }}
+                    onClick={() => {
+                      alert('Upgrade Plan Clicked');
+                      setDropdownOpen(false);
+                    }}
+                  >
+                    Upgrade Plan
+                  </div>
+                  <div
+                    style={{
+                      padding: '12px 16px',
+                      cursor: 'pointer',
+                    }}
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
+
         <div style={{ position: 'relative', marginTop: '4px' }}>
           <Search
             style={{
@@ -289,9 +406,9 @@ function HomeMobile() {
           />
         </div>
       </header>
+
       <main style={{ paddingTop: '120px', paddingLeft: '16px', paddingRight: '16px' }}>
-        <section style={{ marginBottom: '24px',marginTop:"10px"
-         }}>
+        <section style={{ marginBottom: '24px', marginTop: "10px" }}>
           <div style={{
             display: 'flex',
             justifyContent: 'space-between',
@@ -316,6 +433,7 @@ function HomeMobile() {
             ))}
           </div>
         </section>
+
         <div style={{
           marginBottom: '24px',
           backgroundImage: 'url(https://images.unsplash.com/photo-1560869713-7d0a29430803?w=800&auto=format)',
@@ -372,6 +490,7 @@ function HomeMobile() {
             </button>
           </div>
         </div>
+
         <section style={{ marginBottom: '24px', backgroundColor: '#ffffff', padding: '20px', borderRadius: '16px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
             <h2 style={{ fontSize: '16px', fontWeight: '530', color: '#1f2937' }}>
@@ -385,7 +504,7 @@ function HomeMobile() {
               </div>
             ))}
           </div>
-        </section>
+        </section> 
       </main>
     </div>
   );

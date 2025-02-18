@@ -8,23 +8,21 @@ function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   const handleSignIn = async (e) => {
     e.preventDefault();
-    setError("");
-
+    setError(""); // Clear any previous error
+    
+    // Only check for "Remember me" on mobile version
+    const isMobile = window.innerWidth <= 768;
+    if (isMobile && !rememberMe) {
+      setError('Please check "Remember me" to sign in.');
+      return; // Stop the form submission and prevent navigation if "Remember me" is not checked on mobile
+    }
     try {
       const response = await fetch("http://localhost:8080/api/users/login", {
         method: "POST",
@@ -40,11 +38,11 @@ function SignIn() {
           const data = await response.json();
           console.log("Login response:", data);
         }
-        
+
         // Set login status in localStorage and dispatch event
         localStorage.setItem('isLoggedIn', 'true');
         window.dispatchEvent(new Event('login'));
-        
+
         // Navigate to home page
         navigate("/home");
       } else {
@@ -61,6 +59,15 @@ function SignIn() {
     }
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   // Mobile version
   if (isMobile) {
     return (
@@ -72,22 +79,21 @@ function SignIn() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            padding: "60px",
+            padding: "100px",
             backgroundColor: "#f9f9f9",
             overflow: "hidden",
             boxSizing: "border-box",
-            marginRight: '-90px',
-            marginLeft: '-90px',
-            marginTop: '-95px',
+            marginRight: '-155px',
+            marginLeft: '-145px',
+            marginTop: '-135px',
           }}
         >
           <div
             style={{
               width: "500px",
               maxWidth: "530px",
-              background: "white",
               borderRadius: "10px",
-              padding: "20px",
+              padding: "40px",
             }}
           >
             <h1
@@ -238,7 +244,7 @@ function SignIn() {
                 }}
               >
                 <label style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-                  <input type="checkbox" /> Remember me
+                  <input type="checkbox" checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} /> Remember me
                 </label>
               </div>
 

@@ -38,10 +38,10 @@ const TopServices = ({ limit, hideFooter, hideDescription, isMobile }) => {
         <div
           style={{
             display: 'flex',
-            justifyContent: isMobile ? 'flex-start' : 'space-between', // Left-align the heading for mobile
+            justifyContent: isMobile ? 'flex-start' : 'space-between',
             alignItems: 'center',
             marginBottom: '20px',
-            paddingRight: isMobile ? '10px' : '0'
+            paddingRight: isMobile ? '10px' : '0',
           }}
         >
           <h2
@@ -49,21 +49,21 @@ const TopServices = ({ limit, hideFooter, hideDescription, isMobile }) => {
               fontSize: isMobile ? '22px' : '28px',
               fontWeight: 'bold',
               color: isTopServicesPage ? 'black' : '#6666ff',
-              textAlign: isMobile ? 'left' : 'center', // Ensure left alignment for mobile
-              width: '100%', // Make sure it spans across if needed
+              textAlign: isMobile ? 'left' : 'center',
+              width: '100%',
             }}
           >
             Top Services
           </h2>
-          
+
           {isMobile && (
             <button
               onClick={() => navigate('/top-services')}
-              style={{ 
+              style={{
                 fontSize: '14px',
                 background: 'none',
                 border: 'none',
-                cursor: 'pointer'
+                cursor: 'pointer',
               }}
             >
               More
@@ -89,13 +89,12 @@ const TopServices = ({ limit, hideFooter, hideDescription, isMobile }) => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: isMobile ? 'repeat(3, 1fr)' : 'repeat(auto-fit, minmax(180px, 1fr))',
+            gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(auto-fit, minmax(180px, 1fr))',
             gap: isMobile ? '10px' : '15px',
             justifyContent: 'center',
             alignItems: 'center',
             padding: isMobile ? '5px' : '10px',
-            marginBottom:isMobile ? '50px' : '',
-
+            marginBottom: isMobile ? '50px' : '',
           }}
         >
           {servicesToDisplay.map((service, index) => (

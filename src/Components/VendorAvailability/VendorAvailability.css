@@ -262,7 +262,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 12px;margin-left: 60px;
+  margin-bottom: 12px;
 }
 
 .time-input {
@@ -273,13 +273,13 @@
 
 .time-input label {
   font-size: 14px;
-  color: #666;
+  color: #666;margin-left: 60px;
 }
 
 .time-input-group {
   display: flex;
   gap: 50px;
-  align-items: center;
+  align-items: center;margin-left: 50px;
 }
 
 .time-input-group input {
@@ -292,18 +292,18 @@
 }
 
 .time-input-group select {
-  padding: 8px;
+  padding: 12px;
   border: 1px solid #e5e7eb;
   border-radius: 6px;
   font-size: 14px;
   background: white;
-  cursor: pointer;margin-right: 0px;
+  cursor: pointer;margin-left: 5px;
 }
 
 .time-instruction {
   font-size: 14px;
   color: #666;
-  margin-bottom: 20px;margin-left: 25px;
+  margin-bottom: 20px;margin-left: 20px;
 }
 
 .book-button {
@@ -316,21 +316,30 @@
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s;margin-left: 80px;
+  transition: background-color 0.2s;margin-left: 75px;
 }
 
 .book-button:hover {
   background: #4338ca;
 }
 
+/* Example for media queries */
 @media (max-width: 768px) {
-  .main-content {
-    grid-template-columns: 1fr;
-    gap: 24px;
+  .vendor-profile {
+    display: none; /* Hide desktop version on mobile */
   }
 
-  .booking-grid {
-    grid-template-columns: 1fr;
-    gap: 24px;
+  .vendor-profile-mobile {
+    display: block; /* Display mobile version */
+  }
+}
+
+@media (min-width: 769px) {
+  .vendor-profile {
+    display: block; /* Display desktop version */
+  }
+
+  .vendor-profile-mobile {
+    display: none; /* Hide mobile version on desktop */
   }
 }

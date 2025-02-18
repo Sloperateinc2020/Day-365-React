@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import './App.css';
 import AboutPage from './About/AboutPage';
 import Home from './Components/Home';
@@ -10,8 +11,8 @@ import Booking from './Components/Booking/Booking';
 import Blog from './Components/Blog/Blog';
 import Listings from './Components/Listings';
 import Availability from './Availability/Availability';
-import Profile from './Components/Profile/Profile'; // Ensure this is the correct path
-import AccountSettings from './Components/AccountSettings/AccountSettings'; // Ensure this is the correct path
+import Profile from './Components/Profile/Profile';
+import AccountSettings from './Components/AccountSettings/AccountSettings';
 import Payments from './Components/Payments';
 import BankDetails from './Components/BankDetails/BankDetails';
 import TopServices from './Components/TopServices/TopServices';
@@ -37,38 +38,40 @@ import Userdropdown from './Components/Userdropdown';
 import BeautyServices from './Components/Beauty/BeautyServices';
 import VideoDetails from './Components/VideoDetails/VideoDetails';
 
-
-
-
-
+// Replace this with your actual Google Client ID
+const GOOGLE_CLIENT_ID = "1075595028652-aqr9rj7ji1nf49cuk3btf3dbh9d7tha8.apps.googleusercontent.com";
 
 function App() {
-  const [selectedMenu, setSelectedMenu] = useState('Home'); // Initial selected menu
-
   return (
-    <Router>
-      <div className="min-h-screen bg-gray-50">
-        <AppWrapper selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
-      </div>
-    </Router>
+    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+      <Router>
+        <div className="min-h-screen bg-gray-50">
+          <AppContent />
+        </div>
+      </Router>
+    </GoogleOAuthProvider>
   );
 }
 
-const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
-  const location = useLocation(); // Get current route
+const AppContent = () => {
+  const [selectedMenu, setSelectedMenu] = useState('Home');
+  return <AppWrapper selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />;
+};
 
-  // Scroll to top whenever location changes (global scroll to top logic)
+const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
+  const location = useLocation();
+
   useEffect(() => {
-    window.scrollTo(0, 0); // Scroll to top (0px from the top)
-  }, [location.pathname]); // This effect will run on each route change
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return (
     <>
-      {/* Conditionally render Header */}
-      {location.pathname !== '/listings' && location.pathname !== '/vendordashboard' && 
-      location.pathname !== '/booking' && 
-      location.pathname !== '/profile' && 
-      location.pathname !== '/accountsettings' && ( // Added condition for '/accountsettings'
+      {location.pathname !== '/listings' && 
+       location.pathname !== '/vendordashboard' && 
+       location.pathname !== '/booking' && 
+       location.pathname !== '/profile' && 
+       location.pathname !== '/accountsettings' && (
         <Header selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
       )}
 
@@ -80,17 +83,10 @@ const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/booking" element={<Booking />} />
         <Route path="/listings" element={<Listings />} />
-        
-        
-        {/* Add the dynamic availability route with serviceId */}
         <Route path="/availability/:serviceId" element={<Availability />} />
-        
-        {/* Profile and Account Settings Routes */}
-        <Route path="/profile" element={<Profile />} /> 
-        <Route path="/documents" element={<Profile />} /> {/* Ensure this works */}
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/documents" element={<Profile />} />
         <Route path="/accountsettings" element={<AccountSettings />} />
-        
-        {/* Other Routes */}
         <Route path="/payments" element={<Payments />} />
         <Route path="/bankdetails" element={<BankDetails />} />
         <Route path="/edit-vendor-profile/:listingId" element={<EditVendorProfile />} />
@@ -105,9 +101,9 @@ const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
         <Route path="/confirmbooking" element={<ConfirmBooking />} />
         <Route path="/previousbooking" element={<PreviousBooking />} />
         <Route path="/uservendorprofile" element={<UserVendorProfile />} />
-        <Route path="/jobregistration" element={<JobRegistration />} /> 
-        <Route path="/contact" element={<Contact />} /> 
-        <Route path="/signupdetails" element={<SignUpDetails />} /> 
+        <Route path="/jobregistration" element={<JobRegistration />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/signupdetails" element={<SignUpDetails />} />
         <Route path="/chat" element={<ChatApp />} />
         <Route path="/vendoravailability" element={<VendorAvailability />} />
         <Route path="/beautyServices" element={<BeautyServices />} />
@@ -116,18 +112,11 @@ const AppWrapper = ({ selectedMenu, setSelectedMenu }) => {
         <Route path="/service-details" element={<ServiceDetails />} />
         <Route path="/forgotpassword" element={<Forgotpassword />} />
         <Route path="/userdropdown" element={<Userdropdown />} />
-
-
-
-        
-        {/* LatestServices route */}
         <Route path="/latestservices" element={<LatestServices />} />
-
-        {/* 404 Page */}
         <Route path="*" element={<h1>404 - Page Not Found</h1>} />
       </Routes>
     </>
   );
-}
+};
 
 export default App;

@@ -22,7 +22,7 @@ const config = {
 
     REACT_APP_SUPABASE_URL: "https://ztoddnqhksgmlanzcaqi.supabase.co",
     REACT_APP_SUPABASE_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp0b2RkbnFoa3NnbWxhbnpjYXFpIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczNDUwNjQ4NCwiZXhwIjoyMDUwMDgyNDg0fQ.wwu1vRhKqz2ma9XZEWSImGVfxl-pXN-ZA0yopNNgJPY",
-    API_BASE_URL: 'http://localhost:8080/api'
+    API_BASE_URL: 'https://day365-java-9d7bebac1a3b.herokuapp.com'
 };
 
 export default config;

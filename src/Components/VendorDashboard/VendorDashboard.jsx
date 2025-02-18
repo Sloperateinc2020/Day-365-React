@@ -394,7 +394,7 @@ const VendorDashboard = () => {
       <div style={styles.content}>
         {/* Header */}
         <div style={styles.header}>
-          <div style={styles.headerTitle}>Day 365</div>
+          <div style={styles.headerTitle}>Urban Maverick</div>
           <div style={styles.headerIcons}>
             <img 
               src="https://cdn.iconscout.com/icon/free/png-512/free-calendar-icon-download-in-svg-png-gif-file-formats--feather-pack-user-interface-icons-433988.png?f=webp&w=256" 

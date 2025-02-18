@@ -183,18 +183,18 @@ const AboutPage = () => {
     <>
       <div style={styles.container}>
         <div style={styles.header}>
-          <img src="/service.jpg" alt="Day 365" style={styles.headerImage} />
+          <img src="/service.jpg" alt="Urban Maverick" style={styles.headerImage} />
           <div style={styles.headerText}>
-            <h1 style={styles.headerTitle}>What is Day 365?</h1>
+            <h1 style={styles.headerTitle}>What is Urban Maverick?</h1>
             <p style={styles.headerDescription}>
-              Day 365 is a trusted platform for people to receive local services.
-              Day 365 is the best choice for low-cost quality professional services.
+            Urban Maverick is a trusted platform for people to receive local services.
+            Urban Maverick is the best choice for low-cost quality professional services.
             </p>
           </div>
         </div>
 
         <section style={styles.whyChoose}>
-          <h2 style={styles.sectionTitle}>Why choose Day 365?</h2>
+          <h2 style={styles.sectionTitle}>Why choose Urban Maverick?</h2>
           <div style={styles.featuresContainer}>
             {isMobile ? (
               <>
@@ -202,13 +202,13 @@ const AboutPage = () => {
                   <div style={styles.feature}>
                     <h3 style={styles.featureTitle}>Convenient</h3>
                     <p style={styles.featureText}>
-                      Day 365 is your 24/7 personal assistant providing you with convenient services.
+                    Urban Maverick is your 24/7 personal assistant providing you with convenient services.
                     </p>
                   </div>
                   <div style={styles.feature}>
                     <h3 style={styles.featureTitle}>Reliable</h3>
                     <p style={styles.featureText}>
-                      All Day 365 service providers are professionals who have been background-checked and reviewed by other customers.
+                      All Urban Maverick service providers are professionals who have been background-checked and reviewed by other customers.
                     </p>
                   </div>
                 </div>
@@ -216,13 +216,13 @@ const AboutPage = () => {
                   <div style={styles.feature}>
                     <h3 style={styles.featureTitle}>Affordable</h3>
                     <p style={styles.featureText}>
-                      Day 365 offers a transparent pricing system that allows you to see the cost of the service before you book.
+                    Urban Maverick offers a transparent pricing system that allows you to see the cost of the service before you book.
                     </p>
                   </div>
                   <div style={styles.feature}>
                     <h3 style={styles.featureTitle}>Professional</h3>
                     <p style={styles.featureText}>
-                      Day 365 provides a wide range of services, including cleaning, moving, delivery, and more, to meet all your needs.
+                    Urban Maverick provides a wide range of services, including cleaning, moving, delivery, and more, to meet all your needs.
                     </p>
                   </div>
                 </div>
@@ -232,25 +232,25 @@ const AboutPage = () => {
                 <div style={styles.feature}>
                   <h3 style={styles.featureTitle}>Convenient</h3>
                   <p style={styles.featureText}>
-                    Day 365 is your 24/7 personal assistant providing you with convenient services.
+                  Urban Maverick is your 24/7 personal assistant providing you with convenient services.
                   </p>
                 </div>
                 <div style={styles.feature}>
                   <h3 style={styles.featureTitle}>Reliable</h3>
                   <p style={styles.featureText}>
-                    All Day 365 service providers are professionals who have been background-checked and reviewed by other customers.
+                    All Urban Maverick service providers are professionals who have been background-checked and reviewed by other customers.
                   </p>
                 </div>
                 <div style={styles.feature}>
                   <h3 style={styles.featureTitle}>Affordable</h3>
                   <p style={styles.featureText}>
-                    Day 365 offers a transparent pricing system that allows you to see the cost of the service before you book.
+                  Urban Maverick offers a transparent pricing system that allows you to see the cost of the service before you book.
                   </p>
                 </div>
                 <div style={styles.feature}>
                   <h3 style={styles.featureTitle}>Professional</h3>
                   <p style={styles.featureText}>
-                    Day 365 provides a wide range of services, including cleaning, moving, delivery, and more, to meet all your needs.
+                  Urban Maverick provides a wide range of services, including cleaning, moving, delivery, and more, to meet all your needs.
                   </p>
                 </div>
               </>

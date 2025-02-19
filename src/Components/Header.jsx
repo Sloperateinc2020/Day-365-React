@@ -247,11 +247,12 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
                 Login/Register
               </button>
               <button
-                onClick={handleVendorClick}
-                style={vendorButtonStyle}
-              >
-                Join As Vendor
-              </button>
+  onClick={handleVendorClick}
+  style={{ ...vendorButtonStyle, marginLeft: '393px' }}  // Adjust the 20px as per your need
+>
+  Join As Vendor
+</button>
+
             </>
           )}
 

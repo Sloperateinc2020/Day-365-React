@@ -351,7 +351,7 @@ function SignIn() {
           <span
             style={{ fontSize: "20px", fontWeight: "bold", color: "#333" }}
           >
-            Day 365
+            Urban Mavrick
           </span>
         </div>
 

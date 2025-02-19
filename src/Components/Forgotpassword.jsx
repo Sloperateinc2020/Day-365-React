@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import config from "../config";
+import axios from 'axios';
+
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -9,13 +12,19 @@ const ForgotPassword = () => {
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+      fullName: '',
+      email: '',
+      phone: '',
+      password: ''
+    });
 
   const handleSendOTP = async (e) => {
     e.preventDefault();
     setError('');
 
     try {
-      const response = await fetch('http://localhost:8080/api/users/forget-password', {
+      const response = await fetch('https://day365-java-9d7bebac1a3b.herokuapp.com/api/users/forget-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -35,37 +44,52 @@ const ForgotPassword = () => {
     }
   };
 
-  const handleVerifyOTP = async (e) => {
-    e.preventDefault();
-    setError('');
-
-    try {
-      const response = await fetch('http://localhost:8080/api/users/verify-otp', { // Corrected endpoint
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, otp }),
-      });
-
-      if (response.ok) {
-        setSuccessMessage('OTP verified successfully!');
-        setStep(3);
-      } else {
-        const data = await response.json();
-        setError(data.message || 'Invalid OTP');
+  const handleVerifyOTP = async () => {
+    // Ensure `otp` is an array and not empty
+    if (Array.isArray(otp) && otp.every(digit => digit !== '')) {
+      try {
+        const otpString = otp.join(''); // Convert the OTP array into a string
+        await axios.post(`${config.API_BASE_URL}/users/verify-otp`, {
+          email: formData.email,
+          otp: otpString
+        });
+  
+        const loginResponse = await axios.post(`${config.API_BASE_URL}/mobile-users/login`, {
+          phone: formData.phone,
+          password: formData.password
+        });
+  
+        if (loginResponse.data) {
+          // Store the token
+          localStorage.setItem('token', loginResponse.data.token);
+  
+          // Store additional user data if provided in the response
+          if (loginResponse.data.user) {
+            const userData = {
+              ...JSON.parse(localStorage.getItem('userData') || '{}'),
+              ...loginResponse.data.user
+            };
+            localStorage.setItem('userData', JSON.stringify(userData));
+          }
+  
+          // Navigate to profile page instead of signin
+          navigate('/signin');
+        }
+      } catch (err) {
+        setError(err.response?.data?.message || 'Invalid OTP. Please try again.');
       }
-    } catch (error) {
-      setError('An error occurred. Please try again.');
+    } else {
+      setError('OTP is incomplete or invalid. Please check and try again.');
     }
   };
+  
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
     setError('');
 
     try {
-      const response = await fetch('http://localhost:8080/api/users/reset-password', {
+      const response = await fetch('https://day365-java-9d7bebac1a3b.herokuapp.com/api/users/reset-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

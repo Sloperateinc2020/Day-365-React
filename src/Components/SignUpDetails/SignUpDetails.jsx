@@ -177,7 +177,7 @@ const SignUpDetails = () => {
           marginBottom: '16px',
           textAlign: 'center'
         }}>
-          {error}
+                  {error}
         </div>
       )}
 

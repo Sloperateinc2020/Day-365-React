@@ -27,7 +27,7 @@ const SignupPage = () => {
           <div className="signup-left1">
             <div className="user-info1">
               <img 
-                src="/signup2.WEBP" 
+                src="/signup4.png" 
                 alt="User" 
                 className="main-user-image1"
               />

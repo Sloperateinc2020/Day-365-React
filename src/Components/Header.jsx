@@ -306,6 +306,8 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
                 Join As Vendor
               </button>
             </React.Fragment>
+
+            </>
           )}
 
           {isLoggedIn && !isMobile && (

@@ -24,7 +24,7 @@ function SignIn() {
       return; // Stop the form submission and prevent navigation if "Remember me" is not checked on mobile
     }
     try {
-      const response = await fetch("http://localhost:8080/api/users/login", {
+      const response = await fetch("https://day365-java-9d7bebac1a3b.herokuapp.com/api/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -351,7 +351,7 @@ function SignIn() {
           <span
             style={{ fontSize: "20px", fontWeight: "bold", color: "#333" }}
           >
-            Day 365
+            Urban Mavrick
           </span>
         </div>
 

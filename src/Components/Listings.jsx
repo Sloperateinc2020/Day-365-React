@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Sidebar from './Sidebar';
+// import Sidebar from './Sidebar';
 import { Plus } from 'lucide-react';
 import './Listings.css';
 import { Link, useNavigate } from 'react-router-dom';
@@ -86,7 +86,7 @@ function Listings() {
 </div>
 
       {/* Sidebar for Mobile */}
-      <Sidebar isActive="listings" isMobile={isMobile} />
+      {/* <Sidebar isActive="listings" isMobile={isMobile} /> */}
     </div>
   );
 }

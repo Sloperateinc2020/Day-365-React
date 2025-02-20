@@ -155,7 +155,7 @@ const VendorRegistration = () => {
 
   const sendToAPI = async (vendorData) => {
     try {
-      const response = await fetch("http://localhost:8080/api/vendor/register", {
+      const response = await fetch("https://day365-java-9d7bebac1a3b.herokuapp.com/api/vendor/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

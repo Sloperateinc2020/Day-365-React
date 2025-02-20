@@ -207,7 +207,7 @@ const ForgotPassword = () => {
                 type="password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                placeholder="Enter new password"
+                placeholder="Enter new password"  
                 required
                 style={{
                   width: '100%',

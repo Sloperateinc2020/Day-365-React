@@ -47,9 +47,11 @@ body {
   width: 500px;
   height: 300px;
   border-radius: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 20px;  
   background-color: #e0e0e0;
+  transform: translateY(40px);  
 }
+
 
 /* Hide the main user image on mobile */
 @media (max-width: 768px) {

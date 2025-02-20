@@ -15,7 +15,7 @@ const ForgotPassword = () => {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:8080/api/users/forget-password', {
+      const response = await fetch('https://day365-java-9d7bebac1a3b.herokuapp.com/api/users/forget-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ const ForgotPassword = () => {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:8080/api/users/verify-otp', { // Corrected endpoint
+      const response = await fetch('http://day365-java-9d7bebac1a3b.herokuapp.com//api/users/verify-forget-password-otp', { // Corrected endpoint
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ const ForgotPassword = () => {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:8080/api/users/reset-password', {
+      const response = await fetch('https://day365-java-9d7bebac1a3b.herokuapp.com/api/users/reset-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

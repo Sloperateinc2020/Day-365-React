@@ -7,7 +7,6 @@ import Footer from "../Footer";
 import config from "../../config";
 import VendorRegistrationMobile from "./VendorRegistrationMobile"; // Import the mobile version
 
-
 const VendorRegistration = () => {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -20,7 +19,7 @@ const VendorRegistration = () => {
     city: "",
     pincode: "",
     state: "",
-    country: "",
+    country: "India", // Set default country to India
     skills: "",
     aadhaarNumber: "",
     panCard: ""
@@ -35,14 +34,17 @@ const VendorRegistration = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [phoneErrorMessage, setPhoneErrorMessage] = useState("");
   const [isMobile, setIsMobile] = useState(false);
-
+  const [firstNameError, setFirstNameError] = useState("");
+  const [lastNameError, setLastNameError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [pincodeError, setPincodeError] = useState("");
 
   const supabase = createClient(
     config.REACT_APP_SUPABASE_URL,
     config.REACT_APP_SUPABASE_KEY
   );
-    const navigate = useNavigate();
-
+  const navigate = useNavigate();
 
   const STORAGE_CONFIG = {
     BUCKET_NAME: "urban-maverick",
@@ -85,6 +87,72 @@ const VendorRegistration = () => {
     }
   };
 
+  const handleFirstNameChange = (e) => {
+    const value = e.target.value;
+    if (/^[a-zA-Z\s]*$/.test(value)) {
+      setFormData(prev => ({
+        ...prev,
+        firstName: value
+      }));
+      setFirstNameError("");
+    } else {
+      setFirstNameError("First name must only contain letters and spaces.");
+    }
+  };
+
+  const handleLastNameChange = (e) => {
+    const value = e.target.value;
+    if (/^[a-zA-Z\s]*$/.test(value)) {
+      setFormData(prev => ({
+        ...prev,
+        lastName: value
+      }));
+      setLastNameError("");
+    } else {
+      setLastNameError("Last name must only contain letters and spaces.");
+    }
+  };
+
+  const handlePhoneChange = (e) => {
+    const value = e.target.value;
+    if (/^\d{0,10}$/.test(value)) {
+      setFormData(prev => ({
+        ...prev,
+        phoneNumber: value
+      }));
+      setPhoneError("");
+    } else {
+      setPhoneError("Phone number must be exactly 10 digits.");
+    }
+  };
+
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (emailRegex.test(value)) {
+      setFormData(prev => ({
+        ...prev,
+        email: value
+      }));
+      setEmailError("");
+    } else {
+      setEmailError("Please enter a valid email address.");
+    }
+  };
+
+  const handlePincodeChange = (e) => {
+    const value = e.target.value;
+    if (/^\d{0,6}$/.test(value)) {
+      setFormData(prev => ({
+        ...prev,
+        pincode: value
+      }));
+      setPincodeError("");
+    } else {
+      setPincodeError("Zip code must be exactly 6 digits.");
+    }
+  };
+
   const sendToAPI = async (vendorData) => {
     try {
       const response = await fetch("https://day365-java-9d7bebac1a3b.herokuapp.com/api/vendor/register", {
@@ -99,19 +167,17 @@ const VendorRegistration = () => {
         const errorText = await response.text();
         return { status: 409, message: errorText };
       }
-  
+
       if (!response.ok) {
         throw new Error("Failed to register vendor");
       }
-  
+
       return response;
     } catch (error) {
       console.error("Error sending data to API:", error);
       throw error;
     }
   };
-
-  
 
   async function uploadImage(file, bucket) {
     try {
@@ -122,7 +188,7 @@ const VendorRegistration = () => {
       if (!STORAGE_CONFIG.ALLOWED_MIME_TYPES.includes(file.type)) {
         throw new Error("Invalid file type. Only images are allowed.");
       }
-      
+
       const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, "_")}`;
       const { data, error } = await supabase.storage
         .from(bucket)
@@ -156,34 +222,33 @@ const VendorRegistration = () => {
     setIsLoading(true);
     setSuccessMessage(""); 
     setPhoneErrorMessage("");  
-  
+
     try {
       if (!aadhaarFile || !panFile) {
         throw new Error("Please upload both Aadhaar and PAN card files.");
       }
-  
-      
+
       const aadhaarResult = await uploadImage(aadhaarFile, STORAGE_CONFIG.BUCKET_NAME);
       const panResult = await uploadImage(panFile, STORAGE_CONFIG.BUCKET_NAME);
-  
+
       const vendorData = {
         ...formData,
         aadhaarUrl: aadhaarResult.url,  
         panUrl: panResult.url,          
         status: 'pending',              
       };
-    
+
       const response = await sendToAPI(vendorData);
-  
+
       if (response.ok) {
         setSuccessMessage("Your details have been successfully submitted. Your status will be updated soon.");
         setIsBackgroundDisabled(true);
       } 
-      
+
       if (response.status === 409) {
         if (response.status === 409 && response.message.includes("This phone number is already associated with a vendor account.")) {
           setPhoneErrorMessage("Vendor already exists with this mobile number. Please provide a different one."); 
-        }else if (response.message.includes("No user found with the provided phone number. Please register as a user first.")) {
+        } else if (response.message.includes("No user found with the provided phone number. Please register as a user first.")) {
           setPhoneErrorMessage("This mobile number is not registered as a user.");
         }
         return;
@@ -194,7 +259,6 @@ const VendorRegistration = () => {
       setIsLoading(false);
     }
   };
-  
 
   useEffect(() => {
     if (showOtpSection) {
@@ -207,6 +271,7 @@ const VendorRegistration = () => {
       document.body.classList.remove("scroll-locked");
     };
   }, [showOtpSection]);
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768); // Adjust the threshold as needed
@@ -222,6 +287,7 @@ const VendorRegistration = () => {
     // Render the mobile version if on a mobile device
     return <VendorRegistrationMobile />;
   }
+
   return (
     <>
       <div className="vendor-registration-container">
@@ -233,11 +299,10 @@ const VendorRegistration = () => {
               <p>{successMessage}</p>
               <button
                 className="close-button"
-                onClick={() =>{
-                  setSuccessMessage("")
+                onClick={() => {
+                  setSuccessMessage("");
                   navigate("/");
-                } 
-                }
+                }}
               >
                 Close
               </button>
@@ -259,59 +324,6 @@ const VendorRegistration = () => {
           </div>
         )}
 
-
-        {/* {showOtpSection && (
-          <div className="otp-modal">
-            <h2 className="otp-title">Verification Code</h2>
-            <p className="otp-subtitle">
-              We have sent a code to your registered mobile number.
-            </p>
-            <div className="otp-fields">
-              {otp.map((value, index) => (
-                <input
-                  key={index}
-                  id={`otp-${index}`}
-                  type="text"
-                  maxLength="1"
-                  value={value}
-                  onChange={(e) => {
-                    const updatedOtp = [...otp];
-                    updatedOtp[index] = e.target.value.slice(0, 1);
-                    setOtp(updatedOtp);
-                    
-                    if (e.target.value && index < 3) {
-                      const nextInput = e.target.parentElement.children[index + 1];
-                      nextInput?.focus();
-                    }
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Backspace' && !value && index > 0) {
-                      const prevInput = e.target.parentElement.children[index - 1];
-                      prevInput?.focus();
-                    }
-                  }}
-                  className="otp-input"
-                />
-              ))}
-            </div>
-            <div className="otp-actions">
-              <button type="button" className="resend-button">
-                Resend
-              </button>
-              <button
-                type="button"
-                className="confirm-button"
-                onClick={() => {
-                  setShowOtpSection(false);
-                  setIsBackgroundDisabled(false);
-                }}
-              >
-                Confirm
-              </button>
-            </div>
-          </div>
-        )} */}
-
         <h1 className="title">Become a Service Provider</h1>
         <p className="subtitle">
           Join the community of local service professionals who are dedicated to
@@ -326,9 +338,10 @@ const VendorRegistration = () => {
                 type="text"
                 name="firstName"
                 value={formData.firstName}
-                onChange={handleInputChange}
+                onChange={handleFirstNameChange}
                 placeholder="Enter your First Name"
               />
+              {firstNameError && <p style={{ color: "red" }}>{firstNameError}</p>}
             </div>
             <div className="form-text">
               <label>Last Name</label>
@@ -336,9 +349,10 @@ const VendorRegistration = () => {
                 type="text"
                 name="lastName"
                 value={formData.lastName}
-                onChange={handleInputChange}
+                onChange={handleLastNameChange}
                 placeholder="Enter your Last Name"
               />
+              {lastNameError && <p style={{ color: "red" }}>{lastNameError}</p>}
             </div>
           </div>
 
@@ -349,9 +363,10 @@ const VendorRegistration = () => {
                 type="email"
                 name="email"
                 value={formData.email}
-                onChange={handleInputChange}
+                onChange={handleEmailChange}
                 placeholder="Enter Email Address"
               />
+              {emailError && <p style={{ color: "red" }}>{emailError}</p>}
             </div>
             <div className="form-text">
               <label>Phone Number</label>
@@ -359,9 +374,10 @@ const VendorRegistration = () => {
                 type="text"
                 name="phoneNumber"
                 value={formData.phoneNumber}
-                onChange={handleInputChange}
+                onChange={handlePhoneChange}
                 placeholder="Phone Number"
               />
+              {phoneError && <p style={{ color: "red" }}>{phoneError}</p>}
             </div>
           </div>
 
@@ -416,9 +432,10 @@ const VendorRegistration = () => {
                 type="text"
                 name="pincode"
                 value={formData.pincode}
-                onChange={handleInputChange}
+                onChange={handlePincodeChange}
                 placeholder="Enter your Zipcode"
               />
+              {pincodeError && <p style={{ color: "red" }}>{pincodeError}</p>}
             </div>
             <div className="form-text">
               <label>State</label>
@@ -440,6 +457,7 @@ const VendorRegistration = () => {
                 value={formData.country}
                 onChange={handleInputChange}
                 placeholder="Enter your Country"
+                readOnly
               />
             </div>
             <div className="form-text">

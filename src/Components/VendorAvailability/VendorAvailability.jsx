@@ -11,21 +11,28 @@ const VendorAvailability = () => {
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
-  // Initializing state for current month and year
   const [currentMonthIndex, setCurrentMonthIndex] = useState(9); // October (index 9)
   const [currentYear, setCurrentYear] = useState(2025);
   const [selectedDate, setSelectedDate] = useState(null);
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
+  const [startAMPM, setStartAMPM] = useState('AM');
+  const [endAMPM, setEndAMPM] = useState('AM');
 
   const handleBookNow = () => {
-    navigate('/confirmbooking', {
-      state: {
-        selectedDate,
-        startTime,
-        endTime
-      }
-    });
+    if (selectedDate && startTime && endTime) {
+      navigate('/confirmbooking', {
+        state: {
+          selectedDate,
+          startTime,
+          endTime,
+          startAMPM,
+          endAMPM
+        }
+      });
+    } else {
+      alert('Please select a date and time slots.');
+    }
   };
 
   const handleStartTimeChange = (e) => {
@@ -36,6 +43,14 @@ const VendorAvailability = () => {
     setEndTime(e.target.value);
   };
 
+  const handleStartAMPMChange = (e) => {
+    setStartAMPM(e.target.value);
+  };
+
+  const handleEndAMPMChange = (e) => {
+    setEndAMPM(e.target.value);
+  };
+
   const handleDateSelect = (day) => {
     setSelectedDate(new Date(currentYear, currentMonthIndex, day));
   };
@@ -43,20 +58,18 @@ const VendorAvailability = () => {
   const changeMonth = (direction) => {
     setCurrentMonthIndex((prevMonthIndex) => {
       let newMonthIndex = prevMonthIndex + direction;
-      let newYear = currentYear; // Track the year explicitly
+      let newYear = currentYear;
 
       if (newMonthIndex < 0) {
-        newMonthIndex = 11; // Go to December
-        newYear = currentYear - 1; // Decrease the year
+        newMonthIndex = 11;
+        newYear = currentYear - 1;
       } else if (newMonthIndex > 11) {
-        newMonthIndex = 0; // Go to January
-        newYear = currentYear + 1; // Increase the year
+        newMonthIndex = 0;
+        newYear = currentYear + 1;
       }
 
-      // Update the year when the month crosses over
       setCurrentYear(newYear);
-
-      return newMonthIndex; // Return the updated month index
+      return newMonthIndex;
     });
   };
 
@@ -93,13 +106,7 @@ const VendorAvailability = () => {
           <span className="rating-count">1,000 reviews</span>
         </div>
         <div className="rating-bars">
-          {[
-            { stars: 5, percentage: 86 },
-            { stars: 4, percentage: 10 },
-            { stars: 3, percentage: 2 },
-            { stars: 2, percentage: 1 },
-            { stars: 1, percentage: 1 }
-          ].map(({ stars, percentage }) => (
+          {[{ stars: 5, percentage: 86 }, { stars: 4, percentage: 10 }, { stars: 3, percentage: 2 }, { stars: 2, percentage: 1 }, { stars: 1, percentage: 1 }].map(({ stars, percentage }) => (
             <div key={stars} className="rating-bar">
               <span className="bar-label">{stars}</span>
               <div className="bar-container">
@@ -191,7 +198,7 @@ const VendorAvailability = () => {
                   value={startTime}
                   onChange={handleStartTimeChange}
                 />
-                <select>
+                <select value={startAMPM} onChange={handleStartAMPMChange}>
                   <option value="AM">AM</option>
                   <option value="PM">PM</option>
                 </select>
@@ -208,7 +215,7 @@ const VendorAvailability = () => {
                   value={endTime}
                   onChange={handleEndTimeChange}
                 />
-                <select>
+                <select value={endAMPM} onChange={handleEndAMPMChange}>
                   <option value="AM">AM</option>
                   <option value="PM">PM</option>
                 </select>

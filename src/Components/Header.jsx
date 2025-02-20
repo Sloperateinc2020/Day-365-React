@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faHome, faListAlt, faInfoCircle, faEnvelope, faUser, faStore, faShoppingCart, faUserCircle
+  faHouse, faList, faStore, faCircleInfo, faEnvelope, faUser, faUserCircle, faRightToBracket, faRightFromBracket, faUserPlus, faCrown,
+  faTasks, faHandshake, faSmile, faTools, faPalette, faEllipsis // Updated icon names
 } from '@fortawesome/free-solid-svg-icons';
 
 export default function Header({ selectedMenu, setSelectedMenu }) {
@@ -13,6 +14,7 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return localStorage.getItem('isLoggedIn') === 'true';
   });
+  const [hoveredMenu, setHoveredMenu] = useState(null);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -59,9 +61,7 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
     setSelectedMenu(menu);
     setDropdownOpen(false);
 
-    if (menu === 'Contact') {
-      navigate('/contact');
-    } else if (menu === 'Home') {
+    if (menu === 'Home') {
       navigate('/home');
     } else if (menu === 'All Services') {
       navigate('/allservices');
@@ -71,6 +71,8 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
       navigate('/signup');
     } else if (menu === 'Beauty') {
       navigate('/beautyServices');
+    } else if (menu === 'More') {
+      // Handle the "More" menu click
     }
   };
 
@@ -137,26 +139,33 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
     width: '100%',
   };
 
-  const textWithGapStyle = (isSelected) => ({
+  const textWithGapStyle = (isSelected, isHovered) => ({
     background: 'none',
     border: 'none',
     cursor: 'pointer',
     fontSize: isMobile ? 12 : 16,
-    color: isSelected ? 'blue' : 'black',
+    color: isSelected ? getMenuColor(selectedMenu) : 'black', // Change color based on selected menu
     display: 'flex',
     flexDirection: isMobile ? 'column' : 'row',
     alignItems: 'center',
     gap: isMobile ? '4px' : '10px',
   });
 
+  const iconStyle = (isSelected) => ({
+    color: isSelected ? getMenuColor(selectedMenu) : 'black', // Change color based on selected menu
+  });
+
+  const moreIconStyle = (isSelected) => ({
+    color: isSelected ? '#FF5733' : 'black', // Change colors to different on hover or select for "More"
+  });
+
   const profileIconStyle = {
     cursor: 'pointer',
     marginLeft: 'auto',
     fontSize: '33px',
-    color: '#8a6ded',
-    marginBottom: '-20px'  // Adjusted marginBottom for more space at the bottom
-};
-
+    color: 'black', // Changed to black
+    marginBottom: '-20px', // Adjusted marginBottom for more space at the bottom
+  };
 
   const vendorButtonStyle = {
     backgroundColor: '#8a6ded',
@@ -190,9 +199,23 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
     borderBottom: '1px solid #eee',
     transition: 'background-color 0.2s',
     whiteSpace: 'nowrap',
-    '&:hover': {
-      backgroundColor: '#f5f5f5',
-    },
+  };
+
+  const getMenuColor = (menu) => {
+    switch (menu) {
+      case 'Home':
+        return '#8A2BE2'; // Purple
+      case 'All Services':
+        return '#FF5733'; // Orange
+      case 'Beauty':
+        return '#FF33A1'; // Pink
+      case 'About':
+        return '#3357FF'; // Blue
+      case 'More':
+        return '#FF33A1'; // Pink
+      default:
+        return '#ff2c2c';
+    }
   };
 
   return (
@@ -203,55 +226,86 @@ export default function Header({ selectedMenu, setSelectedMenu }) {
         <div style={menuContainerStyle}>
           <button
             onClick={() => handleMenuClick('Home')}
-            style={textWithGapStyle(selectedMenu === 'Home')}
+            onMouseEnter={() => setHoveredMenu('Home')}
+            onMouseLeave={() => setHoveredMenu(null)}
+            style={textWithGapStyle(selectedMenu === 'Home', hoveredMenu === 'Home')}
           >
-            <FontAwesomeIcon icon={faHome} />
-            {isMobile ? 'Home' : 'Home'}
+            <FontAwesomeIcon 
+              icon={faHouse} 
+              style={iconStyle(selectedMenu === 'Home')}
+            />
+            <span style={iconStyle(selectedMenu === 'Home')}>Home</span>
           </button>
           <button
             onClick={() => handleMenuClick('All Services')}
-            style={textWithGapStyle(selectedMenu === 'All Services')}
+            onMouseEnter={() => setHoveredMenu('All Services')}
+            onMouseLeave={() => setHoveredMenu(null)}
+            style={textWithGapStyle(selectedMenu === 'All Services', hoveredMenu === 'All Services')}
           >
-            <FontAwesomeIcon icon={faListAlt} />
-            {isMobile ? 'All Services' : 'All Services'}
+            <FontAwesomeIcon 
+              icon={faTools} 
+              style={iconStyle(selectedMenu === 'All Services')}
+            />
+            <span style={iconStyle(selectedMenu === 'All Services')}>All Services</span>
           </button>
           <button
             onClick={() => handleMenuClick('Beauty')}
-            style={textWithGapStyle(selectedMenu === 'Beauty')}
+            onMouseEnter={() => setHoveredMenu('Beauty')}
+            onMouseLeave={() => setHoveredMenu(null)}
+            style={textWithGapStyle(selectedMenu === 'Beauty', hoveredMenu === 'Beauty')}
           >
-            <FontAwesomeIcon icon={faStore} />
-            {isMobile ? 'Beauty' : 'Beauty'}
+            <FontAwesomeIcon 
+              icon={faPalette} 
+              style={iconStyle(selectedMenu === 'Beauty')}
+            />
+            <span style={iconStyle(selectedMenu === 'Beauty')}>Beauty</span>
           </button>
           <button
             onClick={() => handleMenuClick('About')}
-            style={textWithGapStyle(selectedMenu === 'About')}
+            onMouseEnter={() => setHoveredMenu('About')}
+            onMouseLeave={() => setHoveredMenu(null)}
+            style={textWithGapStyle(selectedMenu === 'About', hoveredMenu === 'About')}
           >
-            <FontAwesomeIcon icon={faInfoCircle} />
-            {isMobile ? 'About' : 'About'}
+            <FontAwesomeIcon 
+              icon={faCircleInfo} 
+              style={iconStyle(selectedMenu === 'About')}
+            />
+            <span style={iconStyle(selectedMenu === 'About')}>About</span>
           </button>
           <button
-            onClick={() => handleMenuClick('Contact')}
-            style={textWithGapStyle(selectedMenu === 'Contact')}
+            onClick={() => handleMenuClick('More')}
+            onMouseEnter={() => setHoveredMenu('More')}
+            onMouseLeave={() => setHoveredMenu(null)}
+            style={textWithGapStyle(selectedMenu === 'More', hoveredMenu === 'More')}
           >
-            <FontAwesomeIcon icon={faEnvelope} />
-            {isMobile ? 'Contact' : 'Contact'}
+            <FontAwesomeIcon 
+              icon={faEllipsis} 
+              style={moreIconStyle(selectedMenu === 'More')}
+            />
+            <span style={moreIconStyle(selectedMenu === 'More')}>More</span>
           </button>
 
           {!isMobile && !isLoggedIn && (
-            <>
+            <React.Fragment>
               <button
                 onClick={() => handleMenuClick('Login/Register')}
-                style={textWithGapStyle(selectedMenu === 'Login/Register')}
+                onMouseEnter={() => setHoveredMenu('Login/Register')}
+                onMouseLeave={() => setHoveredMenu(null)}
+                style={textWithGapStyle(selectedMenu === 'Login/Register', hoveredMenu === 'Login/Register')}
               >
-                <FontAwesomeIcon icon={faUser} />
-                Login/Register
+                <FontAwesomeIcon 
+                  icon={faRightToBracket} 
+                  style={iconStyle(selectedMenu === 'Login/Register')}
+                />
+                <span style={iconStyle(selectedMenu === 'Login/Register')}>Login/Register</span>
               </button>
               <button
-  onClick={handleVendorClick}
-  style={{ ...vendorButtonStyle, marginLeft: '393px' }}  // Adjust the 20px as per your need
->
-  Join As Vendor
-</button>
+                onClick={handleVendorClick}
+                style={vendorButtonStyle}
+              >
+                Join As Vendor
+              </button>
+            </React.Fragment>
 
             </>
           )}
